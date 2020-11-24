@@ -1,12 +1,12 @@
-#include "../boolean/boolean.h"
-#include "../point/point.h"
-#include "../arrayDinamik/listDinamik.h"
-#include "../mesinkarakter/mesinkar.h"
-#include "../mesinkarakter/mesinkata.h"
-#include "../CircularQueue/circular_queue.h"
-#include "../Stack/stack.h"
-#include "../matriks/matriks.h"
-#include "../graf/graf.h"
+/*#include "./boolean/boolean.h"
+#include "./point/point.h"
+#include "./arrayDinamik/listDinamik.h"
+#include "./mesinkarakter/mesinkar.h"
+#include "./mesinkarakter/mesinkata.h"
+#include "./CircularQueue/circular_queue.h"
+#include "./Stack/stack.h"
+#include "./matriks/matriks.h"
+#include "./graf/graf.h"*/
 
 #include <stdio.h>
 #include <stdlib.h>
