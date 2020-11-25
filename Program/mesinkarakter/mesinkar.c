@@ -63,7 +63,7 @@ void WRITECHAR(char in);
 void WRITEBLANK();
 /* Menulis blank ' ' pada file savepita (spasi) */
 {
-    fprintf(savepita, ' ');
+    fprintf(savepita, " ");
 }
 
 void WRITENEWLINE();
@@ -76,4 +76,16 @@ void FINISHWRITE();
 /* Menutup file yang sudah ditulis */
 {
     fclose(savepita);
+}
+
+void InputAngka(int *angka)
+/* Membaca input angka dari user */
+{
+    scanf("%d", angka);
+}
+
+void InputKarakter(char *ch)
+/* Membaca input karakter dari user */
+{
+    scanf("%c", ch);
 }

@@ -1,4 +1,4 @@
-/*#include "./boolean/boolean.h"
+#include "./boolean/boolean.h"
 #include "./point/point.h"
 #include "./arrayDinamik/listDinamik.h"
 #include "./mesinkarakter/mesinkar.h"
@@ -6,10 +6,32 @@
 #include "./CircularQueue/circular_queue.h"
 #include "./Stack/stack.h"
 #include "./matriks/matriks.h"
-#include "./graf/graf.h"*/
+#include "./graf/graf.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+
+void InputCOMMAND()
+/* Menginput COMMAND dan mengecek commandnya */
+{
+    
+    printf("ENTER COMMAND: ");
+    InputUSER();
+    
+    IsKataMOVE(CKata);
+    IsKataSTATUS(CKata);
+    IsKataCHECKORDER(CKata);
+    IsKataSTARTBUILD(CKata);
+    IsKataFINISHBUILD(CKata);
+    IsKataADDCOMPONENT(CKata);
+    IsKataREMOVECOMPONENT(CKata);
+    IsKataSHOP(CKata);
+    IsKataDELIVER(CKata);
+    IsKataEND_DAY(CKata);
+    IsKataMAP(CKata);
+    IsKataEXIT(CKata);
+    IsKataSAVE(CKata);
+}
 
 int main(){
     printf("\n");

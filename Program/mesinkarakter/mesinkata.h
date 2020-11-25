@@ -52,17 +52,50 @@ int Char2Int(char ch);
 void BacaAngka();
 /* Membaca angka dan mengkonversi dari karakter menjadi int */
 
-void InputAngka();
-/* Membaca input angka dari user */
-
-void InputKarakter();
-/* Membaca input karakter dari user */
-
 void InputUSER();
 /* Membaca input dari user secara keseluruhan */
 
 boolean IsKataSama (Kata K1, Kata K2);
 /* Menghasilkan true jika K1 = K2 */
+
+boolean IsKataMOVE (Kata K);
+/* Menghasilkan true jika Kata K adalah MOVE */
+
+boolean IsKataSTATUS (Kata K);
+/* Menghasilkan true jika Kata K adalah STATUS */
+
+boolean IsKataCHECKORDER (Kata K);
+/* Menghasilkan true jika Kata K adalah CHECKORDER */
+
+boolean IsKataSTARTBUILD (Kata K);
+/* Menghasilkan true jika Kata K adalah STARTBUILD */
+
+boolean IsKataFINISHBUILD (Kata K);
+/* Menghasilkan true jika Kata K adalah FINISHBUILD */
+
+boolean IsKataADDCOMPONENT (Kata K);
+/* Menghasilkan true jika Kata K adalah ADDCOMPONENT */
+
+boolean IsKataREMOVECOMPONENT (Kata K);
+/* Menghasilkan true jika Kata K adalah REMOVECOMPONENT */
+
+boolean IsKataSHOP (Kata K);
+/* Menghasilkan true jika Kata K adalah SHOP */
+
+boolean IsKataDELIVER (Kata K);
+/* Menghasilkan true jika Kata K adalah DELIVER */
+
+boolean IsKataEND_DAY (Kata K);
+/* Menghasilkan true jika Kata K adalah END_DAY */
+
+boolean IsKataMAP (Kata K);
+/* Menghasilkan true jika Kata K adalah MAP */
+
+boolean IsKataEXIT (Kata K);
+/* Menghasilkan true jika Kata K adalah EXIT */
+
+boolean IsKataSAVE (Kata K);
+/* Menghasilkan true jika Kata K adalah SAVE */
 
 void InputCOMMAND();
 /* Menginput COMMAND dan mengecek commandnya */

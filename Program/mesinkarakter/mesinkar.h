@@ -7,6 +7,7 @@
 #include "../boolean/boolean.h"
 
 #define MARK '.'
+#define MARKNL "\n"
 /* State Mesin */
 extern char CC;
 extern boolean EOP;
@@ -43,5 +44,11 @@ void WRITENEWLINE();
 
 void FINISHWRITE();
 /* Menutup file yang sudah ditulis */
+
+void InputAngka();
+/* Membaca input angka dari user */
+
+void InputKarakter();
+/* Membaca input karakter dari user */
 
 #endif
