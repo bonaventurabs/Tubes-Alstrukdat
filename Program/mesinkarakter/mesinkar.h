@@ -45,10 +45,10 @@ void WRITENEWLINE();
 void FINISHWRITE();
 /* Menutup file yang sudah ditulis */
 
-void InputAngka();
+void InputAngka(int *angka);
 /* Membaca input angka dari user */
 
-void InputKarakter();
+void InputKarakter(char *ch);
 /* Membaca input karakter dari user */
 
 #endif

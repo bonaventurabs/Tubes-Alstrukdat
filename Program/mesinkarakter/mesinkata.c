@@ -72,37 +72,42 @@ void SalinKata()
         ADV();
         i++;
     }
-    CKata.Length = i - 1;
+    CKata.Length = i-1;
 }
 
-int Char2Int(char *ch)
+int Char2Int(char ch)
 /* Mengkonversi dari karakter menjadi angka */
 {
     int angka;
-    sscanf(ch, "%d", &angka);
+    sscanf(&ch, "%d", &angka);
     return angka;
 }
 
 void BacaAngka(int *angka)
 /* Membaca angka dan mengkonversi dari karakter menjadi int */
 {
+    int sum = 0;
     ADVKATA();
-    *angka = Char2Int(CKata.TabKata);
+    printf("%d\n",CKata.Length);
+    for (int i = 1; i <= CKata.Length; i++)
+    {
+        sum = (sum*10) + Char2Int(CKata.TabKata[i]);
+    }
+    *angka = sum;
 }
 
 void InputUSER()
 /* Membaca input dari user secara keseluruhan */
 {
-    int i = i;
-
+    int i = 1;
     InputKarakter(&CC);
-    while ((CC != MARKNL))
+    while ((CC != MARKNL) && (i <= NMax))
     {
         CKata.TabKata[i] = CC;
         InputKarakter(&CC);
         i++;
     }
-    CKata.Length = i - 1;
+    CKata.Length = i-1;
 }
 
 boolean IsKataSama (Kata K1, Kata K2)

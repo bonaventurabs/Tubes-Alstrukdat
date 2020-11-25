@@ -87,5 +87,5 @@ void InputAngka(int *angka)
 void InputKarakter(char *ch)
 /* Membaca input karakter dari user */
 {
-    scanf("%c", ch);
+    retval = scanf("%c", ch);
 }

@@ -46,7 +46,7 @@ void SalinKata();
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
-int Char2Int(char *ch);
+int Char2Int(char ch);
 /* Mengkonversi dari karakter menjadi angka */
 
 void BacaAngka();
