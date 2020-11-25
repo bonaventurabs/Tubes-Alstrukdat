@@ -42,37 +42,37 @@ void ADV()
     }
 }
 
-void STARTWRITE(char *path);
+void STARTWRITE(char *path)
 /* Menulis atau membuat file (jika belum ada) sesuai path */
 {
     savepita = fopen(path, "w+");
 }
 
-void WRITEINT(int in);
+void WRITEINT(int in)
 /* Menulis tipe int pada file savepita */
 {
     fprintf(savepita, "%d", in);
 }
 
-void WRITECHAR(char in);
+void WRITECHAR(char in)
 /* Menulis tipe char pada file savepita */
 {
     fprintf(savepita, "%c", in);
 }
 
-void WRITEBLANK();
+void WRITEBLANK()
 /* Menulis blank ' ' pada file savepita (spasi) */
 {
     fprintf(savepita, " ");
 }
 
-void WRITENEWLINE();
+void WRITENEWLINE()
 /* Mengganti baris pada penulisan file savepita (enter) */
 {
     fprintf(savepita, "\n");
 }
 
-void FINISHWRITE();
+void FINISHWRITE()
 /* Menutup file yang sudah ditulis */
 {
     fclose(savepita);

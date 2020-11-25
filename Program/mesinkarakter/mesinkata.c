@@ -19,7 +19,7 @@ void IgnoreBlank()
     }
 }
 
-void STARTKATA()
+void STARTKATA(char *path)
 {
     /* 
     I.S. : CC sembarang
@@ -27,7 +27,7 @@ void STARTKATA()
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata 
     */
-    START();
+    START(path);
     IgnoreBlank();
     if (CC == MARK)
     {
@@ -203,7 +203,7 @@ boolean IsKataFINISHBUILD (Kata K)
     KataFINISHBUILD.TabKata[10] = 'L';
     KataFINISHBUILD.TabKata[11] = 'D';
 
-    return IsKataSama(KataSTARTBUILD,K);
+    return IsKataSama(KataFINISHBUILD,K);
 }
 
 boolean IsKataADDCOMPONENT (Kata K)
