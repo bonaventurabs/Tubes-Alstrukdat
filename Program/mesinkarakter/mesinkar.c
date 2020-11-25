@@ -8,9 +8,10 @@ char CC;
 boolean EOP;
 
 static FILE *pita;
+static FILE *savepita;
 static int retval;
 
-void START()
+void START(char *path)
 {
     /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
    Karakter pertama yang ada pada pita posisinya adalah pada jendela.
@@ -19,7 +20,7 @@ void START()
           Jika CC = MARK maka EOP akan menyala (true) */
 
     /* Algoritma */
-    pita = fopen("pitakar.txt", "r");
+    pita = fopen(path, "r");
     ADV();
 }
 
@@ -39,4 +40,40 @@ void ADV()
     {
         fclose(pita);
     }
+}
+
+void STARTWRITE(char *path);
+/* Menulis atau membuat file (jika belum ada) sesuai path */
+{
+    savepita = fopen(path, "w+");
+}
+
+void WRITEINT(int in);
+/* Menulis tipe int pada file savepita */
+{
+    fprintf(savepita, "%d", in);
+}
+
+void WRITECHAR(char in);
+/* Menulis tipe char pada file savepita */
+{
+    fprintf(savepita, "%c", in);
+}
+
+void WRITEBLANK();
+/* Menulis blank ' ' pada file savepita (spasi) */
+{
+    fprintf(savepita, ' ');
+}
+
+void WRITENEWLINE();
+/* Mengganti baris pada penulisan file savepita (enter) */
+{
+    fprintf(savepita, "\n");
+}
+
+void FINISHWRITE();
+/* Menutup file yang sudah ditulis */
+{
+    fclose(savepita);
 }

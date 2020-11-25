@@ -11,7 +11,7 @@
 extern char CC;
 extern boolean EOP;
 
-void START();
+void START(char *path);
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
    Karakter pertama yang ada pada pita posisinya adalah pada jendela.
    I.S. : sembarang
@@ -25,5 +25,23 @@ void ADV();
    F.S. : CC adalah karakter berikutnya dari CC yang lama,
           CC mungkin = MARK
           Jika  CC = MARK maka EOP akan menyala (true) */
+
+void STARTWRITE(char *path);
+/* Menulis atau membuat file (jika belum ada) sesuai path */
+
+void WRITEINT(int in);
+/* Menulis tipe int pada file savepita */
+
+void WRITECHAR(char in);
+/* Menulis tipe char pada file savepita */
+
+void WRITEBLANK();
+/* Menulis blank ' ' pada file savepita (spasi) */
+
+void WRITENEWLINE();
+/* Mengganti baris pada penulisan file savepita (enter) */
+
+void FINISHWRITE();
+/* Menutup file yang sudah ditulis */
 
 #endif
