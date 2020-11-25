@@ -1,4 +1,4 @@
-#include "boolean.h"
+#include "../boolean/boolean.h"
 
 #ifndef graf_H
 #define graf_H

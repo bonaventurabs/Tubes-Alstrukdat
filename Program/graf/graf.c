@@ -1,4 +1,4 @@
-#include "boolean.h"
+#include "../boolean/boolean.h"
 #include "graf.h"
 #include <stdlib.h>
 #include <stdio.h>
