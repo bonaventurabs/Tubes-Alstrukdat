@@ -5,67 +5,71 @@
 #define InitialSize 10
 
 typedef int IdxType;
-typedef int ElType;
+typedef struct {
+    char *Nama;
+    int Harga;
+    char *Kategori;
+} ElType;
 typedef struct {
     ElType *A;
     int Capacity;
     int Neff;
-} DynamicList;
+} ArrayKomponen;
 
 /**
  * Konstruktor
  * I.S. sembarang
  * F.S. Terbentuk List kosong dengan ukuran InitialSize
  */
-DynamicList MakeList();
+ArrayKomponen MakeList();
 
 /**
  * Destruktor
  * I.S. List terdefinisi
  * F.S. list->A terdealokasi
  */
-void DeallocateList(DynamicList *list);
+void DeallocateList(ArrayKomponen *list);
 
 /**
  * Fungsi untuk mengetahui apakah suatu list kosong.
  * Prekondisi: list terdefinisi
  */
-boolean IsEmpty(DynamicList list);
+boolean IsEmpty(ArrayKomponen list);
 
 /**
  * Fungsi untuk mendapatkan banyaknya elemen efektif list, 0 jika tabel kosong.
  * Prekondisi: list terdefinisi
  */
-int Length(DynamicList list);
+int Length(ArrayKomponen list);
 
 /**
  * Mengembalikan elemen list L yang ke-I (indeks lojik).
  * Prekondisi: list tidak kosong, i di antara 0..Length(list).
  */
-ElType Get(DynamicList list, IdxType i);
+ElType Get(ArrayKomponen list, IdxType i);
 
 /**
  * Fungsi untuk mendapatkan kapasitas yang tersedia.
  * Prekondisi: list terdefinisi
  */
-int GetCapacity(DynamicList list);
+int GetCapacity(ArrayKomponen list);
 
 /**
  * Fungsi untuk menambahkan elemen baru di index ke-i
  * Prekondisi: list terdefinisi, i di antara 0..Length(list).
  */
-void InsertAt(DynamicList *list, ElType el, IdxType i);
+void InsertAt(ArrayKomponen *list, ElType el, IdxType i);
 
 /**
  * Fungsi untuk menambahkan elemen baru di akhir list.
  * Prekondisi: list terdefinisi
  */
-void InsertLast(DynamicList *list, ElType el);
+void InsertLast(ArrayKomponen *list, ElType el);
 
 /**
  * Fungsi untuk menambahkan elemen baru di awal list.
  * Prekondisi: list terdefinisi
  */
-void InsertFirst(DynamicList *list, ElType el);
+void InsertFirst(ArrayKomponen *list, ElType el);
 
 #endif	
