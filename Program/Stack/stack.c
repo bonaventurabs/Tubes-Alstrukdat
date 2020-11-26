@@ -1,6 +1,6 @@
 #include "stack.h"
 
-void CreateEmpty(Stack *S)
+void CreateEmptyStack(Stack *S)
 /* I.S. Sembarang */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
 /* Ciri stack kosong : TOP bernilai Nil */
@@ -9,14 +9,14 @@ void CreateEmpty(Stack *S)
 }
 
 /* ********* Predikat Untuk test keadaan KOLEKSI ********* */
-bool IsEmpty(Stack S)
+bool IsStackEmpty(Stack S)
 /* Mengirim true jika Stack kosong*/
 /* Ciri stack kosong : TOP bernilai Nil */
 {
     return S.TOP == Nil;
 }
 
-bool IsFull(Stack S)
+bool IsStackFull(Stack S)
 /* Mengirim true jika stack S penuh */
 /* Ciri stack penuh : TOP bernilai MaxEl */
 {
