@@ -1,6 +1,7 @@
 #include "./boolean/boolean.h"
 #include "./point/point.h"
-#include "./arrayDinamik/listDinamik.h"
+#include "./arrayKomponen/arrayKomponen.h"
+#include "./arrayInventory/arrayInventory.h"
 #include "./mesinkarakter/mesinkar.h"
 #include "./mesinkarakter/mesinkata.h"
 #include "./CircularQueue/circular_queue.h"
@@ -63,6 +64,43 @@ void COMMAND()
     }
 }
 
+void MOVE(){
+    printf("Kamu berada pada %s\n", &posisi);
+    printf("Lokasi: pemain sedang berada pada %s.\n", &posisi);
+    printf("Daftar lokasi yang dapat dicapai:\n");
+    for(int i=1;i<Graph;i++){ /***harus tau ADT graphnya dulu inii***/
+      printf(i,". %s\n", &(Graph[i]));
+    }
+    int tujuan;
+    printf("Nomor tujuan: ");
+    scanf("%d", &tujuan);
+    if (tujuan in graph){
+        posisi=tujuan;
+        printf("Kamu telah mencapai lokasi %s", %Graph.Nama);
+    }
+    else{
+        printf("Tempat tersebut tidak bisa dituju. Harap pindah ke tempat terdekat telebih dahulu. Gunakan command MAP untuk detail lebih lanjut");
+    }
+}
+
+void STATUS(){
+    printf("Uang tersisa: $%d\n", &uang);
+    printf("Build yang sedang dikerjakan: pesanan %d untuk %s.\n", &pesanan, &pelanggan);
+    printf("Lokasi: pemain sedang berada pada %s.\n", &posisi);
+    printf("Inventory anda:\n");
+    for(int i=1;i<Inventory.neff;i++){
+      printf(i,". %s (%d)\n", &(Inventory.Nama[i]), &(Inventory.Jumlah[i]));
+    }
+}
+
+void DELIVER(){
+    if (posisi==pelanggan.posisi){
+        printf("Pesanan #%d berhasil diantarkan kepada %s!\n", &pesanan, &pelanggan);    
+    }
+    else{
+        printf("Posisi anda belum berada di rumah %s. Harap pindah ke rumah %s terlebih dahulu!\n", &pelanggan, &pelanggan);
+    }
+}
 int main(){
     printf("\n");
 	printf("                               ____    _    __  _  _______  ____\n");
