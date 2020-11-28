@@ -22,12 +22,12 @@ typedef struct { ElType * Tab;  /* tabel penyimpan elemen */
 /* Definisi Queue kosong: HEAD=NIL; TAIL=NIL. */
 
 /* ********* Prototype ********* */
-boolean IsEmpty (Queue Q);
+boolean IsQueueEmpty (Queue Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */
-boolean IsFull (Queue Q);
+boolean IsQueueFull (Queue Q);
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
-int Length (Queue Q);
+int LengthQueue (Queue Q);
 /* Mengirimkan banyaknya elemen Q, 0 jika kosong */
 int MaxLength (Queue Q);
 /* Mengirimkan kapasitas jumlah elemen Q */
@@ -47,13 +47,13 @@ void DeleteQueue (Queue * Q);
 /* F.S. membebaskan memori Tab, Q.MaxEl di-set 0 */
 
 /* *** Primitif Add/Delete *** */
-void Push (Queue * Q, ElType X);
+void PushQueue (Queue * Q, ElType X);
 /* Proses: Menambahkan X pada Q dengan aturan FIFO */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru,
         TAIL "maju" dengan mekanisme circular buffer
         Jika Q kosong, HEAD dimulai dari 0 */
-ElType Pop (Queue * Q);
+ElType PopQueue (Queue * Q);
 /* Proses: Menghapus indeks HEAD pada Q dengan aturan FIFO, lalu mengembalikan nilainya */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. mengembalikan nilai Q pada indeks HEAD;
