@@ -2,14 +2,14 @@
 #include "circular_queue.h"
 
 /* ********* Prototype ********* */
-boolean IsEmpty (Queue Q) {
+boolean IsQueueEmpty (Queue Q) {
     return Q.HEAD == NIL && Q.TAIL == NIL;
 }
-boolean IsFull (Queue Q) {
-    return Length(Q) == Q.MaxEl;
+boolean IsQueueFull (Queue Q) {
+    return LengthQueue(Q) == Q.MaxEl;
 }
-int Length (Queue Q) {
-    if (IsEmpty(Q))
+int LengthQueue (Queue Q) {
+    if (IsQueueEmpty(Q))
         return 0;
     else if (Q.HEAD >= Q.TAIL)
         return Q.MaxEl + Q.TAIL - Q.HEAD;
@@ -37,8 +37,8 @@ void DeleteQueue (Queue * Q) {
 }
 
 /* *** Primitif Add/Delete *** */
-void Push (Queue * Q, ElType X) {
-    if (IsEmpty(*Q)) {
+void PushQueue (Queue * Q, ElType X) {
+    if (IsQueueEmpty(*Q)) {
         Q->HEAD = 0;
         Q->TAIL = 0;
     }
@@ -48,7 +48,7 @@ void Push (Queue * Q, ElType X) {
         Q->TAIL = 0;
     }
 }
-ElType Pop (Queue * Q) {
+ElType PopQueue (Queue * Q) {
     ElType ret = Q->Tab[Q->HEAD];
     Q->HEAD++;
     if (Q->HEAD == Q->MaxEl) {
@@ -67,10 +67,10 @@ ElType Front (Queue Q) {
 /* *** Utilitas *** */
 Queue CopyQueue (Queue Q) {
     Queue new = CreateQueue(Q.MaxEl);
-    if (!IsEmpty(Q)) {
+    if (!IsQueueEmpty(Q)) {
         int tail = Q.HEAD;
-        while (Length(new) != Length(Q)) {
-            Push(&new, Q.Tab[tail]);
+        while (LengthQueue(new) != LengthQueue(Q)) {
+            PushQueue(&new, Q.Tab[tail]);
             tail = (tail + 1) % Q.MaxEl;
         }
     }
