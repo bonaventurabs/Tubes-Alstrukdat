@@ -12,6 +12,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void LOGO(){
+    printf("\n");
+	printf("                               ____    _    __  _  _______  ____\n");
+	printf("                              |  __|  / \\  |  \\| ||__   __||    |\n");
+	printf("                              |____  / _ \\ | |\\  |   | |   | || |\n");
+	printf("                               |___|/_/ \\_\\|_| \\_|   |_|   |____|\n");
+	printf("                              --T.Y.C.O.O.N--  \n");
+	printf("\n");
+}
+
+void MENU(int *inputmenu){
+    printf("                                    Selamat datang di game\n");
+    printf("                                         SANTO TYCOON\n");
+    printf("                                         1. NEW GAME\n");
+    printf("                                         2. LOAD GAME\n");
+    printf("                                         >");
+    InputAngka(inputmenu);
+    printf("\n");
+    while (*inputmenu!=1 || *inputmenu!=2){
+        printf("                    Input tidak terdefinisi, silahkan masukan angka menu")
+        printf("                                     >");
+        InputAngka(inputmenu);
+    }
+}
+
 void COMMAND()
 /* Menginput COMMAND, mengecek commandnya, serta menjalankan commandnya */
 {
@@ -64,6 +89,10 @@ void COMMAND()
     }
 }
 
+void Konfigurasi(){
+    
+}
+
 void MOVE(){
     printf("Kamu berada pada %s\n", &posisi);
     printf("Lokasi: pemain sedang berada pada %s.\n", &posisi);
@@ -102,17 +131,15 @@ void DELIVER(){
     }
 }
 int main(){
-    printf("\n");
-	printf("                               ____    _    __  _  _______  ____\n");
-	printf("                              |  __|  / \\  |  \\| ||__   __||    |\n");
-	printf("                              |____  / _ \\ | |\\  |   | |   | || |\n");
-	printf("                               |___|/_/ \\_\\|_| \\_|   |_|   |____|\n");
-	printf("                              --T.Y.C.O.O.N--  \n");
-	printf("\n");
+    /* Variabel */
+    int *inputmenu;
 
-    printf("                                    Selamat datang di game\n");
-	printf("                                         SANTO TYCOON\n");
-    printf("                                         1. NEW GAME\n");
-    printf("                                         2. LOAD GAME\n");
+    LOGO();
+    MENU(inputmenu);
+    if (*inputmenu==1){
+
+    } else {
+
+    }
     COMMAND();
 }
