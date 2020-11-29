@@ -122,6 +122,56 @@ void STATUS(){
     }
 }
 
+void CHECKORDER(){
+    printf("Nomor Order: %s\n", pesanan);
+    printf("Pemesan: %d\n", pelanggan);
+    printf("Invoice: %s\n", harga);
+    printf("Komponen:\n");
+    for(int i=1;i<Komponen.neff;i++){
+        printf("%d. %s\n", i, (Komponen.Nama[i]));
+    }
+}
+
+void STARTBUILD(){
+    printf("Kami telah memulai %d untuk %s\n.", pesanan, pelanggan); 
+}
+
+void ADDCOMPONENT(ArrayInventory Inventory, Stack S){
+    int x;
+    printf("komponen yang telah terpasang:\n");
+    for(int i=1;i<Top(S);i++){
+        printf("%d. %s\n", i, (InfoTop(S)));
+    }
+    printf("Komponen yang tersedia\n");
+    for(int i=1;i<Inventory.neff;i++){
+        printf("&d. %s\n", i, (Inventory.Nama[i-1]));
+    }
+
+    printf("Komponen yang ingin dipasang: \n");
+    scanf("%d", &x);
+    if (x == i){ /*masih gatau gimana caranya ngilangin komponen yang tersedia kalo dipilih buat dipasang */
+        Push(S, Inventory.Nama[i]);
+        printf("Komponen berhasil dipasang! \n");
+    }
+    else{
+        printf("Komponen tidak tersedia!");
+    }   
+}
+
+void REMOVECOMPONENT(){
+    printf("Komponen %d\n", &InfoTop(S), "berhasil dicopot!");
+    Pop(S);
+}
+
+void FINISHBUILD(){
+    if(){ /*Masih belum tau if conditionalnya gimana */
+        printf("%d", pesanan, "telah selesai. Silahkan antar ke %s\n", pelanggan);
+    }
+    else{
+        printf("Komponen yang dipasangkan belum sesuai dengan pesanan, build belum dapat diselesaikan")
+    }
+}
+
 void DELIVER(){
     if (posisi==pelanggan.posisi){
         printf("Pesanan #%d berhasil diantarkan kepada %s!\n", &pesanan, &pelanggan);    
