@@ -179,7 +179,7 @@ void PKaliKons (MATRIKS * M, ElType K)
 }
 
 /* ********** KELOMPOK OPERASI RELASIONAL TERHADAP MATRIKS ********** */
-boolean EQ (MATRIKS M1, MATRIKS M2)
+boolean EQMATRIKS (MATRIKS M1, MATRIKS M2)
 /* Mengirimkan true jika M1 = M2, yaitu NBElmt(M1) = NBElmt(M2) dan */
 /* untuk setiap i,j yang merupakan indeks baris dan kolom M1(i,j) = M2(i,j) */
 /* Juga merupakan strong EQ karena GetFirstIdxBrs(M1) = GetFirstIdxBrs(M2) 
@@ -207,13 +207,13 @@ boolean EQ (MATRIKS M1, MATRIKS M2)
         return false;
     }
 }
-boolean NEQ (MATRIKS M1, MATRIKS M2)
+boolean NEQMATRIKS (MATRIKS M1, MATRIKS M2)
 /* Mengirimkan true jika M1 tidak sama dengan M2 */
 {
     return !EQ(M1,M2);
 }
 
-boolean EQSize (MATRIKS M1, MATRIKS M2)
+boolean EQSizeMATRIKS (MATRIKS M1, MATRIKS M2)
 /* Mengirimkan true jika ukuran efektif matriks M1 sama dengan ukuran efektif M2 */
 /* yaitu NBrsEff(M1) = NBrsEff (M2) dan NKolEff (M1) = NKolEff (M2) */
 {
@@ -221,7 +221,7 @@ boolean EQSize (MATRIKS M1, MATRIKS M2)
 }
 
 /* ********** Operasi lain ********** */
-int NBElmt (MATRIKS M)
+int NBElmtMATRIKS (MATRIKS M)
 /* Mengirimkan banyaknya elemen M */
 {
     return NBrsEff(M)*NKolEff(M);
@@ -312,44 +312,6 @@ MATRIKS Inverse1 (MATRIKS M)
         }
     }
     return MIn;
-}
-float Determinan (MATRIKS M)
-/* Prekondisi: IsBujurSangkar(M) */
-/* Menghitung nilai determinan M */
-{
-	MATRIKS MDet;
-	float determinan = 1;
-	indeks i,j,k;
-    float pengurang;
-	/*	Algoritma */
-	/*	Menggunakan Operasi Baris Elementer */
-    MakeMATRIKS(NBrsEff(M),NKolEff(M),&MDet);
-    CopyMATRIKS(M,&MDet);
-	for (j=GetFirstIdxKol(M); j<=GetLastIdxKol(M); j++){
-        Elmt(MDet,GetFirstIdxBrs(M),j) = Elmt(M,GetFirstIdxBrs(M),j);
-    }
-	for (i=GetFirstIdxBrs(M)+1; i<=GetLastIdxBrs(M); i++){
-        for (j=GetFirstIdxKol(M); j<i; j++){
-            pengurang = ((-1)*Elmt(MDet,i,j))/GetElmtDiagonal(MDet,j);
-            for (k=j; k<=GetLastIdxKol(M); k++){
-                Elmt(MDet,i,k) = Elmt(MDet,i,k) + Elmt(MDet,j,k)*pengurang;
-            }
-        }
-    }
-	for (i=GetFirstIdxBrs(MDet); i<=GetFirstIdxBrs(MDet); i++){
-        determinan = determinan*GetElmtDiagonal(MDet,i);
-    }
-	return determinan;
-}
-void PInverse1 (MATRIKS * M)
-/* I.S. M terdefinisi */
-/* F.S. M di-invers, yaitu setiap elemennya dinegasikan (dikalikan -1) */
-{
-    for (indeks i = GetFirstIdxBrs(*M); i<=GetLastIdxBrs(*M); i++){
-        for (indeks j = GetFirstIdxKol(*M); j<=GetLastIdxKol(*M); j++){
-            Elmt(*M,i,j) = (-1)*Elmt(*M,i,j);
-        }
-    }
 }
 void Transpose (MATRIKS * M)
 /* I.S. M terdefinisi dan IsBujursangkar(M) */

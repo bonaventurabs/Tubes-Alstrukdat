@@ -1,0 +1,5 @@
+INTEL Core i7-4770K, 287, CPU
+INTEL Core i5-3570K, 191, CPU
+INTEL Xeon E3-1220 Processor, 174, CPU
+AMD Ryzen 5 2400G With Radeon Vega, 143, CPU
+AMD Ryzen 5 2600G With Wraith Stealt, 157, CPU

@@ -12,10 +12,10 @@
 #define KolMax 99
 
 typedef int indeks; /* indeks baris, kolom */
-typedef int ElType; 
+typedef char ElType; 
 typedef struct { 
 	ElType Mem[BrsMax+1][KolMax+1];
-    int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
+   int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
 	int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
 } MATRIKS;
 /* NBrsEff >= 1 dan NKolEff >= 1 */
@@ -95,19 +95,19 @@ void PKaliKons (MATRIKS * M, ElType K);
 /* F.S. Mengalikan setiap elemen M dengan K */
 
 /* ********** KELOMPOK OPERASI RELASIONAL TERHADAP MATRIKS ********** */
-boolean EQ (MATRIKS M1, MATRIKS M2);
+boolean EQMATRIKS (MATRIKS M1, MATRIKS M2);
 /* Mengirimkan true jika M1 = M2, yaitu NBElmt(M1) = NBElmt(M2) dan */
 /* untuk setiap i,j yang merupakan indeks baris dan kolom M1(i,j) = M2(i,j) */
 /* Juga merupakan strong EQ karena GetFirstIdxBrs(M1) = GetFirstIdxBrs(M2) 
    dan GetLastIdxKol(M1) = GetLastIdxKol(M2) */
-boolean NEQ (MATRIKS M1, MATRIKS M2);
+boolean NEQMATRIKS (MATRIKS M1, MATRIKS M2);
 /* Mengirimkan true jika M1 tidak sama dengan M2 */
-boolean EQSize (MATRIKS M1, MATRIKS M2);
+boolean EQSizeMATRIKS (MATRIKS M1, MATRIKS M2);
 /* Mengirimkan true jika ukuran efektif matriks M1 sama dengan ukuran efektif M2 */
 /* yaitu GetBrsEff(M1) = GetNBrsEff (M2) dan GetNKolEff (M1) = GetNKolEff (M2) */
 
 /* ********** Operasi lain ********** */
-int NBElmt (MATRIKS M);
+int NBElmtMATRIKS (MATRIKS M);
 /* Mengirimkan banyaknya elemen M */
 
 /* ********** KELOMPOK TEST TERHADAP MATRIKS ********** */
@@ -124,12 +124,6 @@ boolean IsSparse (MATRIKS M);
    hanya maksimal 5% dari memori matriks yang efektif bukan bernilai 0 */ 
 MATRIKS Inverse1 (MATRIKS M);
 /* Menghasilkan salinan M dengan setiap elemen "di-invers", yaitu dinegasikan (dikalikan -1) */
-float Determinan (MATRIKS M);
-/* Prekondisi: IsBujurSangkar(M) */
-/* Menghitung nilai determinan M */
-void PInverse1 (MATRIKS * M);
-/* I.S. M terdefinisi */
-/* F.S. M di-invers, yaitu setiap elemennya dinegasikan (dikalikan -1) */
 void Transpose (MATRIKS * M);
 /* I.S. M terdefinisi dan IsBujursangkar(M) */
 /* F.S. M "di-transpose", yaitu setiap elemen M(i,j) ditukar nilainya dengan elemen M(j,i) */
@@ -151,4 +145,14 @@ int CountXBrs (MATRIKS M, indeks i, ElType X);
 /* Menghasilkan banyaknya kemunculan X pada baris i dari M */
 int CountXKol (MATRIKS M, indeks j, ElType X);
 /* Menghasilkan banyaknya kemunculan X pada kolom j dari M */
+
+/* ********** OPERASI GAME SANTO TYCOON ********** */
+void BacaMAP(MATRIKS *M, char S, int X, int Y);
+/* I.S. M kosong terdefinisi */ 
+/* F.S. simbol S terdefinisi di M pada koordinat (X,Y) */
+
+void TulisMAP(MATRIKS M);
+/* I.S. M terdefinisi beserta simbol */
+/* F.S. Map M tertulis di layar dibatasi oleh '*' */
+
 #endif
