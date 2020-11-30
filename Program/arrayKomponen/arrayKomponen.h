@@ -6,9 +6,9 @@
 
 typedef int IdxType;
 typedef struct {
-    char *Nama;
+    char Nama[100];
     int Harga;
-    char *Kategori;
+    char Kategori[20];
 } ElType;
 typedef struct {
     ElType *A;
