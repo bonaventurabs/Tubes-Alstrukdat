@@ -2,16 +2,19 @@
 #define __DYNAMIC_LIST__
 #include "../boolean/boolean.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #define InitialSize 10
 
 typedef int IdxType;
 typedef struct {
-    char Nama[100];
+    char *Nama;
     int Harga;
-    char Kategori[20];
-} ElType;
+    char *Kategori;
+} Item;
 typedef struct {
-    ElType *A;
+    Item *A;
     int Capacity;
     int Neff;
 } ArrayKomponen;
@@ -46,7 +49,7 @@ int ArrayKomponenLength(ArrayKomponen list);
  * Mengembalikan elemen list L yang ke-I (indeks lojik).
  * Prekondisi: list tidak kosong, i di antara 0..Length(list).
  */
-ElType ArrayKomponenGet(ArrayKomponen list, IdxType i);
+Item ArrayKomponenGet(ArrayKomponen list, IdxType i);
 
 /**
  * Fungsi untuk mendapatkan kapasitas yang tersedia.
@@ -58,18 +61,25 @@ int ArrayKomponenGetCapacity(ArrayKomponen list);
  * Fungsi untuk menambahkan elemen baru di index ke-i
  * Prekondisi: list terdefinisi, i di antara 0..Length(list).
  */
-void ArrayKomponenInsertAt(ArrayKomponen *list, ElType el, IdxType i);
+void ArrayKomponenInsertAt(ArrayKomponen *list, Item el, IdxType i);
 
 /**
  * Fungsi untuk menambahkan elemen baru di akhir list.
  * Prekondisi: list terdefinisi
  */
-void ArrayKomponenInsertLast(ArrayKomponen *list, ElType el);
+void ArrayKomponenInsertLast(ArrayKomponen *list, Item el);
 
 /**
  * Fungsi untuk menambahkan elemen baru di awal list.
  * Prekondisi: list terdefinisi
  */
-void ArrayKomponenInsertFirst(ArrayKomponen *list, ElType el);
+void ArrayKomponenInsertFirst(ArrayKomponen *list, Item el);
+
+/* ********** OPERASI GAME SANTO TYCOON ********** */
+/**
+ * Fungsi untuk membentuk Item.
+ * Prekondisi: Nama, Harga, dan Kategori terdefinisi
+ */
+Item ArrangeItem(char Nama[],int Harga, char Kategori[]);
 
 #endif	

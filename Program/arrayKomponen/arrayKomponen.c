@@ -1,4 +1,6 @@
 #include "arrayKomponen.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 
 /**
@@ -8,7 +10,7 @@
  */
 ArrayKomponen MakeArrayKomponen() {
     ArrayKomponen list;
-    list.A = (ElType *) malloc(InitialSize * sizeof(ElType));
+    list.A = (Item *) malloc(InitialSize * sizeof(Item));
     list.Capacity = InitialSize;
     list.Neff = 0;
     return list;
@@ -38,7 +40,7 @@ int ArrayKomponenLength(ArrayKomponen list) {
  * Mengembalikan elemen list L yang ke-I (indeks lojik).
  * Prekondisi: list tidak kosong, i di antara 0..Length(list).
  */
-ElType ArrayKomponenGet(ArrayKomponen list, IdxType i) {
+Item ArrayKomponenGet(ArrayKomponen list, IdxType i) {
     return list.A[i];
 }
 
@@ -54,15 +56,15 @@ int ArrayKomponenGetCapacity(ArrayKomponen list) {
  * Fungsi untuk menambahkan elemen baru di index ke-i
  * Prekondisi: list terdefinisi, i di antara 0..Length(list).
  */
-void ArrayKomponenInsertAt(ArrayKomponen *list, ElType el, IdxType i) {
+void ArrayKomponenInsertAt(ArrayKomponen *list, Item el, IdxType i) {
     int length = ArrayKomponenLength(*list);
     int capacity = ArrayKomponenGetCapacity(*list);
 
     if (length == capacity) {
         int desiredCapacity = capacity + InitialSize;
-        ElType *array = (ElType *) malloc(desiredCapacity * sizeof(ElType));
+        Item *array = (Item *) malloc(desiredCapacity * sizeof(Item));
         for (int a = 0; a < length; a++) {
-            array[a] = Get(*list, a);
+            array[a] = ArrayKomponenGet(*list, a);
         }
         free(list->A);
 
@@ -82,8 +84,8 @@ void ArrayKomponenInsertAt(ArrayKomponen *list, ElType el, IdxType i) {
  * Fungsi untuk menambahkan elemen baru di akhir list.
  * Prekondisi: list terdefinisi
  */
-void ArrayKomponenInsertLast(ArrayKomponen *list, ElType el) {
-    int insertAt = Length(*list);
+void ArrayKomponenInsertLast(ArrayKomponen *list, Item el) {
+    int insertAt = ArrayKomponenLength(*list);
     ArrayKomponenInsertAt(list, el, insertAt);
 }
 
@@ -91,6 +93,19 @@ void ArrayKomponenInsertLast(ArrayKomponen *list, ElType el) {
  * Fungsi untuk menambahkan elemen baru di awal list.
  * Prekondisi: list terdefinisi
  */
-void ArrayKomponenInsertFirst(ArrayKomponen *list, ElType el) {
+void ArrayKomponenInsertFirst(ArrayKomponen *list, Item el) {
     ArrayKomponenInsertAt(list, el, 0);
+}
+
+/**
+ * Fungsi untuk membentuk Item.
+ * Prekondisi: Nama, Harga, dan Kategori terdefinisi
+ */
+Item ArrangeItem(char Nama[],int Harga, char Kategori[]){
+    Item Item;
+    
+    Item.Nama = Nama;
+    Item.Harga = Harga;
+    Item.Kategori = Kategori;
+    return Item;
 }

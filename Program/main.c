@@ -37,16 +37,23 @@ void MENU(int *inputmenu){
     }
 }
 
-void Konfigurasi(char *path, ArrayKomponen *Komponen){
-    /* Mengonfigurasi file eksternal ke dalam variabel Komponen */
+void KonfigurasiItem(char *path, ArrayKomponen *Komponen){
+    /* Mengonfigurasi file eksternal komponen ke dalam variabel2 Komponen */
+    char Nama[200];
+    int Harga;
+    char Kategori[20];
+    Item Insert;
+
     *Komponen = MakeArrayKomponen();
     STARTKATA(path);
+    ADVKATA();
     while (!EndKata){
-        ADVKATA();
-        
+        UnionKata(Nama);
+        BacaAngka(&Harga);
+        UnionKata(Kategori);
+        Insert = ArrangeItem(Nama,Harga,Kategori);
+        ArrayKomponenInsertLast(Komponen,Insert);
     }
-    
-
 }
 
 void COMMAND()
@@ -99,10 +106,6 @@ void COMMAND()
         IsKataEXIT(CKata);
         IsKataSAVE(CKata);*/
     }
-}
-
-void Konfigurasi(){
-
 }
 
 void MOVE(){

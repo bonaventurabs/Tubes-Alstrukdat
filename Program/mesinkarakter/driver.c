@@ -17,17 +17,21 @@ int main(){
     char kall[100];
     int angka;
     UnionKata(kalimat);
-    BacaAngka(&angka);
-    UnionKata(kal);
-    UnionKata(kall);
-
     printf("%s\n",kalimat);
+    BacaAngka(&angka);
     printf("%d\n",angka);
-    printf("%s\n",kal);
-    printf("%s\n",kall);
+    UnionKata(kalimat);
+    printf("%s\n",kalimat);
+    BacaAngka(&angka);
+    printf("%d\n",angka);
+
+
 
     printf("%d\n",EndKata);
     printf("%c\n",CC);
 
+    char* str;
+    str = kalimat;
+    printf("%s\n",str);
     return 0;
 }
