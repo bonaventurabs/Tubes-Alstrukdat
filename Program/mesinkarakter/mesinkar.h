@@ -8,6 +8,7 @@
 
 #define MARK '.'
 #define MARKNL '\n'
+#define MARKC ','
 /* State Mesin */
 extern char CC;
 extern boolean EOP;

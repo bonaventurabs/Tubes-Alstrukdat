@@ -37,6 +37,18 @@ void MENU(int *inputmenu){
     }
 }
 
+void Konfigurasi(char *path, ArrayKomponen *Komponen){
+    /* Mengonfigurasi file eksternal ke dalam variabel Komponen */
+    *Komponen = MakeArrayKomponen();
+    STARTKATA(path);
+    while (!EndKata){
+        ADVKATA();
+        
+    }
+    
+
+}
+
 void COMMAND()
 /* Menginput COMMAND, mengecek commandnya, serta menjalankan commandnya */
 {
@@ -90,7 +102,7 @@ void COMMAND()
 }
 
 void Konfigurasi(){
-    
+
 }
 
 void MOVE(){

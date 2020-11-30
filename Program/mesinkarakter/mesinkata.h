@@ -7,13 +7,13 @@
 #include "../boolean/boolean.h"
 #include "mesinkar.h"
 
-#define NMax 50
+#define NMax 100
 #define BLANK ' '
 
 typedef struct
 {
-    char TabKata[NMax + 1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
-    int Length;
+   char TabKata[NMax + 1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
+   int Length;
 } Kata;
 
 /* State Mesin Kata */
@@ -38,19 +38,22 @@ void ADVKATA();
           Jika CC = MARK, EndKata = true.
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 
-void SalinKata();
-/* Mengakuisisi kata, menyimpan dalam CKata
-   I.S. : CC adalah karakter pertama dari kata
-   F.S. : CKata berisi kata yang sudah diakuisisi;
-          CC = BLANK atau CC = MARK;
+void SalinFrasa();
+    /* Mengakuisisi gabungan kata, menyimpan dalam CKata
+    I.S. : CC adalah karakter pertama dari kata
+    F.S. : CKata berisi gabungan kata yang sudah diakuisisi;
+          CC = BLANK atau CC = MARK atau CC = MARKNL CC = MARKC;
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
 int Char2Int(char ch);
 /* Mengkonversi dari karakter menjadi angka */
 
-void BacaAngka();
+int BacaAngka();
 /* Membaca angka dan mengkonversi dari karakter menjadi int */
+
+char* UnionKata();
+/* Membaca kata dan menggabungkan kata hingga MARKC, antar kata dipisahkan dengan ' ' (spasi) */
 
 void InputUSER();
 /* Membaca input dari user secara keseluruhan */

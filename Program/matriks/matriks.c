@@ -44,12 +44,12 @@ indeks GetFirstIdxKol (MATRIKS M)
 indeks GetLastIdxBrs (MATRIKS M)
 /* Mengirimkan indeks baris terbesar M */
 {
-    return NBrsEff(M)-1;
+    return NBrsEff(M);
 }
 indeks GetLastIdxKol (MATRIKS M)
 /* Mengirimkan indeks kolom terbesar M */
 {
-    return NKolEff(M)-1;
+    return NKolEff(M);
 }
 boolean IsIdxEff (MATRIKS M, indeks i, indeks j)
 /* Mengirimkan true jika i, j adalah indeks efektif bagi M */
@@ -88,8 +88,8 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK)
 */
 {
     MakeMATRIKS(NB,NK,M);
-    for (indeks i = 0; i < NB; i++){
-        for (indeks j = 0; j < NK; j++){
+    for (indeks i = GetFirstIdxBrs(*M); i <= GetLastIdxBrs(*M); i++){
+        for (indeks j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++){
 			scanf("%d",&(Elmt(*M,i,j)));
         }
     }
@@ -188,7 +188,7 @@ boolean EQMATRIKS (MATRIKS M1, MATRIKS M2)
     boolean equal;
     indeks i,j;
 
-    if (EQSize(M1,M2)){
+    if (EQSizeMATRIKS(M1,M2)){
         equal = true;
         i = GetFirstIdxBrs(M1);
         while (equal && i<=GetLastIdxBrs(M1)){
@@ -210,7 +210,7 @@ boolean EQMATRIKS (MATRIKS M1, MATRIKS M2)
 boolean NEQMATRIKS (MATRIKS M1, MATRIKS M2)
 /* Mengirimkan true jika M1 tidak sama dengan M2 */
 {
-    return !EQ(M1,M2);
+    return !EQMATRIKS(M1,M2);
 }
 
 boolean EQSizeMATRIKS (MATRIKS M1, MATRIKS M2)
@@ -299,7 +299,7 @@ boolean IsSparse (MATRIKS M)
             }
         }
     }
-    return (0.05*NBElmt(M)>=count);
+    return (0.05*NBElmtMATRIKS(M)>=count);
 }
 MATRIKS Inverse1 (MATRIKS M)
 /* Menghasilkan salinan M dengan setiap elemen "di-invers", yaitu dinegasikan (dikalikan -1) */
@@ -399,4 +399,49 @@ int CountXKol (MATRIKS M, indeks j, ElType X)
         }
     }
     return count;
+}
+
+/* ********** OPERASI GAME SANTO TYCOON ********** */
+void InsertKosong (MATRIKS *M)
+/* I.S. M terdefinisi */ 
+/* F.S. setiap elemen di M diisi dengan ' ' */
+{
+    for (indeks i = GetFirstIdxBrs(*M); i <= GetLastIdxBrs(*M); i++){
+        for (indeks j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++){
+            Elmt(*M,i,j) = ' ';
+        }
+    }
+}
+
+void BacaMAP(MATRIKS *M, char S, indeks X, indeks Y)
+/* I.S. M kosong terdefinisi, M sudah melalui prosedur InsertKosong(*M) */ 
+/* F.S. simbol S terdefinisi di M pada koordinat (X,Y) */
+{
+    Elmt(*M,X,Y) = S;
+}
+
+void TulisMAP(MATRIKS M, indeks X, indeks Y)
+/* I.S. M terdefinisi beserta simbol */
+/* F.S. Map M tertulis di layar dibatasi oleh '*' beserta P diposisi (X,Y) */
+{
+    for (indeks j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++){
+        printf("*");
+    }
+    printf("\n");
+
+    for (indeks i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++){
+        printf("*");
+        for (indeks j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++){
+            if (i == X && j == Y){
+                printf("%c", 'P');
+            } else {
+                printf("%c", Elmt(M,i,j));
+            } 
+        }
+        printf("*\n");
+    }
+
+    for (indeks j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++){
+        printf("*");
+    }   
 }

@@ -1,5 +1,6 @@
-Asus Rampage II Extreme, 359, Motherboard
-XFX NVIDIA GeForce 9300 Desktop Board, 113, Motherboard
-Intel DX58SO, 209, Motherboard
-ASUS Republic of Gamers Series Rampage Formula ATX Intel, 207, Motherboard
-MSI Platinum P45D3, 179, Motherboard
+Motherboard
+Asus Rampage II Extreme , 359 Motherboard ,
+XFX NVIDIA GeForce 9300 Desktop Board , 113 Motherboard ,
+Intel DX58SO , 209 Motherboard ,
+ASUS Republic of Gamers Series Rampage Formula ATX Intel , 207 Motherboard ,
+MSI Platinum P45D3 , 179 Motherboard ,.

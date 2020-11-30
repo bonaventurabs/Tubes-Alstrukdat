@@ -6,10 +6,10 @@
 #include "../boolean/boolean.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
-#define BrsMin 0
-#define BrsMax 99
-#define KolMin 0
-#define KolMax 99
+#define BrsMin 1
+#define BrsMax 100
+#define KolMin 1
+#define KolMax 100
 
 typedef int indeks; /* indeks baris, kolom */
 typedef char ElType; 
@@ -147,12 +147,16 @@ int CountXKol (MATRIKS M, indeks j, ElType X);
 /* Menghasilkan banyaknya kemunculan X pada kolom j dari M */
 
 /* ********** OPERASI GAME SANTO TYCOON ********** */
+void InsertKosong (MATRIKS *M);
+/* I.S. M terdefinisi */ 
+/* F.S. setiap elemen di M diisi dengan ' ' */
+
 void BacaMAP(MATRIKS *M, char S, int X, int Y);
 /* I.S. M kosong terdefinisi */ 
 /* F.S. simbol S terdefinisi di M pada koordinat (X,Y) */
 
-void TulisMAP(MATRIKS M);
+void TulisMAP(MATRIKS M,indeks X, indeks Y);
 /* I.S. M terdefinisi beserta simbol */
-/* F.S. Map M tertulis di layar dibatasi oleh '*' */
+/* F.S. Map M tertulis di layar dibatasi oleh '*' beserta P diposisi (X,Y) */
 
 #endif

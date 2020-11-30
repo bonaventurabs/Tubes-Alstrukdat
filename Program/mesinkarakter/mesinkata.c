@@ -10,9 +10,9 @@ Kata CKata;
 
 void IgnoreBlank()
 {
-    /* Mengabaikan satu atau beberapa BLANK
+    /* Mengabaikan satu atau beberapa BLANK dan batas pembeda (MARKC) 
     I.S. : CC sembarang
-    F.S. : CC ≠ BLANK atau CC = MARK */
+    F.S. : CC ≠ MARK C dan CC ≠ BLANK atau CC = MARK */
     while ((CC == BLANK) && (CC != MARK))
     {
         ADV();
@@ -54,7 +54,6 @@ void ADVKATA()
     else
     {
         SalinKata();
-        IgnoreBlank();
     }
 }
 void SalinKata()
@@ -66,7 +65,7 @@ void SalinKata()
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
     int i = 1;
-    while ((CC != MARK) && (CC != MARKNL) && (CC != BLANK) && (i <= NMax))
+    while ((CC != MARK) && (CC != MARKNL) && (CC != BLANK) && (CC != MARKC) && (i <= NMax))
     {
         CKata.TabKata[i] = CC;
         ADV();
@@ -83,17 +82,38 @@ int Char2Int(char ch)
     return angka;
 }
 
-void BacaAngka(int *angka)
+int BacaAngka()
 /* Membaca angka dan mengkonversi dari karakter menjadi int */
 {
     int sum = 0;
-    ADVKATA();
-    printf("%d\n",CKata.Length);
     for (int i = 1; i <= CKata.Length; i++)
     {
         sum = (sum*10) + Char2Int(CKata.TabKata[i]);
     }
-    *angka = sum;
+    ADVKATA;
+
+    return sum;
+}
+
+char* UnionKata()
+/* Membaca kata dan menggabungkan kata hingga MARKC, antar kata dipisahkan dengan ' ' (spasi) */
+{
+    char *string;
+    int i = 0;
+    while (CKata.TabKata[1] != MARKC)
+    {
+        for (int j = 1; j <= CKata.Length; j++)
+        {
+            *(string+i) = CKata.TabKata[j];
+            i++;
+        }
+        ADVKATA();
+        if (CKata.TabKata[1] != MARKC){
+            *(string+i) = ' ';
+        } 
+    }
+    ADVKATA();
+    return string;    
 }
 
 void InputUSER()
