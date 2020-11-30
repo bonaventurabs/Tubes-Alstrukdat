@@ -25,6 +25,14 @@ void IgnoreBlank();
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 
+void IgnoreDelimiter();
+/* Mengabaikan satu atau beberapa BLANK dan batas pembeda (DELIMITER) 
+    I.S. : CKata sembarang
+    F.S. : CKata.TabKata[1] ≠ DELIMITER atau CKata.Length ≠ 1 */
+
+boolean IsDelimiter (Kata K);
+/* Menghasilkan true jika Kata K adalah DELIMITER */
+
 void STARTKATA(char *path);
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
@@ -38,22 +46,22 @@ void ADVKATA();
           Jika CC = MARK, EndKata = true.
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 
-void SalinFrasa();
-    /* Mengakuisisi gabungan kata, menyimpan dalam CKata
-    I.S. : CC adalah karakter pertama dari kata
-    F.S. : CKata berisi gabungan kata yang sudah diakuisisi;
-          CC = BLANK atau CC = MARK atau CC = MARKNL CC = MARKC;
-          CC adalah karakter sesudah karakter terakhir yang diakuisisi.
-          Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+void SalinKata();
+/* Mengakuisisi kata, menyimpan dalam CKata
+I.S. : CC adalah karakter pertama dari kata
+F.S. : CKata berisi kata yang sudah diakuisisi;
+      CC = BLANK atau CC = MARK;
+      CC adalah karakter sesudah karakter terakhir yang diakuisisi.
+      Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
 int Char2Int(char ch);
 /* Mengkonversi dari karakter menjadi angka */
 
-int BacaAngka();
+void BacaAngka(int *angka);
 /* Membaca angka dan mengkonversi dari karakter menjadi int */
 
-char* UnionKata();
-/* Membaca kata dan menggabungkan kata hingga MARKC, antar kata dipisahkan dengan ' ' (spasi) */
+void UnionKata(char string[]);
+/* Membaca kata dan menggabungkan kata hingga DELIMITER, antar kata dipisahkan dengan ' ' (spasi) */
 
 void InputUSER();
 /* Membaca input dari user secara keseluruhan */

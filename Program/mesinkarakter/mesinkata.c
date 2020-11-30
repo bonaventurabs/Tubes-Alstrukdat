@@ -10,13 +10,34 @@ Kata CKata;
 
 void IgnoreBlank()
 {
-    /* Mengabaikan satu atau beberapa BLANK dan batas pembeda (MARKC) 
+    /* Mengabaikan satu atau beberapa BLANK
     I.S. : CC sembarang
-    F.S. : CC ≠ MARK C dan CC ≠ BLANK atau CC = MARK */
+    F.S. : CC ≠ BLANK atau CC = MARK */
     while ((CC == BLANK) && (CC != MARK))
     {
         ADV();
     }
+}
+
+void IgnoreDelimiter()
+/* Mengabaikan satu atau beberapa BLANK dan batas pembeda (DELIMITER) 
+    I.S. : CKata sembarang
+    F.S. : CKata.TabKata[1] ≠ DELIMITER atau CKata.Length ≠ 1 */
+{
+    if (IsDelimiter(CKata))
+    {
+        ADVKATA();
+    }
+}
+
+boolean IsDelimiter (Kata K)
+/* Menghasilkan true jika Kata K adalah DELIMITER */
+{
+    Kata Delimiter;
+    Delimiter.Length = 1;
+    Delimiter.TabKata[1] = DELIMITER;
+
+    return IsKataSama(Delimiter,K);
 }
 
 void STARTKATA(char *path)
@@ -65,7 +86,7 @@ void SalinKata()
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
     int i = 1;
-    while ((CC != MARK) && (CC != MARKNL) && (CC != BLANK) && (CC != MARKC) && (i <= NMax))
+    while ((CC != MARK) && (CC != MARKNL) && (CC != BLANK) && (i <= NMax))
     {
         CKata.TabKata[i] = CC;
         ADV();
@@ -82,38 +103,41 @@ int Char2Int(char ch)
     return angka;
 }
 
-int BacaAngka()
+void BacaAngka(int *angka)
 /* Membaca angka dan mengkonversi dari karakter menjadi int */
 {
+    IgnoreDelimiter();
     int sum = 0;
     for (int i = 1; i <= CKata.Length; i++)
     {
         sum = (sum*10) + Char2Int(CKata.TabKata[i]);
     }
-    ADVKATA;
-
-    return sum;
+    ADVKATA();
+    IgnoreDelimiter();
+    *angka = sum;
 }
 
-char* UnionKata()
-/* Membaca kata dan menggabungkan kata hingga MARKC, antar kata dipisahkan dengan ' ' (spasi) */
+void UnionKata(char string[])
+/* Membaca kata dan menggabungkan kata hingga DELIMITER, antar kata dipisahkan dengan ' ' (spasi) */
 {
-    char *string;
     int i = 0;
-    while (CKata.TabKata[1] != MARKC)
+
+    IgnoreDelimiter();
+    while (!IsDelimiter(CKata))
     {
         for (int j = 1; j <= CKata.Length; j++)
         {
-            *(string+i) = CKata.TabKata[j];
+            string[i] = CKata.TabKata[j];
             i++;
         }
         ADVKATA();
-        if (CKata.TabKata[1] != MARKC){
-            *(string+i) = ' ';
+        if (!IsDelimiter(CKata)){
+            string[i] = ' ';
+            i++;
         } 
     }
+    string[i] = '\0';
     ADVKATA();
-    return string;    
 }
 
 void InputUSER()
@@ -138,7 +162,7 @@ boolean IsKataSama (Kata K1, Kata K2)
     if (K1.Length!=K2.Length){
         same = false;
     } else {
-        while (same && i<K1.Length){
+        while (same && i<=K1.Length){
             same = (K1.TabKata[i] == K2.TabKata[i]);
             i++;
         }
