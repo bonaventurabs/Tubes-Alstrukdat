@@ -15,14 +15,14 @@ typedef int IdxType;
 
 typedef struct { char Pemesan;
                  int Nilai;
-                 char Motherboard;
-                 char CPU;
-                 char Memory;
-                 char CPU_Cooler;
-                 char Case;
-                 char GPU:
-                 char Storage;
-                 char PSU;
+                 char *Motherboard;
+                 char *CPU;
+                 char *Memory;
+                 char *CPU_Cooler;
+                 char *Case;
+                 char *GPU:
+                 char *Storage;
+                 char *PSU;
                } Order;
 
 typedef struct { Order * Tab;  /* tabel penyimpan elemen */
