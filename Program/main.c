@@ -22,6 +22,7 @@ ArrayInventory Inventory; //inventory player
 MATRIKS Map; //peta game
 Queue Order;
 Stack Build;
+int uang;
 
 void LOGO(){
     printf("\n");
@@ -418,6 +419,7 @@ int main(){
     /* Variabel */
     int inputmenu;
     All = MakeArrayKomponen();
+    uang = 10000;
 
     /* Program */
     LOGO();
