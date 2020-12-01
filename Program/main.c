@@ -200,11 +200,11 @@ void STARTBUILD(){
         printf("Kamu telah memulai pesanan %d untuk %s\n.", CurrPesanan, CurrPelanggan); 
 }
 
-void ADDCOMPONENT(ArrayInventory Inventory, Stack S){
+void ADDCOMPONENT(){
     int x;
     printf("komponen yang telah terpasang:\n");
-    for(int i=0;i<Top(S);i++){
-        printf("%d. %s\n", (i+1), S.T[i]);
+    for(int i=0;i<Top(Build);i++){
+        printf("%d. %s\n", (i+1), Build.T[i]);
     }
     printf("Komponen yang tersedia\n");
     for(int i=0;i<Inventory.Neff;i++){
@@ -214,7 +214,7 @@ void ADDCOMPONENT(ArrayInventory Inventory, Stack S){
     printf("Komponen yang ingin dipasang: \n");
     scanf("%d", &x);
     if (x <= Inventory.Neff){ /*masih gatau gimana caranya ngilangin komponen yang tersedia kalo dipilih buat dipasang */
-        Push(&S, Inventory.A[x-1].Nama);
+        Push(&Build, Inventory.A[x-1].Nama);
         Inventory.A[x-1].Jumlah--;
         if (Inventory.A[x-1].Jumlah==0){
             for(int i=x-1;i<Inventory.Neff;i++){
