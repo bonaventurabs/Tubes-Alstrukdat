@@ -16,7 +16,7 @@
 // Variabel Global
 ArrayKomponen Motherboard,CPU,Memory,CPUCool,Case,GPU,Storage,PSU;
 ArrayKomponen All; //gabungan dari seluruh komponen
-ListObjek Objek; //list menyimpan objek dan lokasinya
+ListObjek Bangunan; //list menyimpan bangunan dan lokasinya
 POINT LokasiPlayer; //lokasi player
 ArrayInventory Inventory; //inventory player
 MATRIKS Map; //peta game
@@ -78,6 +78,8 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer){
     int NObjek;
     char Simbol;
     int X,Y;
+    MATRIKS AdMap;
+    int ElmtM;
 
     STARTKATA(path);
     BacaAngka(&NBaris);
@@ -86,7 +88,7 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer){
     InsertKosong(Map);
     BacaAngka(&NObjek);
     MakeListObjek(Objek);
-    for (int i = 0; i < N; i++){
+    for (int i = 1; i <= NObjek; i++){
         BacaKarakter(&Simbol);
         BacaAngka(&X);
         BacaAngka(&Y);
@@ -94,6 +96,13 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer){
         BacaMAP(Map,Simbol,X,Y);
         if (Simbol=='B'){
             *LokPlayer = MakePOINT(X,Y);
+        }
+    }
+    MakeMATRIKS(NObjek,NObjek,&AdMap);
+    for (int i = 1; i <= NObjek; i++){
+        for (int j = 1; j <= NObjek; j++){
+            BacaAngka(&ElmtM);
+            Elmt(AdMap,i,j) = ElmtM;
         }
     }
 }
@@ -422,7 +431,7 @@ void END_DAY(){
     int pemesan;
     int K1, K2, K3, K4, K5, K6, K7, K8, sumK, tagihan;
     int K1H, K2H, K3H, K4H, K5H, K6H, K7H, K8H;
-    Order PSN;
+    Order PSN; 
     pemesan = Random(1,7);
     PSN.Pemesan = pemesan;
         
@@ -486,7 +495,7 @@ int main(){
         KonfigurasiItem("./File eksternal/GPU.txt", &GPU, &All);
         KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
         KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
-        KonfigurasiMap("./File eksternal/Map.txt", &Map, &Objek, &LokasiPlayer);
+        KonfigurasiMap("./File eksternal/Map.txt", &Map, &Bangunan, &LokasiPlayer);
 
         //Inventory Awal
         Inventory = MakeArrayInventory();
