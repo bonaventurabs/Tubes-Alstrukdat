@@ -58,7 +58,7 @@ void KonfigurasiItem(char *path, ArrayKomponen *Komponen, ArrayKomponen *All){
     }
 }
 
-void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek){
+void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer){
     int NBaris;
     int NKolom;
     int NObjek;
@@ -76,8 +76,11 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek){
         BacaKarakter(&Simbol);
         BacaAngka(&X);
         BacaAngka(&Y);
-        InsertListObjek(Objek,S,X,Y);
+        InsertListObjek(Objek,Simbol,X,Y);
         BacaMAP(Map,Simbol,X,Y);
+        if (Simbol=='B'){
+            *LokPlayer = MakePOINT(X,Y);
+        }
     }
 }
 
@@ -230,8 +233,9 @@ int main(){
     POINT LokasiPlayer; //lokasi player
     ArrayInventory Inventory; //inventory player
     MATRIKS Map; //peta game
+    Queue Order;
+    Stack Build;
     
-
     /* Program */
     LOGO();
     MENU(&inputmenu);
@@ -245,12 +249,14 @@ int main(){
         KonfigurasiItem("./File eksternal/GPU.txt", &GPU, &All);
         KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
         KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
-        KonfigurasiMap("./File eksternal/Map.txt", &Map, &Objek);
+        KonfigurasiMap("./File eksternal/Map.txt", &Map, &Objek, &LokasiPlayer);
 
-        //Konfigurasi Inventory
+        //Inventory Awal
         Inventory = MakeArrayInventory();
 
-        //Konfigurasi 
+        //Order Pesawan Awal
+
+        
     } else {
 
     }
