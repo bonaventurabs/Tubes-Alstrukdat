@@ -24,7 +24,7 @@ Queue Order;
 Stack Build;
 int uang;
 Queue Pesanan;
-char *CurrPelanggan;
+int CurrPelanggan;
 int CurrPesanan=0;
 
 void LOGO(){
@@ -161,7 +161,7 @@ void MOVE(){
     printf("Nomor tujuan: ");
     scanf("%d", &tujuan);
     if (tujuan in graph){
-        posisi=tujuan;
+        LokasiPlayer=tujuan;
         printf("Kamu telah mencapai lokasi %s", %Graph.Nama);
     }
     else{
@@ -171,11 +171,11 @@ void MOVE(){
 
 void STATUS(){
     printf("Uang tersisa: $%d\n", &uang);
-    printf("Build yang sedang dikerjakan: pesanan %d untuk %s.\n", &pesanan, &pelanggan);
+    printf("Build yang sedang dikerjakan: pesanan %d untuk Pelanggan %d.\n", &CurrPesanan, &CurrPelanggan);
     printf("Lokasi: pemain sedang berada pada %s.\n", &LokasiPlayer);
     printf("Inventory anda:\n");
-    for(int i=1;i<Inventory.neff;i++){
-      printf(i,". %s (%d)\n", &(Inventory.Nama[i]), &(Inventory.Jumlah[i]));
+    for(int i=0;i<Inventory.Neff;i++){
+      printf((i+1),". %s (%d)\n", &(Inventory.A[i].Nama), &(Inventory.A[i].Jumlah));
     }
 }
 
@@ -415,12 +415,12 @@ int Random(int lower, int upper){
 }
 
 void END_DAY(){
-    char pemesan;
+    int pemesan;
     int K1, K2, K3, K4, K5, K6, K7, K8, sumK, tagihan;
     int K1H, K2H, K3H, K4H, K5H, K6H, K7H, K8H;
     Order PSN;
     pemesan = Random(1,7);
-    PSN.Pemesan = ("Pelanggan %d", &pemesan);
+    PSN.Pemesan = pemesan;
         
     K1 = (Random(0,35)%5);
     K1H = Motherboard.A[K1].Harga;
