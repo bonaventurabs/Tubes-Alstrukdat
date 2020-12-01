@@ -24,6 +24,8 @@ Queue Order;
 Stack Build;
 int uang;
 Queue Pesanan;
+char *CurrPelanggan;
+int CurrPesanan=0;
 
 void LOGO(){
     printf("\n");
@@ -178,17 +180,25 @@ void STATUS(){
 }
 
 void CHECKORDER(){
-    printf("Nomor Order: %s\n", pesanan);
-    printf("Pemesan: %d\n", pelanggan);
-    printf("Invoice: %s\n", harga);
+    printf("Nomor Order: %s\n", &CurrPesanan);
+    printf("Pemesan: %s\n", &CurrPelanggan);
+    printf("Invoice: $%d\n", &(Pesanan.Tab[CurrPesanan-1].Nilai));
     printf("Komponen:\n");
-    for(int i=1;i<Komponen.neff;i++){
-        printf("%d. %s\n", i, (Komponen.Nama[i]));
+    printf("1. %s\n", &(Pesanan.Tab[CurrPesanan-1].Motherboard);
+    printf("2. %s\n", &(Pesanan.Tab[CurrPesanan-1].CPU);
+    printf("3. %s\n", &(Pesanan.Tab[CurrPesanan-1].Memory);
+    printf("4. %s\n", &(Pesanan.Tab[CurrPesanan-1].CPU_Cooler);
+    printf("5. %s\n", &(Pesanan.Tab[CurrPesanan-1].Case);
+    printf("6. %s\n", &(Pesanan.Tab[CurrPesanan-1].GPU);
+    printf("7. %s\n", &(Pesanan.Tab[CurrPesanan-1].Storage);
+    printf("8. %s\n", &(Pesanan.Tab[CurrPesanan-1].PSU);
     }
 }
 
 void STARTBUILD(){
-    printf("Kami telah memulai %d untuk %s\n.", pesanan, pelanggan); 
+    CurrPelanggan=Pesanan.Tab[CurrPesanan].Pemesan;
+    CurrPesanan++;
+        printf("Kamu telah memulai pesanan %d untuk %s\n.", CurrPesanan, CurrPelanggan); 
 }
 
 void ADDCOMPONENT(ArrayInventory Inventory, Stack S){
