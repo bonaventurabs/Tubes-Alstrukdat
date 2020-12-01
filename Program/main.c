@@ -229,14 +229,14 @@ int main(){
     ListObjek Objek; //list menyimpan objek dan lokasinya
     POINT LokasiPlayer; //lokasi player
     ArrayInventory Inventory; //inventory player
-    MATRIKS Map; peta game
+    MATRIKS Map; //peta game
     
 
     /* Program */
     LOGO();
     MENU(&inputmenu);
     if (inputmenu==1){
-        //Konfigurasi File Eksternal
+        //Konfigurasi File Eksternal (Komponen/Item, Map, Objek)
         KonfigurasiItem("./File eksternal/Motherboard.txt", &Motherboard, &All);
         KonfigurasiItem("./File eksternal/CPU.txt", &CPU, &All);
         KonfigurasiItem("./File eksternal/Memory.txt", &Memory, &All);
@@ -246,6 +246,11 @@ int main(){
         KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
         KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
         KonfigurasiMap("./File eksternal/Map.txt", &Map, &Objek);
+
+        //Konfigurasi Inventory
+        Inventory = MakeArrayInventory();
+
+        //Konfigurasi 
     } else {
 
     }

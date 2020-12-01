@@ -8,10 +8,10 @@ typedef int IdxType;
 typedef struct {
     char *Nama;
     int Jumlah;
-} ElType;
+} Element;
 
 typedef struct {
-    ElType *A;
+    Element *A;
     int Capacity;
     int Neff;
 } ArrayInventory;
@@ -46,7 +46,7 @@ int ArrayInventoryLength(ArrayInventory list);
  * Mengembalikan elemen list L yang ke-I (indeks lojik).
  * Prekondisi: list tidak kosong, i di antara 0..Length(list).
  */
-ElType ArrayInventoryGet(ArrayInventory list, IdxType i);
+Element ArrayInventoryGet(ArrayInventory list, IdxType i);
 
 /**
  * Fungsi untuk mendapatkan kapasitas yang tersedia.
@@ -58,18 +58,18 @@ int ArrayInventoryGetCapacity(ArrayInventory list);
  * Fungsi untuk menambahkan elemen baru di index ke-i
  * Prekondisi: list terdefinisi, i di antara 0..Length(list).
  */
-void ArrayInventoryInsertAt(ArrayInventory *list, ElType el, IdxType i);
+void ArrayInventoryInsertAt(ArrayInventory *list, Element el, IdxType i);
 
 /**
  * Fungsi untuk menambahkan elemen baru di akhir list.
  * Prekondisi: list terdefinisi
  */
-void ArrayInventoryInsertLast(ArrayInventory *list, ElType el);
+void ArrayInventoryInsertLast(ArrayInventory *list, Element el);
 
 /**
  * Fungsi untuk menambahkan elemen baru di awal list.
  * Prekondisi: list terdefinisi
  */
-void ArrayInventoryInsertFirst(ArrayInventory *list, ElType el);
+void ArrayInventoryInsertFirst(ArrayInventory *list, Element el);
 
 #endif	

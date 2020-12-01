@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "arrayInventory.h"
 
 /**
@@ -7,7 +10,7 @@
  */
 ArrayInventory MakeArrayInventory() {
     ArrayInventory list;
-    list.A = (ElType *) malloc(InitialSize * sizeof(ElType));
+    list.A = (Element *) malloc(InitialSize * sizeof(Element));
     list.Capacity = InitialSize;
     list.Neff = 0;
     return list;
@@ -37,7 +40,7 @@ int ArrayInventoryLength(ArrayInventory list) {
  * Mengembalikan elemen list L yang ke-I (indeks lojik).
  * Prekondisi: list tidak kosong, i di antara 0..Length(list).
  */
-ElType ArrayInventoryGet(ArrayInventory list, IdxType i) {
+Element ArrayInventoryGet(ArrayInventory list, IdxType i) {
     return list.A[i];
 }
 
@@ -53,15 +56,15 @@ int ArrayInventoryGetCapacity(ArrayInventory list) {
  * Fungsi untuk menambahkan elemen baru di index ke-i
  * Prekondisi: list terdefinisi, i di antara 0..Length(list).
  */
-void ArrayInventoryInsertAt(ArrayInventory *list, ElType el, IdxType i) {
-    int length = Length(*list);
-    int capacity = GetCapacity(*list);
+void ArrayInventoryInsertAt(ArrayInventory *list, Element el, IdxType i) {
+    int length = ArrayInventoryLength(*list);
+    int capacity = ArrayInventoryGetCapacity(*list);
 
     if (length == capacity) {
         int desiredCapacity = capacity + InitialSize;
-        ElType *array = (ElType *) malloc(desiredCapacity * sizeof(ElType));
+        Element *array = (Element *) malloc(desiredCapacity * sizeof(Element));
         for (int a = 0; a < length; a++) {
-            array[a] = Get(*list, a);
+            array[a] = ArrayInventoryGet(*list, a);
         }
         free(list->A);
 
@@ -81,15 +84,15 @@ void ArrayInventoryInsertAt(ArrayInventory *list, ElType el, IdxType i) {
  * Fungsi untuk menambahkan elemen baru di akhir list.
  * Prekondisi: list terdefinisi
  */
-void ArrayInventoryInsertLast(ArrayInventory *list, ElType el) {
-    int insertAt = Length(*list);
-    InsertAt(list, el, insertAt);
+void ArrayInventoryInsertLast(ArrayInventory *list, Element el) {
+    int insertAt = ArrayInventoryLength(*list);
+    ArrayInventoryInsertAt(list, el, insertAt);
 }
 
 /**
  * Fungsi untuk menambahkan elemen baru di awal list.
  * Prekondisi: list terdefinisi
  */
-void ArrayInventoryInsertFirst(ArrayInventory *list, ElType el) {
-    InsertAt(list, el, 0);
+void ArrayInventoryInsertFirst(ArrayInventory *list, Element el) {
+    ArrayInventoryInsertAt(list, el, 0);
 }
