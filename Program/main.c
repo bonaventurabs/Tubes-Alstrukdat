@@ -181,7 +181,7 @@ void STATUS(){
 
 void CHECKORDER(){
     printf("Nomor Order: %s\n", &CurrPesanan);
-    printf("Pemesan: %s\n", &CurrPelanggan);
+    printf("Pemesan: Pelanggan %d\n", &CurrPelanggan);
     printf("Invoice: $%d\n", &(Pesanan.Tab[CurrPesanan-1].Nilai));
     printf("Komponen:\n");
     printf("1. %s\n", &(Pesanan.Tab[CurrPesanan-1].Motherboard);
@@ -198,12 +198,12 @@ void STARTBUILD(){
     CurrPelanggan=Pesanan.Tab[CurrPesanan].Pemesan;
     CurrPesanan++;
     CreateEmptyStack(&Build);
-    printf("Kamu telah memulai pesanan %d untuk %s\n.", CurrPesanan, CurrPelanggan); 
+    printf("Kamu telah memulai pesanan %d untuk Pelanggan %d.\n", CurrPesanan, CurrPelanggan); 
 }
 
 void ADDCOMPONENT(){
     int x;
-    printf("komponen yang telah terpasang:\n");
+    printf("Komponen yang telah terpasang:\n");
     for(int i=0;i<Top(Build);i++){
         printf("%d. %s\n", (i+1), Build.T[i]);
     }
@@ -264,7 +264,7 @@ void FINISHBUILD(){
     }
       
     if(benar){ 
-        printf("%d", &CurrPesanan, "telah selesai. Silahkan antar ke %s\n", &CurrPelanggan);
+        printf("%d", &CurrPesanan, "telah selesai. Silahkan antar ke Pelanggan %d\n", &CurrPelanggan);
         Element Komputer;
         Komputer.Nama=("Build untuk pesanan #%d",&CurrPesanan);
         Komputer.Jumlah=1;
@@ -276,11 +276,11 @@ void FINISHBUILD(){
 }
 
 void DELIVER(){
-    if (LokasiPlayer==pelanggan.posisi){
-        printf("Pesanan #%d berhasil diantarkan kepada %s!\n", &pesanan, &pelanggan);    
+    if (LokasiPlayer==Objek.TabObjek[CurrPelanggan+2].Loc){
+        printf("Pesanan #%d berhasil diantarkan kepada Pelanggan %d!\n", &CurrPesanan, &CurrPelanggan);    
     }
     else{
-        printf("Posisi anda belum berada di rumah %s. Harap pindah ke rumah %s terlebih dahulu!\n", &pelanggan, &pelanggan);
+        printf("Posisi anda belum berada di rumah Pelanggan %d. Harap pindah ke rumah Pelanggan %d terlebih dahulu!\n", &CurrPelanggan, &CurrPelanggan);
     }
 }
 

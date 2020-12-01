@@ -13,7 +13,7 @@
 /* Definisi tipe elemen dan indeks pada Queue */
 typedef int IdxType;
 
-typedef struct { char Pemesan;
+typedef struct { int Pemesan;
                  int Nilai;
                  char *Motherboard;
                  char *CPU;
