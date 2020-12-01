@@ -217,7 +217,7 @@ void ADDCOMPONENT(){
         Push(&Build, Inventory.A[x-1].Nama);
         Inventory.A[x-1].Jumlah--;
         if (Inventory.A[x-1].Jumlah==0){
-            for(int i=x-1;i<Inventory.Neff;i++){
+            for(int i=x-1;i<(Inventory.Neff-1);i++){
                 Inventory.A[x-1]=Inventory.A[x];
             }
             Inventory.Neff--;
