@@ -5,17 +5,17 @@
 
 /* *** Konstruktor *** */
 void CreateGraph(infograph X, Graph* G){
-	/* I.S. Sembarang ; F.S. Terbentuk Graph dengan satu simpul dengan Id=X */
+/* I.S. Sembarang ; F.S. Terbentuk Graph dengan satu simpul dengan Id=X */
 	adrNode P;
 
 	FirstG(*G) = Nil;
-	InsertNode(G, X, &P);
+	InsertNode(G,X,&P);
 }
 
 
 /* *** Manajemen Memory List Simpul (Leader) *** */
 adrNode AlokNodeGraph (infograph X){
-	/*	Mengembalikan address hasil alokasi Simpul X .
+/*	Mengembalikan address hasil alokasi Simpul X .
 	Jika alokasi berhasil, maka address tidak Nil, misalnya
 	menghasilkan P, maka Id X, 
 	Trail(P)=Nil,
@@ -24,7 +24,7 @@ adrNode AlokNodeGraph (infograph X){
 	adrNode P;
 
 	P = (adrNode) malloc (sizeof(NodeGraph));
-	if(P != Nil){
+	if (P != Nil){
 		Id(P) = X;
 		Trail(P) = Nil;
 		NextG(P) = Nil;
@@ -34,19 +34,19 @@ adrNode AlokNodeGraph (infograph X){
 }
 
 void DeAlokNodeGraph (adrNode P){
-	/* I.S. P terdefinisi F.S. P dikembalikan ke sistem */
+/* I.S. P terdefinisi F.S. P dikembalikan ke sistem */
     free(P);
 }
 
 adrSuccNode AlokSuccNode(adrNode Pn){
-	/* 	Mengembalikan address hasil alokasi.
+/* 	Mengembalikan address hasil alokasi.
 	Jika alokasi berhasil, maka address tidak Nil, misalnya
 	menghasilkan Pt, maka Succ (Pt)=Pn dan NextG(Pt)=Nil. 
 	Jika alokasi gagal, mengembalikan Nil. */
 	adrSuccNode P;
 
-   	P = (adrSuccNode) malloc(sizeof(SuccNode));
-    if(P != Nil){
+   	P = (adrSuccNode) malloc (sizeof(SuccNode));
+    if (P != Nil){
 	    NextG(P) = Nil;
 	    Succ(P) = Pn;
     }
@@ -54,76 +54,70 @@ adrSuccNode AlokSuccNode(adrNode Pn){
 }
 
 void DealokSuccNode (adrSuccNode P){
-	/* I.S. P terdefinisi F.S. P dikembalikan ke sistem */
+/* I.S. P terdefinisi F.S. P dikembalikan ke sistem */
     free(P);
 }
 
-
 adrNode SearchNode (Graph G, infograph X){
-	/*	Mengembalikan address simpul dengan Id=X jika sudah ada pada graph G, Nil jika belum */
+/*	Mengembalikan address simpul dengan Id=X jika sudah ada pada graph G, Nil jika belum */
 	adrNode P;
 
 	P = FirstG(G);
-	while(P != Nil){
-		if(Id(P) == X){
-			return P;
-		}
+	if (P == Nil){
+		return P;
+	}
+	while (Id(P) != X && P != Nil){
 		P = NextG(P);
 	}
-
     return P;
 }
 
 adrSuccNode SearchEdge (Graph G, infograph prec, infograph succ){
-	/* 	Mengembalikan address trailer yang menyimpan info busur (prec,succ)
+/* 	Mengembalikan address trailer yang menyimpan info busur (prec,succ)
 	jika sudah ada pada graph G, Nil jika belum */
-	adrNode Pn;
-	adrSuccNode P;
+	adrNode Pprec;
+	adrSuccNode Psucc;
+	boolean found = false;
 
-    Pn = SearchNode(G, prec);
-	if(Pn == Nil){
-		// Tidak ada node prec
+	Pprec = SearchNode(G,prec);
+	if (Pprec == Nil){
 		return Nil;
 	}
 
-	P = Trail(Pn);
-	// ada prec, mencari (prec, succ)
-    while(P != Nil){
-		if(Id(Succ(P)) == succ){
-			return P;
+	Psucc = Trail(Pprec);
+    while (!found && Psucc != Nil){
+		if (Id(Succ(Psucc)) == succ){
+			found = true;
 		}
-		P = NextG(P);
+		Psucc = NextG(Psucc);
 	}
 
-	return P;
+	return Psucc;
 }
 
 void InsertNode (Graph* G, infograph X, adrNode* Pn){
-	/*	Menambahkan simpul X ke dalam graph, jika alokasi X berhasil.
+/*	Menambahkan simpul X ke dalam graph, jika alokasi X berhasil.
 	I.S. G terdefinisi, X terdefinisi dan belum ada pada G.
 	F.S. Jika alokasi berhasil, X menjadi elemen
 	terakhir G, Pn berisi address simpul X. Jika alokasi gagal, G tetap, Pn berisi Nil */
-	adrNode P;
+	adrNode Plast;
 
     *Pn = AlokNodeGraph(X);
-
-	P = FirstG(*G);
-	if(P == Nil){
-		// kasus graf kosong
-		FirstG(*G) = *Pn;
-	}
-
-	else {
-		// alokasi ke elemen terakhir
-		while(NextG(P) != Nil){
-			P = NextG(P);
+	if (*Pn != Nil){
+		Plast = FirstG(*G);
+		if (Plast == Nil){
+			FirstG(*G) = *Pn;
+		} else {
+			while (NextG(Plast) != Nil){
+				Plast = NextG(Plast);
+			}
+			NextG(Plast) = *Pn;
 		}
-		NextG(P) = *Pn;
 	}
 }
 
 void InsertEdge (Graph* G, infograph prec, infograph succ){
-	/* 	Menambahkan busur dari prec menuju succ ke dalam G 
+/* 	Menambahkan busur dari prec menuju succ ke dalam G 
 	I.S. G, prec, succ terdefinisi.
 	F.S. Jika belum ada busur (prec,succ) di G, maka tambahkan busur
 		(prec,succ) ke G. Jika simpul prec/succ belum ada pada G,
@@ -131,44 +125,41 @@ void InsertEdge (Graph* G, infograph prec, infograph succ){
 		di G, maka G tetap. */
 	adrNode Pprec;
 	adrNode Psucc;
-	adrSuccNode P;
+	adrSuccNode PTrail;
 
-    if (SearchEdge(*G, prec, succ) == Nil){
-		Pprec = SearchNode(*G, prec);
-		Psucc = SearchNode(*G, succ);
+    if (SearchEdge(*G,prec,succ) == Nil){
+		Pprec = SearchNode(*G,prec);
+		Psucc = SearchNode(*G,succ);
 
 		if(Pprec == Nil){
-			InsertNode(G, prec, &Pprec);
+			InsertNode(G,prec,&Pprec);
 		}
 		if(Psucc == Nil){
-			InsertNode(G, succ, &Psucc);
+			InsertNode(G,succ,&Psucc);
 		}
 
-		P = Trail(Pprec);
-
-		if(P == Nil){
+		PTrail = Trail(Pprec);
+		if(PTrail == Nil){
 			Trail(Pprec) = AlokSuccNode(Psucc);
 		}
 		else {
-			while(NextG(P) != Nil){
+			while(NextG(PTrail) != Nil){
 				P = NextG(P);
 			}
-			NextG(P) = AlokSuccNode(Psucc);
+			NextG(PTrail) = AlokSuccNode(Psucc);
 		}
 	}
-	// else Edge sudah ada
-	
 }
 
 /* *** Lain-Lain *** */
 
 void Connect(Graph *G, infograph N1, infograph N2){
-	/* Menyambungkan N1 dan N2 */
-	InsertEdge(G, N1, N2);
-	InsertEdge(G, N2, N1);
+/* Menyambungkan N1 dan N2 */
+	InsertEdge(G,N1,N2);
+	InsertEdge(G,N2,N1);
 }
 
 boolean isConnected (Graph G, infograph N1, infograph N2){
-	/* Mengembalikan apakah N1 dan N2 terhubung */
-	return (SearchEdge(G, N1, N2) != Nil) && (SearchEdge(G, N2, N1) != Nil);
+/* Mengembalikan apakah N1 dan N2 terhubung */
+	return (SearchEdge(G,N1,N2) != Nil) && (SearchEdge(G,N2,N1) != Nil);
 }

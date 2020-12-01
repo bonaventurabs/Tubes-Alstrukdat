@@ -20,7 +20,7 @@ void InsertListObjek (ListObjek *L, char S, int X, int Y)
 {
     Simbol(*L,NObjek(*L)) = S;
     
+    NObjek(*L)++;
     Absis(Point(*L,NObjek(*L))) = X;
     Ordinat(Point(*L,NObjek(*L))) = Y;
-    NObjek(*L)++;
 }

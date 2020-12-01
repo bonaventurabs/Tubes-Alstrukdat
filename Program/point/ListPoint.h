@@ -14,7 +14,7 @@ typedef struct {
 } Objek;
 
 typedef struct {
-   Objek TabObjek[MaxObj]; 
+   Objek TabObjek[MaxObj+1]; 
    int NObj;  
 } ListObjek;
 
