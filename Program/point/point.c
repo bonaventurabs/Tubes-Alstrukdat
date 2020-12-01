@@ -2,7 +2,7 @@
 /* *** Implementasi ABSTRACT DATA TYPE POINT *** */
 
 #include <stdio.h>
-#include "boolean.h"
+#include "../boolean/boolean.h"
 #include "math.h"
 #include "point.h"
 
@@ -12,7 +12,7 @@
         
 /* *** DEFINISI PROTOTIPE PRIMITIF *** */
 /* *** Konstruktor membentuk POINT *** */
-POINT MakePOINT (float X, float Y)
+POINT MakePOINT (int X, int Y)
 /* Membentuk sebuah POINT dari komponen-komponennya */
 {
     POINT a;
@@ -31,8 +31,8 @@ void BacaPOINT (POINT * P)
 /* I.S. Sembarang */
 /* F.S. P terdefinisi */
 {
-    float x,y;
-    scanf("%f %f",&x,&y);
+    int x,y;
+    scanf("%d %d",&x,&y);
     Absis(*P) = x;
     Ordinat(*P) = y;
 }
@@ -45,28 +45,28 @@ void TulisPOINT (POINT P)
 /* I.S. P terdefinisi */
 /* F.S. P tertulis di layar dengan format "(X,Y)" */
 {
-    printf("(%.2f,%.2f)",Absis(P),Ordinat(P)); /* perhatikan bahwa untuk menghasilkan 2 desimal, gunakan %.2f */
+    printf("(%d,%d)",Absis(P),Ordinat(P)); /* perhatikan bahwa untuk menghasilkan 2 desimal, gunakan %.2f */
 }
           
 
 /* *** Kelompok operasi relasional terhadap POINT *** */
-boolean EQ (POINT P1, POINT P2)
+boolean EQPOINT (POINT P1, POINT P2)
 /* Mengirimkan true jika P1 = P2 : absis dan ordinatnya sama */
 {
     return (Absis(P1) == Absis(P2) && Ordinat(P1) == Ordinat(P2));
 }
 
-boolean NEQ (POINT P1, POINT P2)
+boolean NEQPOINT (POINT P1, POINT P2)
 /* Mengirimkan true jika P1 tidak sama dengan P2 */
 {
-    return !EQ(P1,P2);
+    return !EQPOINT(P1,P2);
 }
 
 /* *** Kelompok menentukan di mana P berada *** */
 boolean IsOrigin (POINT P)
 /* Menghasilkan true jika P adalah titik origin */
 {
-    return EQ(P,MakePOINT(0,0));
+    return EQPOINT(P,MakePOINT(0,0));
 }
 
 boolean IsOnSbX (POINT P)
@@ -100,7 +100,7 @@ int Kuadran (POINT P)
 
 
 /* *** KELOMPOK OPERASI LAIN TERHADAP TYPE *** */
-POINT PlusDelta (POINT P, float deltaX, float deltaY)
+POINT PlusDelta (POINT P, int deltaX, int deltaY)
 /* Mengirim salinan P yang absisnya adalah Absis(P) + deltaX dan ordinatnya adalah Ordinat(P) + deltaY */
 {
     Absis(P) = Absis(P) + deltaX;
@@ -108,7 +108,7 @@ POINT PlusDelta (POINT P, float deltaX, float deltaY)
     return P;
 }
 
-void Geser (POINT *P, float deltaX, float deltaY)
+void Geser (POINT *P, int deltaX, int deltaY)
 /* I.S. P terdefinisi */
 /* F.S. P digeser, absisnya sebesar deltaX dan ordinatnya sebesar deltaY */
 {
@@ -119,11 +119,11 @@ void Geser (POINT *P, float deltaX, float deltaY)
 float Jarak0 (POINT P)
 /* Menghitung jarak P ke (0,0) */
 {
-    return (sqrt( (Absis(P) * Absis(P) ) + (Ordinat(P) * Ordinat(P) ) ) ); /* atau bisa dengan pow(...,2) */
+    return (float)(sqrt( (Absis(P) * Absis(P) ) + (Ordinat(P) * Ordinat(P) ) ) ); /* atau bisa dengan pow(...,2) */
 }
 
 float Panjang (POINT P1, POINT P2)
 /* Menghitung panjang garis yang dibentuk P1 dan P2. */
 {
-    return sqrt(pow(Absis(P1) - Absis(P2), 2) + pow(Ordinat(P1) - Ordinat(P2), 2));
+    return (float)sqrt(pow(Absis(P1) - Absis(P2), 2) + pow(Ordinat(P1) - Ordinat(P2), 2));
 }

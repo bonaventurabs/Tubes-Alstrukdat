@@ -1,5 +1,6 @@
 #include "./boolean/boolean.h"
 #include "./point/point.h"
+#include "./point/ListPoint.h"
 #include "./arrayKomponen/arrayKomponen.h"
 #include "./arrayInventory/arrayInventory.h"
 #include "./mesinkarakter/mesinkar.h"
@@ -55,6 +56,26 @@ void KonfigurasiItem(char *path, ArrayKomponen *Komponen){
         ArrayKomponenInsertLast(Komponen,Insert);
     }
 }
+
+void KonfigurasiMap(char *path, ArrayKomponen *Komponen){
+    int NBaris;
+    int NKolom;
+    MATRIKS Map;
+    int NObjek;
+    
+    STARTKATA(path);
+    BacaAngka(&NBaris);
+    BacaAngka(&NKolom);
+    MakeMATRIKS(NBaris,NKolom, &Map);
+    BacaAngka(&NObjek);
+    for (int i = 0; i < N; i++)
+        
+    {
+        /* code */
+    }
+    
+}
+
 
 void COMMAND()
 /* Menginput COMMAND, mengecek commandnya, serta menjalankan commandnya */

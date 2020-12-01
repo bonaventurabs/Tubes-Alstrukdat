@@ -159,4 +159,8 @@ void TulisMAP(MATRIKS M,indeks X, indeks Y);
 /* I.S. M terdefinisi beserta simbol */
 /* F.S. Map M tertulis di layar dibatasi oleh '*' beserta P diposisi (X,Y) */
 
+/* **********  GAME SANTO TYCOON ********** */
+
+
+/* ********** OPERASI GAME SANTO TYCOON ********** */
 #endif
