@@ -233,6 +233,10 @@ void ADDCOMPONENT(){
 void REMOVECOMPONENT(){
     char copot;
     Pop(&Build,&copot);
+    Element simpan;
+    simpan.Nama=copot;
+    simpan.Jumlah=1;
+    ArrayInventoryInsertLast(&Inventory,simpan);
     printf("Komponen %d\n", &copot, " berhasil dicopot!");
 }
 
