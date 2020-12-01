@@ -197,7 +197,8 @@ void CHECKORDER(){
 void STARTBUILD(){
     CurrPelanggan=Pesanan.Tab[CurrPesanan].Pemesan;
     CurrPesanan++;
-        printf("Kamu telah memulai pesanan %d untuk %s\n.", CurrPesanan, CurrPelanggan); 
+    CreateEmptyStack(&Build);
+    printf("Kamu telah memulai pesanan %d untuk %s\n.", CurrPesanan, CurrPelanggan); 
 }
 
 void ADDCOMPONENT(){
@@ -236,11 +237,41 @@ void REMOVECOMPONENT(){
 }
 
 void FINISHBUILD(){
-    if(){ /*Masih belum tau if conditionalnya gimana */
-        printf("%d", pesanan, "telah selesai. Silahkan antar ke %s\n", pelanggan);
+    boolean benar=true;
+    if(Build.T[1]!=Pesanan.Tab[CurrPesanan-1].Motherboard){
+        benar=false;
+    }
+    if(Build.T[2]!=Pesanan.Tab[CurrPesanan-1].CPU){
+        benar=false;
+    }
+    if(Build.T[3]!=Pesanan.Tab[CurrPesanan-1].Memory){
+        benar=false;
+    }
+    if(Build.T[4]!=Pesanan.Tab[CurrPesanan-1].CPU_Cooler){
+        benar=false;
+    }
+    if(Build.T[5]!=Pesanan.Tab[CurrPesanan-1].Case){
+        benar=false;
+    }
+    if(Build.T[6]!=Pesanan.Tab[CurrPesanan-1].GPU){
+        benar=false;
+    }
+    if(Build.T[7]!=Pesanan.Tab[CurrPesanan-1].Storage){
+        benar=false;
+    }
+    if(Build.T[8]!=Pesanan.Tab[CurrPesanan-1].PSU){
+        benar=false;
+    }
+      
+    if(benar){ 
+        printf("%d", &CurrPesanan, "telah selesai. Silahkan antar ke %s\n", &CurrPelanggan);
+        Element Komputer;
+        Komputer.Nama=("Build untuk pesanan #%d",&CurrPesanan);
+        Komputer.Jumlah=1;
+        ArrayInventoryInsertLast(&Inventory,Komputer);
     }
     else{
-        printf("Komponen yang dipasangkan belum sesuai dengan pesanan, build belum dapat diselesaikan")
+        printf("Komponen yang dipasangkan belum sesuai dengan pesanan, build belum dapat diselesaikan");
     }
 }
 
