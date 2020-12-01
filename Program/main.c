@@ -149,8 +149,7 @@ void COMMAND()
 }
 
 void MOVE(){
-    printf("Kamu berada pada %s\n", &posisi);
-    printf("Lokasi: pemain sedang berada pada %s.\n", &posisi);
+    printf("Kamu berada pada %s\n", &LokasiPlayer);
     printf("Daftar lokasi yang dapat dicapai:\n");
     for(int i=1;i<Graph;i++){ /***harus tau ADT graphnya dulu inii***/
       printf(i,". %s\n", &(Graph[i]));
@@ -170,7 +169,7 @@ void MOVE(){
 void STATUS(){
     printf("Uang tersisa: $%d\n", &uang);
     printf("Build yang sedang dikerjakan: pesanan %d untuk %s.\n", &pesanan, &pelanggan);
-    printf("Lokasi: pemain sedang berada pada %s.\n", &posisi);
+    printf("Lokasi: pemain sedang berada pada %s.\n", &LokasiPlayer);
     printf("Inventory anda:\n");
     for(int i=1;i<Inventory.neff;i++){
       printf(i,". %s (%d)\n", &(Inventory.Nama[i]), &(Inventory.Jumlah[i]));
