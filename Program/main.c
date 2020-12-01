@@ -372,8 +372,8 @@ void END_DAY(){
     int K1H, K2H, K3H, K4H, K5H, K6H, K7H, K8H;
     Order PSN;
     pemesan = Random(1,7);
-    PSN.Pemesan = pemesan;
-
+    PSN.Pemesan = ("Pelanggan %d", &pemesan);
+        
     K1 = (Random(0,35)%5);
     K1H = Motherboard.A[K1].Harga;
     PSN.Motherboard = Motherboard.A[K1].Nama;
@@ -440,7 +440,8 @@ int main(){
         Inventory = MakeArrayInventory();
 
         //Order Pesawan Awal
-
+        Pesanan = CreateQueue(99);
+        END_DAY();
     } else {
 
     }
