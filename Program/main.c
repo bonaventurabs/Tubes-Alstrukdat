@@ -224,6 +224,186 @@ void DELIVER(){
         printf("Posisi anda belum berada di rumah %s. Harap pindah ke rumah %s terlebih dahulu!\n", &pelanggan, &pelanggan);
     }
 }
+
+void SHOP(){
+    int pil, pilkom, jumlah, pilawal;
+	ArrayKomponen X;
+
+    printf("1. Tampilkan semua komponen");
+	printf("2. Tampilkan komponen berdasarkan tipe");
+	printf("Masukkan pilihan: ");
+	scanf("%d", &pilawal);
+	if (pilawal == 1)
+	{
+		for (int i=0;i<All.Neff;i++)
+		{
+			printf("%d. %s $%d\n" , i+1,All.A[i].Nama,All.A[i].Harga);
+		}
+		printf("Komponen yang ingin dibeli: ");
+		scanf("%d", &pilkom);
+		printf("\n");
+		printf("Masukkan jumlah yang ingin dibeli: ");
+		scanf("%d", &jumlah);
+		printf("\n");
+
+		if ((All.A[pilkom-1].Harga * jumlah) >= uang)
+		{
+			printf("Kompenen berhasil dibeli!");
+			uang = uang - All.A[pilkom-1].Harga * jumlah;
+			Element Bought;
+            Bought.Nama = All.A[pilkom-1].Nama;
+            Bought.Jumlah = jumlah;
+            ArrayInventoryInsertLast(*Inventory, Bought);
+		}
+		else
+		{
+			printf("Uang tidak cukup!");
+		}
+	}
+	else
+	{
+		printf("Tipe komponen:\n");
+	    printf("1. Motherboard\n");
+		printf("2. CPU\n");
+		printf("3. Memory\n");
+		printf("4. CPU Cooler\n");
+		printf("5. Case\n");
+		printf("6. GPU\n");
+		printf("7. Storage\n");
+		printf("8. PSU\n");
+		printf("Masukkan pilihan: ");
+		scanf("%d", &pil);
+		if (pil == 1)
+		{
+			X.A = Motherboard.A;
+			X.Capacity = Motherboard.Capacity;
+			X.Neff = Motherboard.Neff;
+		}
+		else if (pil == 2)
+		{
+			X.A = CPU.A;
+			X.Capacity = CPU.Capacity;
+			X.Neff = CPU.Neff;
+		}
+	    else if (pil == 3)
+		{
+			X.A = Memory.A;
+			X.Capacity = Memory.Capacity;
+			X.Neff = Memory.Neff;
+		}
+		else if (pil == 4)
+		{
+			X.A = CPUCool.A;
+			X.Capacity = CPUCool.Capacity;
+			X.Neff = CPUCool.Neff;
+		}
+		else if (pil == 5)
+		{
+			X.A = Case.A;
+			X.Capacity = Case.Capacity;
+			X.Neff = Case.Neff;
+		}
+		else if (pil == 6)
+		{
+			X.A = GPU.A;
+			X.Capacity = GPU.Capacity;
+			X.Neff = GPU.Neff;
+		}
+		else if (pil == 7)
+		{
+			X.A = Storage.A;
+	    	X.Capacity = Storage.Capacity;
+			X.Neff = Storage.Neff;
+		}
+		else if (pil == 8)
+		{
+			X.A = PSU.A;
+			X.Capacity = PSU.Capacity;
+			X.Neff = PSU.Neff;
+		}
+		for (int i=0;i<X.Neff;i++)
+		{
+			printf("%d. %s $%d\n" , i+1,X.A[i].Nama,X.A[i].Harga);
+		}
+		printf("Komponen yang ingin dibeli: ");
+		scanf("%d", &pilkom);
+		printf("\n");
+		printf("Masukkan jumlah yang ingin dibeli: ");
+		scanf("%d", &jumlah);
+		printf("\n");
+
+		if ((X.A[pilkom-1].Harga * jumlah) >= uang)
+		{
+			printf("Kompenen berhasil dibeli!");
+			uang = uang - X.A[pilkom-1].Harga * jumlah;
+			Element Bought;
+            Bought.Nama = X.A[pilkom-1].Nama;
+            Bought.Jumlah = jumlah;
+            ArrayInventoryInsertLast(*Inventory, Bought);
+		}
+		else
+		{
+			printf("Uang tidak cukup!");
+		}
+	}
+}
+
+int Random(int lower, int upper){
+    time_t t;
+    srand((unsigned) time(&t));
+
+    return(rand() % (upper-lower+1)+lower);    
+}
+
+void END_DAY(){
+    char pemesan;
+    int K1, K2, K3, K4, K5, K6, K7, K8, sumK, tagihan;
+    int K1H, K2H, K3H, K4H, K5H, K6H, K7H, K8H;
+    Order PSN;
+    pemesan = Random(1,7);
+    PSN.Pemesan = pemesan;
+
+    K1 = (Random(0,35)%5);
+    K1H = Motherboard.A[K1].Harga;
+    PSN.Motherboard = Motherboard.A[K1].Nama;
+
+    K2 = (Random(21,65)%5);
+    K2H = CPU.A[K2].Harga;
+    PSN.CPU = CPU.A[K2].Nama;
+
+    K3 = (Random(85,150)%5);
+    K3H = Memory.A[K3].Harga;
+    PSN.Memory = Memory.A[K3].Nama;
+
+    K4 = (Random(78, 98)%5);
+    K4H = CPUCool.A[K4].Harga;
+    PSN.CPU_Cooler = CPUCool.A[K4].Nama;
+
+    K5 = (Random(101, 111)%5);
+    K5H = Case.A[K5].Harga;
+    PSN.Case = Case.A[K5].Nama;
+
+    K6 = (Random(212, 232)%5);
+    K6H = GPU.A[K6].Harga;
+    PSN.GPU = GPU.A[K6].Nama;
+
+    K7 = (Random(9, 79)%5);
+    K7H = Storage.A[K7].Harga;
+    PSN.Storage = Storage.A[K7].Nama;
+
+    K8 = (Random(20, 86)%5);
+    K8H = PSU.A[K8].Harga;
+    PSN.PSU = PSU.A[K8].Nama;
+
+    sumK = K1H+K2H+K3H+K4H+K5H+K6H+K7H+K8H;
+    tagihan = sumK * 1.5;
+    PSN.Nilai = tagihan;
+
+    PushQueue(*Order, PSN);
+}
+
+
+
 int main(){
     /* Variabel */
     int inputmenu;
