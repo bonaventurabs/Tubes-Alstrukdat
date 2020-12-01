@@ -95,6 +95,17 @@ void SalinKata()
     CKata.Length = i-1;
 }
 
+void BacaKarakter(char *ch)
+/* Membaca CKata yang terdiri dari 1 karakter dan mengkonversikannya ke tipe char */
+{
+    IgnoreDelimiter();
+    if (CKata.Length==1){
+        *ch = CKata.TabKata[1];
+        ADVKATA();
+        IgnoreDelimiter();
+    }
+}
+
 int Char2Int(char ch)
 /* Mengkonversi dari karakter menjadi angka */
 {

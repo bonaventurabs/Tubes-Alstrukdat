@@ -1,8 +1,8 @@
 PSU
-Cooler Master MPY-7501-AFAAG-US MWE 750 , 98  PSU ,
-SFX L Power 600W 80 Plus Gold , 120 PSU ,
-Corsair RMX Series RM550x , 110 PSU ,
-Thermaltake Toughpower Grand RGB 850W 80+ Gold , 150 PSU ,
-Thermaltake TR2 600W ATX 12 , 70 PSU ,.
+Cooler Master MPY-7501-AFAAG-US MWE 750 , 98 , PSU ,
+SFX L Power 600W 80 Plus Gold , 120 , PSU ,
+Corsair RMX Series RM550x , 110 , PSU ,
+Thermaltake Toughpower Grand RGB 850W 80+ Gold , 150 , PSU ,
+Thermaltake TR2 600W ATX 12 , 70 , PSU , .
 
  

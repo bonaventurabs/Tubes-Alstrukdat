@@ -16,6 +16,7 @@ int main(){
     char kal[100];
     char kall[100];
     int angka;
+    char B;
     UnionKata(kalimat);
     printf("%s\n",kalimat);
     BacaAngka(&angka);
@@ -24,7 +25,10 @@ int main(){
     printf("%s\n",kalimat);
     BacaAngka(&angka);
     printf("%d\n",angka);
-
+    BacaKarakter(&B);
+    printf("%c\n",B);
+    UnionKata(kalimat);
+    printf("%s\n",kalimat);
 
 
     printf("%d\n",EndKata);

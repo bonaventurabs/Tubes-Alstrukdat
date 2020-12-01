@@ -54,6 +54,9 @@ F.S. : CKata berisi kata yang sudah diakuisisi;
       CC adalah karakter sesudah karakter terakhir yang diakuisisi.
       Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
+void BacaKarakter(char *ch);
+/* Membaca CKata yang terdiri dari 1 karakter dan mengkonversikannya ke tipe char */
+
 int Char2Int(char ch);
 /* Mengkonversi dari karakter menjadi angka */
 

@@ -1,5 +1,6 @@
-NZXT, 71 Case
-Be Quiet!, 103, Case
-Corsair, 87, Case
-Fractal, 166, Case
-Phanteks, 85, Case
+Case
+NZXT , 71 , Case ,
+Be Quiet! , 103 , Case ,
+Corsair , 87 , Case ,
+Fractal , 166 , Case ,
+Phanteks , 85 , Case , .

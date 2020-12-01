@@ -38,7 +38,7 @@ void MENU(int *inputmenu){
     }
 }
 
-void KonfigurasiItem(char *path, ArrayKomponen *Komponen){
+void KonfigurasiItem(char *path, ArrayKomponen *Komponen, ArrayKomponen *All){
     /* Mengonfigurasi file eksternal komponen ke dalam variabel2 Komponen */
     char Nama[200];
     int Harga;
@@ -54,26 +54,31 @@ void KonfigurasiItem(char *path, ArrayKomponen *Komponen){
         UnionKata(Kategori);
         Insert = ArrangeItem(Nama,Harga,Kategori);
         ArrayKomponenInsertLast(Komponen,Insert);
+        ArrayKomponenInsertLast(All,Insert)
     }
 }
 
-void KonfigurasiMap(char *path, ArrayKomponen *Komponen){
+void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek){
     int NBaris;
     int NKolom;
-    MATRIKS Map;
     int NObjek;
-    
+    char Simbol;
+    int X,Y;
+
     STARTKATA(path);
     BacaAngka(&NBaris);
     BacaAngka(&NKolom);
-    MakeMATRIKS(NBaris,NKolom, &Map);
+    MakeMATRIKS(NBaris,NKolom,Map);
+    InsertKosong(Map);
     BacaAngka(&NObjek);
-    for (int i = 0; i < N; i++)
-        
-    {
-        /* code */
+    MakeListObjek(Objek);
+    for (int i = 0; i < N; i++){
+        BacaKarakter(&Simbol);
+        BacaAngka(&X);
+        BacaAngka(&Y);
+        InsertListObjek(Objek,S,X,Y);
+        BacaMAP(Map,Simbol,X,Y);
     }
-    
 }
 
 
@@ -218,12 +223,29 @@ void DELIVER(){
 }
 int main(){
     /* Variabel */
-    int *inputmenu;
+    int inputmenu;
+    ArrayKomponen Motherboard,CPU,Memory,CPUCool,Case,GPU,Storage,PSU;
+    ArrayKomponen All = MakeArrayKomponen(); //gabungan dari seluruh komponen
+    ListObjek Objek; //list menyimpan objek dan lokasinya
+    POINT LokasiPlayer; //lokasi player
+    ArrayInventory Inventory; //inventory player
+    MATRIKS Map; peta game
+    
 
+    /* Program */
     LOGO();
-    MENU(inputmenu);
-    if (*inputmenu==1){
-
+    MENU(&inputmenu);
+    if (inputmenu==1){
+        //Konfigurasi File Eksternal
+        KonfigurasiItem("./File eksternal/Motherboard.txt", &Motherboard, &All);
+        KonfigurasiItem("./File eksternal/CPU.txt", &CPU, &All);
+        KonfigurasiItem("./File eksternal/Memory.txt", &Memory, &All);
+        KonfigurasiItem("./File eksternal/CPU Cooler.txt", &CPUCool, &All);
+        KonfigurasiItem("./File eksternal/Case.txt", &Case, &All);
+        KonfigurasiItem("./File eksternal/GPU.txt", &GPU, &All);
+        KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
+        KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
+        KonfigurasiMap("./File eksternal/Map.txt", &Map, &Objek);
     } else {
 
     }

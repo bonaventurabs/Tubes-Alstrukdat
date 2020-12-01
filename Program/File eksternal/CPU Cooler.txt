@@ -1,6 +1,6 @@
 CPU-Cooler
-Cooler Master Hyper 212 RGB Black Edition , 35 CPU Cooler ,
-Gigabyte Aorus ATC800 RGB 120mm , 90 CPU Cooler ,
-Noctua NH-D15 , 89 CPU Cooler ,
-ROG Strix LC 360 RGB , 100 CPU Cooler ,
-ASUS TUF Gaming LC 240 RGB , 102 CPU Cooler ,.
+Cooler Master Hyper 212 RGB Black Edition , 35 , CPU Cooler ,
+Gigabyte Aorus ATC800 RGB 120mm , 90 , CPU Cooler ,
+Noctua NH-D15 , 89 , CPU Cooler ,
+ROG Strix LC 360 RGB , 100 , CPU Cooler ,
+ASUS TUF Gaming LC 240 RGB , 102 , CPU Cooler , .
