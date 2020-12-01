@@ -191,8 +191,7 @@ void CHECKORDER(){
     printf("5. %s\n", &(Pesanan.Tab[CurrPesanan-1].Case);
     printf("6. %s\n", &(Pesanan.Tab[CurrPesanan-1].GPU);
     printf("7. %s\n", &(Pesanan.Tab[CurrPesanan-1].Storage);
-    printf("8. %s\n", &(Pesanan.Tab[CurrPesanan-1].PSU);
-    }
+    printf("8. %s\n", &(Pesanan.Tab[CurrPesanan-1].PSU);   
 }
 
 void STARTBUILD(){
@@ -204,18 +203,25 @@ void STARTBUILD(){
 void ADDCOMPONENT(ArrayInventory Inventory, Stack S){
     int x;
     printf("komponen yang telah terpasang:\n");
-    for(int i=1;i<Top(S);i++){
-        printf("%d. %s\n", i, (InfoTop(S)));
+    for(int i=0;i<Top(S);i++){
+        printf("%d. %s\n", (i+1), S.T[i]);
     }
     printf("Komponen yang tersedia\n");
-    for(int i=1;i<Inventory.neff;i++){
-        printf("&d. %s\n", i, (Inventory.Nama[i-1]));
+    for(int i=0;i<Inventory.Neff;i++){
+        printf("&d. %s\n", (i+1), (Inventory.A[i].Nama));
     }
 
     printf("Komponen yang ingin dipasang: \n");
     scanf("%d", &x);
-    if (x == i){ /*masih gatau gimana caranya ngilangin komponen yang tersedia kalo dipilih buat dipasang */
-        Push(S, Inventory.Nama[i]);
+    if (x <= Inventory.Neff){ /*masih gatau gimana caranya ngilangin komponen yang tersedia kalo dipilih buat dipasang */
+        Push(&S, Inventory.A[x-1].Nama);
+        Inventory.A[x-1].Jumlah--;
+        if (Inventory.A[x-1].Jumlah==0){
+            for(int i=x-1;i<Inventory.Neff;i++){
+                Inventory.A[x-1]=Inventory.A[x];
+            }
+            Inventory.Neff--;
+        }
         printf("Komponen berhasil dipasang! \n");
     }
     else{
