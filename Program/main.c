@@ -458,7 +458,7 @@ void END_DAY(){
     tagihan = sumK * 1.5;
     PSN.Nilai = tagihan;
 
-    PushQueue(*Pesanan, PSN);
+    PushQueue(&Pesanan, PSN);
 }
 
 
