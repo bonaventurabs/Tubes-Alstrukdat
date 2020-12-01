@@ -13,6 +13,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Variabel Global
+ArrayKomponen Motherboard,CPU,Memory,CPUCool,Case,GPU,Storage,PSU;
+ArrayKomponen All; //gabungan dari seluruh komponen
+ListObjek Objek; //list menyimpan objek dan lokasinya
+POINT LokasiPlayer; //lokasi player
+ArrayInventory Inventory; //inventory player
+MATRIKS Map; //peta game
+Queue Order;
+Stack Build;
+
 void LOGO(){
     printf("\n");
 	printf("                               ____    _    __  _  _______  ____\n");
@@ -407,15 +417,8 @@ void END_DAY(){
 int main(){
     /* Variabel */
     int inputmenu;
-    ArrayKomponen Motherboard,CPU,Memory,CPUCool,Case,GPU,Storage,PSU;
-    ArrayKomponen All = MakeArrayKomponen(); //gabungan dari seluruh komponen
-    ListObjek Objek; //list menyimpan objek dan lokasinya
-    POINT LokasiPlayer; //lokasi player
-    ArrayInventory Inventory; //inventory player
-    MATRIKS Map; //peta game
-    Queue Order;
-    Stack Build;
-    
+    All = MakeArrayKomponen();
+
     /* Program */
     LOGO();
     MENU(&inputmenu);
@@ -436,7 +439,6 @@ int main(){
 
         //Order Pesawan Awal
 
-        
     } else {
 
     }
