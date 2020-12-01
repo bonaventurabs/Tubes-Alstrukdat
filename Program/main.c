@@ -230,8 +230,9 @@ void ADDCOMPONENT(){
 }
 
 void REMOVECOMPONENT(){
-    printf("Komponen %d\n", &InfoTop(S), "berhasil dicopot!");
-    Pop(S);
+    char copot;
+    Pop(&Build,&copot);
+    printf("Komponen %d\n", &copot, " berhasil dicopot!");
 }
 
 void FINISHBUILD(){
