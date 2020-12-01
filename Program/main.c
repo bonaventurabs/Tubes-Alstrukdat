@@ -23,6 +23,7 @@ MATRIKS Map; //peta game
 Queue Order;
 Stack Build;
 int uang;
+Queue Pesanan;
 
 void LOGO(){
     printf("\n");
@@ -409,7 +410,7 @@ void END_DAY(){
     tagihan = sumK * 1.5;
     PSN.Nilai = tagihan;
 
-    PushQueue(*Order, PSN);
+    PushQueue(*Pesanan, PSN);
 }
 
 
