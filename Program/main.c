@@ -276,7 +276,7 @@ void FINISHBUILD(){
 }
 
 void DELIVER(){
-    if (LokasiPlayer==Objek.TabObjek[CurrPelanggan+2].Loc){
+    if (EQPOINT(LokasiPlayer,Objek.TabObjek[CurrPelanggan+2].Loc)){
         printf("Pesanan #%d berhasil diantarkan kepada Pelanggan %d!\n", &CurrPesanan, &CurrPelanggan);    
     }
     else{
