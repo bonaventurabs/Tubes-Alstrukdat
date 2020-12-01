@@ -276,7 +276,7 @@ void FINISHBUILD(){
 }
 
 void DELIVER(){
-    if (posisi==pelanggan.posisi){
+    if (LokasiPlayer==pelanggan.posisi){
         printf("Pesanan #%d berhasil diantarkan kepada %s!\n", &pesanan, &pelanggan);    
     }
     else{
@@ -312,7 +312,7 @@ void SHOP(){
 			Element Bought;
             Bought.Nama = All.A[pilkom-1].Nama;
             Bought.Jumlah = jumlah;
-            ArrayInventoryInsertLast(*Inventory, Bought);
+            ArrayInventoryInsertLast(&Inventory, Bought);
 		}
 		else
 		{
@@ -398,7 +398,7 @@ void SHOP(){
 			Element Bought;
             Bought.Nama = X.A[pilkom-1].Nama;
             Bought.Jumlah = jumlah;
-            ArrayInventoryInsertLast(*Inventory, Bought);
+            ArrayInventoryInsertLast(&Inventory, Bought);
 		}
 		else
 		{
