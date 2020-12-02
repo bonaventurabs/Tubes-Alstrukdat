@@ -110,59 +110,6 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Gr
     }
 }
 
-
-void COMMAND()
-/* Menginput COMMAND, mengecek commandnya, serta menjalankan commandnya */
-{
-    boolean exit = false;
-    while (!exit){
-        printf("ENTER COMMAND: ");
-        InputUSER();
-        if (IsKataMOVE(CKata)){
-            MOVE();
-        } else if (IsKataSTATUS(CKata)){
-            STATUS();
-        } else if (IsKataCHECKORDER(CKata)){
-            CHECKORDER();
-        } else if (IsKataSTARTBUILD(CKata)){
-            STARTBUILD();
-        } else if (IsKataFINISHBUILD(CKata)){
-            FINISHBUILD();
-        } else if (IsKataADDCOMPONENT(CKata)){
-            ADDCOMPONENT();
-        } else if (IsKataREMOVECOMPONENT(CKata)){
-            REMOVECOMPONENT();
-        } else if (IsKataSHOP(CKata)){
-            SHOP();
-        } else if (IsKataDELIVER(CKata)){
-            DELIVER();
-        } else if (IsKataEND_DAY(CKata)){
-            END_DAY();
-        } else if (IsKataMAP(CKata)){
-            MAP();
-        } else if (IsKataEXIT(CKata)){
-            exit = true;
-        } else if (IsKataSAVE(CKata)){
-
-        } else {
-            printf("COMMAND tidak terdefinisi. Silahkan input COMMAND lain!")
-        }
-        /*IsKataMOVE(CKata);
-        IsKataSTATUS(CKata);
-        IsKataCHECKORDER(CKata);
-        IsKataSTARTBUILD(CKata);
-        IsKataFINISHBUILD(CKata);
-        IsKataADDCOMPONENT(CKata);
-        IsKataREMOVECOMPONENT(CKata);
-        IsKataSHOP(CKata);
-        IsKataDELIVER(CKata);
-        IsKataEND_DAY(CKata);
-        IsKataMAP(CKata);
-        IsKataEXIT(CKata);
-        IsKataSAVE(CKata);*/
-    }
-}
-
 void MOVE(){
     char NamaLokasiPlayer="*";
     int i=1;
@@ -545,7 +492,57 @@ void MAP(){
     TulisMAP(Map, Absis(LokasiPlayer), Ordinat(LokasiPlayer));
 }
 
+void COMMAND()
+/* Menginput COMMAND, mengecek commandnya, serta menjalankan commandnya */
+{
+    boolean exit = false;
+    while (!exit){
+        printf("ENTER COMMAND: ");
+        InputUSER();
+        if (IsKataMOVE(CKata)){
+            MOVE();
+        } else if (IsKataSTATUS(CKata)){
+            STATUS();
+        } else if (IsKataCHECKORDER(CKata)){
+            CHECKORDER();
+        } else if (IsKataSTARTBUILD(CKata)){
+            STARTBUILD();
+        } else if (IsKataFINISHBUILD(CKata)){
+            FINISHBUILD();
+        } else if (IsKataADDCOMPONENT(CKata)){
+            ADDCOMPONENT();
+        } else if (IsKataREMOVECOMPONENT(CKata)){
+            REMOVECOMPONENT();
+        } else if (IsKataSHOP(CKata)){
+            SHOP();
+        } else if (IsKataDELIVER(CKata)){
+            DELIVER();
+        } else if (IsKataEND_DAY(CKata)){
+            END_DAY();
+        } else if (IsKataMAP(CKata)){
+            MAP();
+        } else if (IsKataEXIT(CKata)){
+            exit = true;
+        } else if (IsKataSAVE(CKata)){
 
+        } else {
+            printf("COMMAND tidak terdefinisi. Silahkan input COMMAND lain!");
+        }
+        /*IsKataMOVE(CKata);
+        IsKataSTATUS(CKata);
+        IsKataCHECKORDER(CKata);
+        IsKataSTARTBUILD(CKata);
+        IsKataFINISHBUILD(CKata);
+        IsKataADDCOMPONENT(CKata);
+        IsKataREMOVECOMPONENT(CKata);
+        IsKataSHOP(CKata);
+        IsKataDELIVER(CKata);
+        IsKataEND_DAY(CKata);
+        IsKataMAP(CKata);
+        IsKataEXIT(CKata);
+        IsKataSAVE(CKata);*/
+    }
+}
 
 int main(){
     /* Variabel */
