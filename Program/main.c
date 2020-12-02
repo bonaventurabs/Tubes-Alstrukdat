@@ -165,20 +165,84 @@ void COMMAND()
 }
 
 void MOVE(){
-    printf("Kamu berada pada %s\n", &LokasiPlayer);
-    printf("Daftar lokasi yang dapat dicapai:\n");
-    for(int i=1;i<Graph;i++){ /***harus tau ADT graphnya dulu inii***/
-      printf(i,". %s\n", &(Graph[i]));
+    char NamaLokasiPlayer="*";
+    int i=1;
+    while (NamaLokasiPlayer=="*" && i<=NObjek(Bangunan)){
+        if (EQPOINT(LokasiPlayer,Bangunan.TabObjek[i].Loc)){
+            if (i=1){
+                NamaLokasiPlayer="Base";
+            }
+            else if(i=2){
+                NamaLokasiPlayer="Shop";
+            }
+            else{
+                NamaLokasiPlayer=("Pelanggan %d",(i-2));
+            }
+        }
+        else{
+            i++;
+        }       
     }
+    adrNode NodeLokasiPlayer;
+    NodeLokasiPlayer=FirstG(GrafBangunan);
+    while (NodeLokasiPlayer->Id!=i && NodeLokasiPlayer!=Nil){
+        NodeLokasiPlayer=NextG(NodeLokasiPlayer);
+    }
+    printf("Kamu berada pada %s\n", NamaLokasiPlayer);
+    printf("Daftar lokasi yang dapat dicapai:\n");
+    int j=1;
+    adrSuccNode DaftarLokasi=Trail(NodeLokasiPlayer);
+    while (DaftarLokasi!=Nil){
+        if (DaftarLokasi->Succ->Id=1){
+            printf(j,". Base\n")
+        }
+        else if (DaftarLokasi->Succ->Id=2){
+            printf(j,". Base\n")
+        }
+        else{
+            printf(j,". Pelanggan %d\n", (i-2));
+        }
+        j++;    
+    }
+
     int tujuan;
     printf("Nomor tujuan: ");
     scanf("%d", &tujuan);
-    if (tujuan in graph){
-        LokasiPlayer=tujuan;
-        printf("Kamu telah mencapai lokasi %s", %Graph.Nama);
+
+    if (tujuan < j){
+        int k=1;
+        DaftarLokasi=Trail(NodeLokasiPlayer);
+        while (k!=tujuan){
+            DaftarLokasi=NextG(DaftarLokasi);
+            j++;    
+        }
+        infograph IdTujuan= Id(Succ(DaftarLokasi));
+        POINT LokasiTujuan=Point(Bangunan,IdTujuan);
+        LokasiPlayer=LokasiTujuan;
+
+        char NamaLokasiTujuan="*";
+        int m=1;
+        while (NamaLokasiTujuan=="*" && i<=NObjek(Bangunan)){
+            if (EQPOINT(LokasiTujuan,Bangunan.TabObjek[m].Loc)){
+                if (m=1){
+                    NamaLokasiTujuan="Base";
+                }
+                else if(m=2){
+                    NamaLokasiTujuan="Shop";
+                }
+                else{
+                    NamaLokasiTujuan=("Pelanggan %d",(m-2));
+                }
+            }
+            else{
+                m++;
+            }
+
+        }
+        printf("Kamu telah mencapai lokasi %s", NamaLokasiTujuan);
     }
     else{
-        printf("Tempat tersebut tidak bisa dituju. Harap pindah ke tempat terdekat telebih dahulu. Gunakan command MAP untuk detail lebih lanjut");
+        printf("Tempat tersebut tidak bisa dituju. Harap pindah ke tempat terdekat telebih dahulu!");
     }
 }
 
