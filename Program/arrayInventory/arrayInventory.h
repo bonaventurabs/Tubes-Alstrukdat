@@ -2,7 +2,7 @@
 #define __INVENTORY_ARRAY__
 #include "../boolean/boolean.h"
 
-#define InitialSize 50
+#define InitialSizeInventory 50
 
 typedef int IdxType;
 typedef struct {
@@ -19,7 +19,7 @@ typedef struct {
 /**
  * Konstruktor
  * I.S. sembarang
- * F.S. Terbentuk List kosong dengan ukuran InitialSize
+ * F.S. Terbentuk List kosong dengan ukuran InitialSizeInventory
  */
 ArrayInventory MakeArrayInventory();
 

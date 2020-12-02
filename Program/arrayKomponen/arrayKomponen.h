@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define InitialSize 10
+#define InitialSizeKomponen 10
 
 typedef int IdxType;
 typedef struct {
@@ -22,7 +22,7 @@ typedef struct {
 /**
  * Konstruktor
  * I.S. sembarang
- * F.S. Terbentuk List kosong dengan ukuran InitialSize
+ * F.S. Terbentuk List kosong dengan ukuran InitialSizeKomponen
  */
 ArrayKomponen MakeArrayKomponen();
 

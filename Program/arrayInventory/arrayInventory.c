@@ -6,12 +6,12 @@
 /**
  * Konstruktor
  * I.S. sembarang
- * F.S. Terbentuk List kosong dengan ukuran InitialSize
+ * F.S. Terbentuk List kosong dengan ukuran InitialSizeInventory
  */
 ArrayInventory MakeArrayInventory() {
     ArrayInventory list;
-    list.A = (Element *) malloc(InitialSize * sizeof(Element));
-    list.Capacity = InitialSize;
+    list.A = (Element *) malloc(InitialSizeInventory * sizeof(Element));
+    list.Capacity = InitialSizeInventory;
     list.Neff = 0;
     return list;
 }
@@ -61,7 +61,7 @@ void ArrayInventoryInsertAt(ArrayInventory *list, Element el, IdxType i) {
     int capacity = ArrayInventoryGetCapacity(*list);
 
     if (length == capacity) {
-        int desiredCapacity = capacity + InitialSize;
+        int desiredCapacity = capacity + InitialSizeInventory;
         Element *array = (Element *) malloc(desiredCapacity * sizeof(Element));
         for (int a = 0; a < length; a++) {
             array[a] = ArrayInventoryGet(*list, a);

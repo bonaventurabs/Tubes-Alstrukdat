@@ -6,12 +6,12 @@
 /**
  * Konstruktor
  * I.S. sembarang
- * F.S. Terbentuk List kosong dengan ukuran InitialSize
+ * F.S. Terbentuk List kosong dengan ukuran InitialSizeKomponen
  */
 ArrayKomponen MakeArrayKomponen() {
     ArrayKomponen list;
-    list.A = (Item *) malloc(InitialSize * sizeof(Item));
-    list.Capacity = InitialSize;
+    list.A = (Item *) malloc(InitialSizeKomponen * sizeof(Item));
+    list.Capacity = InitialSizeKomponen;
     list.Neff = 0;
     return list;
 }
@@ -61,7 +61,7 @@ void ArrayKomponenInsertAt(ArrayKomponen *list, Item el, IdxType i) {
     int capacity = ArrayKomponenGetCapacity(*list);
 
     if (length == capacity) {
-        int desiredCapacity = capacity + InitialSize;
+        int desiredCapacity = capacity + InitialSizeKomponen;
         Item *array = (Item *) malloc(desiredCapacity * sizeof(Item));
         for (int a = 0; a < length; a++) {
             array[a] = ArrayKomponenGet(*list, a);
