@@ -12,7 +12,7 @@ TOP adalah alamat elemen puncak*/
 #define NilS 0
 #define MaxEl 7
 
-typedef char infotype;
+typedef char *infotype;
 typedef int address;
 
 typedef struct
