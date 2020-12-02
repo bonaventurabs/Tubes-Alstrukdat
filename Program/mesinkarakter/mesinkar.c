@@ -38,8 +38,16 @@ void ADV()
     EOP = (CC == MARK);
     if (EOP)
     {
-        fclose(pita);
+        FINISH();
     }
+}
+
+void FINISH()
+/* Menutup file pita.
+   I.S. : Pita terdefinisi
+   F.S. : File pita tertutup */
+{
+    fclose(pita);
 }
 
 void STARTWRITE(char *path)

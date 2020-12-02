@@ -20,7 +20,7 @@ void IgnoreBlank()
         i++;
     }
     if (i==NMax){
-        fclose(pita);
+        FINISH();
         CC = MARK;
     }
 }

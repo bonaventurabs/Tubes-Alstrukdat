@@ -28,6 +28,11 @@ void ADV();
           CC mungkin = MARK
           Jika  CC = MARK maka EOP akan menyala (true) */
 
+void FINISH();
+/* Menutup file pita.
+   I.S. : Pita terdefinisi
+   F.S. : File pita tertutup */
+
 void STARTWRITE(char *path);
 /* Menulis atau membuat file (jika belum ada) sesuai path */
 

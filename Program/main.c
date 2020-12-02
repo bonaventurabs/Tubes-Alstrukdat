@@ -194,10 +194,10 @@ void MOVE(){
     adrSuccNode DaftarLokasi=Trail(NodeLokasiPlayer);
     while (DaftarLokasi!=Nil){
         if (DaftarLokasi->Succ->Id=1){
-            printf(j,". Base\n")
+            printf(j,". Base\n");
         }
         else if (DaftarLokasi->Succ->Id=2){
-            printf(j,". Base\n")
+            printf(j,". Base\n");
         }
         else{
             printf(j,". Pelanggan %d\n", (i-2));
@@ -357,7 +357,7 @@ void FINISHBUILD(){
 }
 
 void DELIVER(){
-    if (EQPOINT(LokasiPlayer,Objek.TabObjek[CurrPelanggan+2].Loc)){
+    if (EQPOINT(LokasiPlayer,Bangunan.TabObjek[CurrPelanggan+2].Loc)){
         printf("Pesanan #%d berhasil diantarkan kepada Pelanggan %d!\n", &CurrPesanan, &CurrPelanggan);    
     }
     else{
