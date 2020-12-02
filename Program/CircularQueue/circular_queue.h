@@ -23,9 +23,9 @@ typedef struct { int Pemesan;
                  char *GPU;
                  char *Storage;
                  char *PSU;
-               } Pesan;
+               } Order;
 
-typedef struct { Pesan *Tab;  /* tabel penyimpan elemen */
+typedef struct { Order *Tab;  /* tabel penyimpan elemen */
                  IdxType HEAD;  /* indeks elemen paling awal (terdepan) */
                  IdxType TAIL;  /* indeks tempat menambah elemen baru */
                  int MaxEl;     /* kapasitas jumlah elemen */

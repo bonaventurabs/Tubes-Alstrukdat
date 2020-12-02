@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // Variabel Global
 ArrayKomponen Motherboard,CPU,Memory,CPUCool,Case,GPU,Storage,PSU;
@@ -499,10 +500,10 @@ void END_DAY(){
     int pemesan;
     int K1, K2, K3, K4, K5, K6, K7, K8, sumK, tagihan;
     int K1H, K2H, K3H, K4H, K5H, K6H, K7H, K8H;
-    Pesan PSN; 
+    Order PSN;
     pemesan = Random(1,7);
-    PSN.Pemesan = pemesan;
-        
+    PSN.Pemesan =pemesan;
+
     K1 = (Random(0,35)%5);
     K1H = Motherboard.A[K1].Harga;
     PSN.Motherboard = Motherboard.A[K1].Nama;
