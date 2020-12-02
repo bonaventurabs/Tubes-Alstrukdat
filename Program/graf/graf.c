@@ -4,6 +4,11 @@
 #include <stdio.h>
 
 /* *** Konstruktor *** */
+void CreateEmptyGraph(Graph* G){
+/* I.S. Sembarang ; F.S. Terbentuk Graph kosong, FirstG(*G) = Nil*/
+	FirstG(*G) = Nil;
+}
+
 void CreateGraph(infograph X, Graph* G){
 /* I.S. Sembarang ; F.S. Terbentuk Graph dengan satu simpul dengan Id=X */
 	adrNode P;
@@ -144,7 +149,7 @@ void InsertEdge (Graph* G, infograph prec, infograph succ){
 		}
 		else {
 			while(NextG(PTrail) != Nil){
-				P = NextG(P);
+				PTrail = NextG(PTrail);
 			}
 			NextG(PTrail) = AlokSuccNode(Psucc);
 		}

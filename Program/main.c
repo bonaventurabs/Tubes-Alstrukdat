@@ -20,6 +20,7 @@ ListObjek Bangunan; //list menyimpan bangunan dan lokasinya
 POINT LokasiPlayer; //lokasi player
 ArrayInventory Inventory; //inventory player
 MATRIKS Map; //peta game
+Graph GrafBangunan; //graf bangunan
 Queue Order;
 Stack Build;
 int uang;
@@ -46,7 +47,7 @@ void MENU(int *inputmenu){
     InputAngka(inputmenu);
     printf("\n");
     while (*inputmenu!=1 || *inputmenu!=2){
-        printf("                    Input tidak terdefinisi, silahkan masukan angka menu")
+        printf("                    Input tidak terdefinisi, silahkan masukan angka menu");
         printf("                                     >");
         InputAngka(inputmenu);
     }
@@ -68,17 +69,16 @@ void KonfigurasiItem(char *path, ArrayKomponen *Komponen, ArrayKomponen *All){
         UnionKata(Kategori);
         Insert = ArrangeItem(Nama,Harga,Kategori);
         ArrayKomponenInsertLast(Komponen,Insert);
-        ArrayKomponenInsertLast(All,Insert)
+        ArrayKomponenInsertLast(All,Insert);
     }
 }
 
-void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer){
+void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Graph *GrafBangunan){
     int NBaris;
     int NKolom;
     int NObjek;
     char Simbol;
     int X,Y;
-    MATRIKS AdMap;
     int ElmtM;
 
     STARTKATA(path);
@@ -88,6 +88,7 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer){
     InsertKosong(Map);
     BacaAngka(&NObjek);
     MakeListObjek(Objek);
+
     for (int i = 1; i <= NObjek; i++){
         BacaKarakter(&Simbol);
         BacaAngka(&X);
@@ -98,11 +99,14 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer){
             *LokPlayer = MakePOINT(X,Y);
         }
     }
-    MakeMATRIKS(NObjek,NObjek,&AdMap);
+
+    CreateEmptyGraph(GrafBangunan);
     for (int i = 1; i <= NObjek; i++){
         for (int j = 1; j <= NObjek; j++){
             BacaAngka(&ElmtM);
-            Elmt(AdMap,i,j) = ElmtM;
+            if (ElmtM==1){
+                InsertEdge(GrafBangunan,i,j);
+            }
         }
     }
 }
@@ -193,14 +197,14 @@ void CHECKORDER(){
     printf("Pemesan: Pelanggan %d\n", &CurrPelanggan);
     printf("Invoice: $%d\n", &(Pesanan.Tab[CurrPesanan-1].Nilai));
     printf("Komponen:\n");
-    printf("1. %s\n", &(Pesanan.Tab[CurrPesanan-1].Motherboard);
-    printf("2. %s\n", &(Pesanan.Tab[CurrPesanan-1].CPU);
-    printf("3. %s\n", &(Pesanan.Tab[CurrPesanan-1].Memory);
-    printf("4. %s\n", &(Pesanan.Tab[CurrPesanan-1].CPU_Cooler);
-    printf("5. %s\n", &(Pesanan.Tab[CurrPesanan-1].Case);
-    printf("6. %s\n", &(Pesanan.Tab[CurrPesanan-1].GPU);
-    printf("7. %s\n", &(Pesanan.Tab[CurrPesanan-1].Storage);
-    printf("8. %s\n", &(Pesanan.Tab[CurrPesanan-1].PSU);   
+    printf("1. %s\n", &(Pesanan.Tab[CurrPesanan-1].Motherboard));
+    printf("2. %s\n", &(Pesanan.Tab[CurrPesanan-1].CPU));
+    printf("3. %s\n", &(Pesanan.Tab[CurrPesanan-1].Memory));
+    printf("4. %s\n", &(Pesanan.Tab[CurrPesanan-1].CPU_Cooler));
+    printf("5. %s\n", &(Pesanan.Tab[CurrPesanan-1].Case));
+    printf("6. %s\n", &(Pesanan.Tab[CurrPesanan-1].GPU));
+    printf("7. %s\n", &(Pesanan.Tab[CurrPesanan-1].Storage));
+    printf("8. %s\n", &(Pesanan.Tab[CurrPesanan-1].PSU));   
 }
 
 void STARTBUILD(){
@@ -495,7 +499,7 @@ int main(){
         KonfigurasiItem("./File eksternal/GPU.txt", &GPU, &All);
         KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
         KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
-        KonfigurasiMap("./File eksternal/Map.txt", &Map, &Bangunan, &LokasiPlayer);
+        KonfigurasiMap("./File eksternal/Map.txt", &Map, &Bangunan, &LokasiPlayer, &GrafBangunan);
 
         //Inventory Awal
         Inventory = MakeArrayInventory();

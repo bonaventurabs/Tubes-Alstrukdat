@@ -12,10 +12,16 @@ void IgnoreBlank()
 {
     /* Mengabaikan satu atau beberapa BLANK
     I.S. : CC sembarang
-    F.S. : CC ≠ BLANK atau CC = MARK */
-    while ((CC == BLANK) && (CC != MARK))
+    F.S. : CC ≠ MARKNL dan CC ≠ BLANK atau CC = MARK */
+    int i = 0;
+    while ((CC == MARKNL) || (CC == BLANK) && (CC != MARK) && (i<NMax))
     {
         ADV();
+        i++;
+    }
+    if (i==NMax){
+        fclose(pita);
+        CC = MARK;
     }
 }
 

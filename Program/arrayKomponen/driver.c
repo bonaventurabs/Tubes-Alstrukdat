@@ -5,18 +5,21 @@
 
 int main(){
     char Nama[100] = "Intel";
-    char Kategori[20] = "CPU";
+    char *Kategori2 = "CPU";
+    char *Kategori1 = "Memory";
     int Harga = 20;
     Item P,A;
 
     char Nama2[100] = "AMD";
 
-    P = ArrangeItem(Nama,Harga,Kategori);
+    P = ArrangeItem(Nama,Harga,Kategori1);
     printf("%s\n",P.Nama);
+    printf("%s\n",P.Kategori);
     
 
-    A = ArrangeItem(Nama2,Harga,Kategori);
+    A = ArrangeItem(Nama2,Harga,Kategori2);
     printf("%s\n",A.Nama);
+    printf("%s\n",A.Kategori);
 
     return 0;
 }

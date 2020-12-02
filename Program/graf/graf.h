@@ -36,6 +36,9 @@ typedef struct{
 #define NextG(Pn) (Pn)->NextG
 
 /* *** Konstruktor *** */
+void CreateEmptyGraph(Graph* G);
+/* I.S. Sembarang ; F.S. Terbentuk Graph kosong, FirstG(*G) = Nil*/
+
 void CreateGraph(infograph X, Graph* G);
 /* I.S. Sembarang ; F.S. Terbentuk Graph dengan satu simpul dengan Id=X */
 

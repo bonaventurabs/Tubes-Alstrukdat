@@ -15,7 +15,7 @@ int main(){
     char kalimat[100];
     char kal[100];
     char kall[100];
-    int angka;
+    int angka,angka2;
     char B;
     UnionKata(kalimat);
     printf("%s\n",kalimat);
@@ -29,6 +29,8 @@ int main(){
     printf("%c\n",B);
     UnionKata(kalimat);
     printf("%s\n",kalimat);
+    BacaAngka(&angka2);
+    printf("%d\n",angka2);
 
 
     printf("%d\n",EndKata);
