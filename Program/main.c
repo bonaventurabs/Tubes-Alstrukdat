@@ -140,13 +140,13 @@ void MOVE(){
     adrSuccNode DaftarLokasi=Trail(NodeLokasiPlayer);
     while (DaftarLokasi!=Nil){
         if (DaftarLokasi->Succ->Id=1){
-            printf(j,". Base\n");
+            printf("%d. Base\n",j);
         }
         else if (DaftarLokasi->Succ->Id=2){
-            printf(j,". Base\n");
+            printf("%d. Shop\n",j);
         }
         else{
-            printf(j,". Pelanggan %d\n", (i-2));
+            printf("%d. Pelanggan %d\n", j, (j-2));
         }
         j++;    
     }
@@ -198,7 +198,7 @@ void STATUS(){
     printf("Lokasi: pemain sedang berada pada %s.\n", &LokasiPlayer);
     printf("Inventory anda:\n");
     for(int i=0;i<Inventory.Neff;i++){
-      printf((i+1),". %s (%d)\n", &(Inventory.A[i].Nama), &(Inventory.A[i].Jumlah));
+      printf("%d. %s (%d)\n",(i+1), &(Inventory.A[i].Nama), &(Inventory.A[i].Jumlah));
     }
 }
 
