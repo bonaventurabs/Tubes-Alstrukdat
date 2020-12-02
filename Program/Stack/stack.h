@@ -21,6 +21,8 @@ typedef struct
     address TOP;
 } Stack;
 
+#define TOP(S) (S).TOP
+
 /* Definisi stack S kosong : S.TOP = NilS */
 /* S.TOP = jumlah element stack */
 /* S.T[S.TOP-1] = element paling atas */

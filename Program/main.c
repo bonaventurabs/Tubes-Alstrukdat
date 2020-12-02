@@ -224,10 +224,10 @@ void STARTBUILD(){
     printf("Kamu telah memulai pesanan %d untuk Pelanggan %d.\n", CurrPesanan, CurrPelanggan); 
 }
 
-void ADDCOMPONENT(){
+void ADDCOMPONENT(){ 
     int x;
     printf("Komponen yang telah terpasang:\n");
-    for(int i=0;i<Top(Build);i++){
+    for(int i=0;i<TOP(Build);i++){
         printf("%d. %s\n", (i+1), Build.T[i]);
     }
     printf("Komponen yang tersedia\n");
