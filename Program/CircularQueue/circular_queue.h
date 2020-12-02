@@ -58,19 +58,19 @@ void DeleteQueue (Queue * Q);
 /* F.S. membebaskan memori Tab, Q.MaxEl di-set 0 */
 
 /* *** Primitif Add/Delete *** */
-void PushQueue (Queue * Q, ElType X);
+void PushQueue (Queue * Q, Order X);
 /* Proses: Menambahkan X pada Q dengan aturan FIFO */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru,
         TAIL "maju" dengan mekanisme circular buffer
         Jika Q kosong, HEAD dimulai dari 0 */
-ElType PopQueue (Queue * Q);
+Order PopQueue (Queue * Q);
 /* Proses: Menghapus indeks HEAD pada Q dengan aturan FIFO, lalu mengembalikan nilainya */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. mengembalikan nilai Q pada indeks HEAD;
         HEAD "maju" dengan mekanisme circular buffer;
         Q mungkin kosong */
-ElType Front (Queue Q);
+Order Front (Queue Q);
 /* Proses: Mengembalikan nilai Q pada indeks HEAD tanpa penghapusan */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. mengembalikan nilai Q pada indeks HEAD;
