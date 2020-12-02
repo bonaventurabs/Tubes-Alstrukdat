@@ -119,33 +119,33 @@ void COMMAND()
         printf("ENTER COMMAND: ");
         InputUSER();
         if (IsKataMOVE(CKata)){
-
+            MOVE();
         } else if (IsKataSTATUS(CKata)){
-
+            STATUS();
         } else if (IsKataCHECKORDER(CKata)){
-
+            CHECKORDER();
         } else if (IsKataSTARTBUILD(CKata)){
-
+            STARTBUILD();
         } else if (IsKataFINISHBUILD(CKata)){
-
+            FINISHBUILD();
         } else if (IsKataADDCOMPONENT(CKata)){
-
+            ADDCOMPONENT();
         } else if (IsKataREMOVECOMPONENT(CKata)){
-
+            REMOVECOMPONENT();
         } else if (IsKataSHOP(CKata)){
-
+            SHOP();
         } else if (IsKataDELIVER(CKata)){
-
+            DELIVER();
         } else if (IsKataEND_DAY(CKata)){
-
+            END_DAY();
         } else if (IsKataMAP(CKata)){
-
+            MAP();
         } else if (IsKataEXIT(CKata)){
             exit = true;
         } else if (IsKataSAVE(CKata)){
 
         } else {
-        
+            printf("COMMAND tidak terdefinisi. Silahkan input COMMAND lain!")
         }
         /*IsKataMOVE(CKata);
         IsKataSTATUS(CKata);
@@ -539,6 +539,10 @@ void END_DAY(){
     PSN.Nilai = tagihan;
 
     PushQueue(&Pesanan, PSN);
+}
+
+void MAP(){
+    TulisMAP(Map, Absis(LokasiPlayer), Ordinat(LokasiPlayer));
 }
 
 
