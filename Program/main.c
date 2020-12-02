@@ -492,10 +492,10 @@ void SHOP(){
 int Random(int lower, int upper){
     time_t t;
     srand((unsigned) time(&t));
-
+   
     return(rand() % (upper-lower+1)+lower);    
 }
-
+    
 void END_DAY(){
     int pemesan;
     int K1, K2, K3, K4, K5, K6, K7, K8, sumK, tagihan;
