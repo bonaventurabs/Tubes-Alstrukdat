@@ -1,3 +1,4 @@
+#include "../boolean/boolean.h"
 #include "stack.h"
 
 void CreateEmptyStack(Stack *S)
@@ -9,14 +10,14 @@ void CreateEmptyStack(Stack *S)
 }
 
 /* ********* Predikat Untuk test keadaan KOLEKSI ********* */
-bool IsStackEmpty(Stack S)
+boolean IsStackEmpty(Stack S)
 /* Mengirim true jika Stack kosong*/
 /* Ciri stack kosong : TOP bernilai Nil */
 {
     return S.TOP == Nil;
 }
 
-bool IsStackFull(Stack S)
+boolean IsStackFull(Stack S)
 /* Mengirim true jika stack S penuh */
 /* Ciri stack penuh : TOP bernilai MaxEl */
 {
@@ -49,7 +50,7 @@ void ForcePush(Stack *S, infotype X)
         S berisi b c d e f g h i j k */
 {
     int idx;
-    if (!IsFull(*S))
+    if (!IsStackFull(*S))
     {
         Push(S, X);
     }
