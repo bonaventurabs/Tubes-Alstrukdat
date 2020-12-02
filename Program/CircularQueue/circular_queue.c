@@ -23,7 +23,7 @@ int MaxLength (Queue Q) {
 /* *** Kreator *** */
 Queue CreateQueue (int Max) {
     Queue Q;
-    Q.Tab = (Order *) malloc (Max * sizeof(Order));
+    Q.Tab = (Pesan *) malloc (Max * sizeof(Pesan));
     Q.HEAD = NIL;
     Q.TAIL = NIL;
     Q.MaxEl = Max;
@@ -37,7 +37,7 @@ void DeleteQueue (Queue * Q) {
 }
 
 /* *** Primitif Add/Delete *** */
-void PushQueue (Queue * Q, Order X) {
+void PushQueue (Queue * Q, Pesan X) {
     if (IsQueueEmpty(*Q)) {
         Q->HEAD = 0;
         Q->TAIL = 0;
@@ -48,8 +48,8 @@ void PushQueue (Queue * Q, Order X) {
         Q->TAIL = 0;
     }
 }
-Order PopQueue (Queue * Q) {
-    Order ret = Q->Tab[Q->HEAD];
+Pesan PopQueue (Queue * Q) {
+    Pesan ret = Q->Tab[Q->HEAD];
     Q->HEAD++;
     if (Q->HEAD == Q->MaxEl) {
         Q->HEAD = 0;
@@ -60,7 +60,7 @@ Order PopQueue (Queue * Q) {
     }
     return ret;
 }
-Order Front (Queue Q) {
+Pesan Front (Queue Q) {
     return Q.Tab[Q.HEAD];
 }
 

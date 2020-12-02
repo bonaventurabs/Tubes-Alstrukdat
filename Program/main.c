@@ -21,7 +21,7 @@ POINT LokasiPlayer; //lokasi player
 ArrayInventory Inventory; //inventory player
 MATRIKS Map; //peta game
 Graph GrafBangunan; //graf bangunan
-Queue Order;
+Queue Pesan;
 Stack Build;
 int uang;
 Queue Pesanan;
@@ -435,7 +435,7 @@ void END_DAY(){
     int pemesan;
     int K1, K2, K3, K4, K5, K6, K7, K8, sumK, tagihan;
     int K1H, K2H, K3H, K4H, K5H, K6H, K7H, K8H;
-    Order PSN; 
+    Pesan PSN; 
     pemesan = Random(1,7);
     PSN.Pemesan = pemesan;
         
