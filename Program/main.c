@@ -254,7 +254,7 @@ void ADDCOMPONENT(){
 }
 
 void REMOVECOMPONENT(){
-    char copot;
+    char *copot;
     Pop(&Build,&copot);
     Element simpan;
     simpan.Nama=copot;
@@ -293,7 +293,7 @@ void FINISHBUILD(){
     if(benar){ 
         printf("%d", &CurrPesanan, "telah selesai. Silahkan antar ke Pelanggan %d\n", &CurrPelanggan);
         Element Komputer;
-        Komputer.Nama=("Build untuk pesanan #%d",&CurrPesanan);
+        Komputer.Nama="Build untuk pesanan #%d",&CurrPesanan;
         Komputer.Jumlah=1;
         ArrayInventoryInsertLast(&Inventory,Komputer);
     }
