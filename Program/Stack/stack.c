@@ -4,17 +4,17 @@
 void CreateEmptyStack(Stack *S)
 /* I.S. Sembarang */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
-/* Ciri stack kosong : TOP bernilai Nil */
+/* Ciri stack kosong : TOP bernilai NilS */
 {
-    S->TOP = Nil;
+    S->TOP = NilS;
 }
 
 /* ********* Predikat Untuk test keadaan KOLEKSI ********* */
 boolean IsStackEmpty(Stack S)
 /* Mengirim true jika Stack kosong*/
-/* Ciri stack kosong : TOP bernilai Nil */
+/* Ciri stack kosong : TOP bernilai NilS */
 {
-    return S.TOP == Nil;
+    return S.TOP == NilS;
 }
 
 boolean IsStackFull(Stack S)

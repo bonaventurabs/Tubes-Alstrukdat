@@ -9,7 +9,7 @@ Deklarasi stack yang diimplementasi dengan tabel kontigu alokasi statik
 dan ukuran sama
 TOP adalah alamat elemen puncak*/
 
-#define Nil 0
+#define NilS 0
 #define MaxEl 7
 
 typedef char infotype;
@@ -21,7 +21,7 @@ typedef struct
     address TOP;
 } Stack;
 
-/* Definisi stack S kosong : S.TOP = Nil */
+/* Definisi stack S kosong : S.TOP = NilS */
 /* S.TOP = jumlah element stack */
 /* S.T[S.TOP-1] = element paling atas */
 
@@ -31,12 +31,12 @@ typedef struct
 void CreateEmptyStack(Stack *S);
 /* I.S. Sembarang */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
-/* Ciri stack kosong : TOP bernilai Nil */
+/* Ciri stack kosong : TOP bernilai NilS */
 
 /* ********* Predikat Untuk test keadaan KOLEKSI ********* */
 boolean IsStackEmpty(Stack S);
 /* Mengirim true jika Stack kosong*/
-/* Ciri stack kosong : TOP bernilai Nil */
+/* Ciri stack kosong : TOP bernilai NilS */
 boolean IsStackFull(Stack S);
 /* Mengirim true jika stack S penuh */
 /* Ciri stack penuh : TOP bernilai MaxEl */
