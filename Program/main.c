@@ -435,8 +435,7 @@ void SHOP(){
 }
 
 int Random(int lower, int upper){
-    time_t t;
-    srand((unsigned) time(&t));
+    srand(time(NULL));
 
     return(rand() % (upper-lower+1)+lower);    
 }
