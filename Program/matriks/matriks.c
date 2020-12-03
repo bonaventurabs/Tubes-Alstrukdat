@@ -424,7 +424,7 @@ void TulisMAP(MATRIKS M, indeks X, indeks Y)
 /* I.S. M terdefinisi beserta simbol */
 /* F.S. Map M tertulis di layar dibatasi oleh '*' beserta P diposisi (X,Y) */
 {
-    for (indeks j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++){
+    for (indeks j = GetFirstIdxKol(M); j <= GetLastIdxKol(M)+2; j++){
         printf("*");
     }
     printf("\n");
@@ -441,7 +441,8 @@ void TulisMAP(MATRIKS M, indeks X, indeks Y)
         printf("*\n");
     }
 
-    for (indeks j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++){
+    for (indeks j = GetFirstIdxKol(M); j <= GetLastIdxKol(M)+2; j++){
         printf("*");
-    }   
+    }
+    printf("\n");  
 }

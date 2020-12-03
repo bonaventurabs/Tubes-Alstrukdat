@@ -224,16 +224,17 @@ boolean IsKataCHECKORDER (Kata K)
 /* Menghasilkan true jika Kata K adalah CHECKORDER */
 {
     Kata KataCHECKORDER;
-    KataCHECKORDER.Length = 9;
+    KataCHECKORDER.Length = 10;
     KataCHECKORDER.TabKata[1] = 'C';
     KataCHECKORDER.TabKata[2] = 'H';
     KataCHECKORDER.TabKata[3] = 'E';
-    KataCHECKORDER.TabKata[4] = 'K';
-    KataCHECKORDER.TabKata[5] = 'O';
-    KataCHECKORDER.TabKata[6] = 'R';
-    KataCHECKORDER.TabKata[7] = 'D';
-    KataCHECKORDER.TabKata[8] = 'E';
-    KataCHECKORDER.TabKata[9] = 'R';
+    KataCHECKORDER.TabKata[4] = 'C';
+    KataCHECKORDER.TabKata[5] = 'K';
+    KataCHECKORDER.TabKata[6] = 'O';
+    KataCHECKORDER.TabKata[7] = 'R';
+    KataCHECKORDER.TabKata[8] = 'D';
+    KataCHECKORDER.TabKata[9] = 'E';
+    KataCHECKORDER.TabKata[10] = 'R';
 
     return IsKataSama(KataCHECKORDER,K);
 }

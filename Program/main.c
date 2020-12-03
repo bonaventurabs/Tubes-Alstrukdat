@@ -72,13 +72,16 @@ void KonfigurasiItem(char *path, ArrayKomponen *Komponen, ArrayKomponen *All){
     }
 }
 
-void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Graph *GrafBangunan){
+void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Graph *GrafB){
     int NBaris;
     int NKolom;
     int NObjek;
     char Simbol;
+    int countC = 0;
+    char count;
     int X,Y;
     int ElmtM;
+    adrNode P;
 
     STARTKATA(path);
     BacaAngka(&NBaris);
@@ -93,21 +96,31 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Gr
         BacaAngka(&X);
         BacaAngka(&Y);
         InsertListObjek(Objek,Simbol,X,Y);
-        BacaMAP(Map,Simbol,X,Y);
+        if (Simbol=='C'){
+            countC++;
+            count = '0' + countC;
+            BacaMAP(Map,count,X,Y);
+        } else {
+            BacaMAP(Map,Simbol,X,Y);
+        }
         if (Simbol=='B'){
             *LokPlayer = MakePOINT(X,Y);
         }
     }
-
-    CreateEmptyGraph(GrafBangunan);
-    for (int i = 1; i <= NObjek; i++){
-        for (int j = 1; j <= NObjek; j++){
+    CreateEmptyGraph(GrafB);
+    for (int i = 1; i <= NObjek(*Objek); i++)
+    {
+        InsertNode(GrafB,i,&P);
+    }
+    for (int i = 1; i <= NObjek(*Objek); i++){
+        for (int j = 1; j <= NObjek(*Objek); j++){
             BacaAngka(&ElmtM);
             if (ElmtM==1){
-                InsertEdge(GrafBangunan,i,j);
+                InsertEdge(GrafB,i,j);
             }
         }
     }
+    FINISH();
 }
 
 void MOVE(){/*
@@ -526,7 +539,7 @@ void COMMAND()
         } else if (IsKataSAVE(CKata)){
 
         } else {
-            printf("COMMAND tidak terdefinisi. Silahkan input COMMAND lain!");
+            printf("COMMAND tidak terdefinisi. Silahkan input COMMAND lain!\n");
         }
         /*IsKataMOVE(CKata);
         IsKataSTATUS(CKata);
