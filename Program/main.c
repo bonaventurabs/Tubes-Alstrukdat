@@ -123,87 +123,55 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Gr
     FINISH();
 }
 
-void MOVE(){/*
-    char NamaLokasiPlayer="*";
-    int i=1;
-    while (NamaLokasiPlayer=="*" && i<=NObjek(Bangunan)){
-        if (EQPOINT(LokasiPlayer,Bangunan.TabObjek[i].Loc)){
-            if (i=1){
-                NamaLokasiPlayer="Base";
-            }
-            else if(i=2){
-                NamaLokasiPlayer="Shop";
-            }
-            else{
-                NamaLokasiPlayer=("Pelanggan %d",(i-2));
-            }
-        }
-        else{
-            i++;
-        }       
-    }
+void MOVE(){
+    char *NamaLokPlayer = (char*) malloc (100*sizeof(char));
+    char *NamaLokasi = (char*) malloc (100*sizeof(char));
+    char *NamaLokasiTujuan = (char*) malloc (100*sizeof(char));
+    int id;
     adrNode NodeLokasiPlayer;
-    NodeLokasiPlayer=FirstG(GrafBangunan);
-    while (NodeLokasiPlayer->Id!=i && NodeLokasiPlayer!=Nil){
-        NodeLokasiPlayer=NextG(NodeLokasiPlayer);
-    }
-    printf("Kamu berada pada %s\n", NamaLokasiPlayer);
+    adrSuccNode DaftarLokasi,NodeLokTujuan;
+    int j = 1;
+    int tujuan;
+
+    TulisBangunanLok(Bangunan,LokasiPlayer,&NamaLokPlayer);
+    id = SearchIndeks(Bangunan,LokasiPlayer);
+    NodeLokasiPlayer=SearchNode(GrafBangunan,id);
+
+    printf("Kamu berada pada %s \n",NamaLokPlayer);
     printf("Daftar lokasi yang dapat dicapai:\n");
-    int j=1;
-    adrSuccNode DaftarLokasi=Trail(NodeLokasiPlayer);
+    DaftarLokasi = Trail(NodeLokasiPlayer);
     while (DaftarLokasi!=Nil){
-        if (DaftarLokasi->Succ->Id=1){
-            printf("%d. Base\n",j);
-        }
-        else if (DaftarLokasi->Succ->Id=2){
-            printf("%d. Shop\n",j);
-        }
-        else{
-            printf("%d. Pelanggan %d\n", j, (j-2));
-        }
-        j++;    
+        TulisBangunanInd(Bangunan,Id(Succ(DaftarLokasi)),&NamaLokasi);
+        printf("%d. %s\n",j,NamaLokasi);
+
+        DaftarLokasi = NextG(DaftarLokasi);
+        j++;
     }
 
-    int tujuan;
     printf("Nomor tujuan: ");
     scanf("%d", &tujuan);
 
-    if (tujuan < j){
+    if (1 <= tujuan && tujuan < j){
         int k=1;
-        DaftarLokasi=Trail(NodeLokasiPlayer);
+        NodeLokTujuan=Trail(NodeLokasiPlayer);
         while (k!=tujuan){
-            DaftarLokasi=NextG(DaftarLokasi);
-            j++;    
+            NodeLokTujuan=NextG(NodeLokTujuan);
+            k++;    
         }
-        infograph IdTujuan= Id(Succ(DaftarLokasi));
+        infograph IdTujuan= Id(Succ(NodeLokTujuan));
         POINT LokasiTujuan=Point(Bangunan,IdTujuan);
-        LokasiPlayer=LokasiTujuan;
+        
+        LokasiPlayer = MakePOINT(Absis(LokasiTujuan),Ordinat(LokasiTujuan));
 
-        char NamaLokasiTujuan="*";
-        int m=1;
-        while (NamaLokasiTujuan=="*" && i<=NObjek(Bangunan)){
-            if (EQPOINT(LokasiTujuan,Bangunan.TabObjek[m].Loc)){
-                if (m=1){
-                    NamaLokasiTujuan="Base";
-                }
-                else if(m=2){
-                    NamaLokasiTujuan="Shop";
-                }
-                else{
-                    NamaLokasiTujuan=("Pelanggan %d",(m-2));
-                }
-            }
-            else{
-                m++;
-            }
-
-        }
-        printf("Kamu telah mencapai lokasi %s", NamaLokasiTujuan);
+        TulisBangunanLok(Bangunan,LokasiTujuan,&NamaLokasiTujuan);
+        printf("Kamu telah mencapai lokasi %s\n", NamaLokasiTujuan);
     }
     else{
-        printf("Tempat tersebut tidak bisa dituju. Harap pindah ke tempat terdekat telebih dahulu!");
+        printf("Tempat tersebut tidak bisa dituju. Harap pindah ke tempat terdekat telebih dahulu!\n");
     }
-*/
+    free(NamaLokasi);
+    free(NamaLokasiTujuan);
+    free(NamaLokPlayer);
 }
 
 void STATUS(){

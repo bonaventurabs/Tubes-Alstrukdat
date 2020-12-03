@@ -135,13 +135,13 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Gr
 }
 
 void MOVE(){
-    char *NamaLokPlayer;
+    char *NamaLokPlayer = (char*) malloc (100*sizeof(char));
+    char *NamaLokasi = (char*) malloc (100*sizeof(char));
+    char *NamaLokasiTujuan = (char*) malloc (100*sizeof(char));
     int id;
     adrNode NodeLokasiPlayer;
     adrSuccNode DaftarLokasi,NodeLokTujuan;
     int j = 1;
-    char *NamaLokasi;
-    char *NamaLokasiTujuan;
     int tujuan;
 
     TulisBangunanLok(Bangunan,LokasiPlayer,&NamaLokPlayer);
@@ -152,8 +152,7 @@ void MOVE(){
     printf("Daftar lokasi yang dapat dicapai:\n");
     DaftarLokasi = Trail(NodeLokasiPlayer);
     while (DaftarLokasi!=Nil){
-        printf("%c\n",Simbol(Bangunan,4));
-        TulisBangunanInd(Bangunan,1,&NamaLokasi);
+        TulisBangunanInd(Bangunan,Id(Succ(DaftarLokasi)),&NamaLokasi);
         printf("%d. %s\n",j,NamaLokasi);
 
         DaftarLokasi = NextG(DaftarLokasi);
@@ -176,16 +175,19 @@ void MOVE(){
         LokasiPlayer = MakePOINT(Absis(LokasiTujuan),Ordinat(LokasiTujuan));
 
         TulisBangunanLok(Bangunan,LokasiTujuan,&NamaLokasiTujuan);
-        printf("Kamu telah mencapai lokasi %s", NamaLokasiTujuan);
+        printf("Kamu telah mencapai lokasi %s\n", NamaLokasiTujuan);
     }
     else{
-        printf("Tempat tersebut tidak bisa dituju. Harap pindah ke tempat terdekat telebih dahulu!");
+        printf("Tempat tersebut tidak bisa dituju. Harap pindah ke tempat terdekat telebih dahulu!\n");
     }
+    free(NamaLokasi);
+    free(NamaLokasiTujuan);
+    free(NamaLokPlayer);
 }
 
 void STATUS(){
     printf("Uang tersisa: $%d\n", uang);
-    printf("Build yang sedang dikerjakan: pesanan %d untuk Pelanggan %d.\n", &CurrPesanan, &CurrPelanggan);
+    printf("Build yang sedang dikerjakan: pesanan %d untuk Pelanggan %d.\n", CurrPesanan, CurrPelanggan);
     printf("Lokasi: pemain sedang berada pada %s.\n", &LokasiPlayer);
     printf("Inventory anda:\n");
     for(int i=0;i<Inventory.Neff;i++){
