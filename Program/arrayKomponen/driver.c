@@ -16,6 +16,10 @@ int main(){
     P = ArrangeItem(Nama,Harga,Kategori1);
     printf("%s\n",P.Nama);
     printf("%s\n",P.Kategori);
+
+    P = ArrangeItem(Nama2,Harga,Kategori1);
+    printf("%s\n",P.Nama);
+    printf("%s\n",P.Kategori);
     
 
     A = ArrangeItem(Nama2,Harga,Kategori2);

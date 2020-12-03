@@ -9,6 +9,7 @@ int main(){
     ListObjek L;
     MakeListObjek(&L);
     printf("%d\n",NObjek(L));
+    int j = 1;
 
     InsertListObjek(&L,'C',2,1);
     printf("%d\n",NObjek(L));
@@ -22,6 +23,11 @@ int main(){
     printf("%d\n",Ordinat(P));
     printf("\n");
     char *coba;
-    TulisBangunan(L,P,&coba);
-    printf("%s\n",coba);
+    TulisBangunanLok(L,P,&coba);
+    printf("Anda ada di %s\n",coba);
+    printf("%d\n",SearchIndeks(L,P));
+    TulisBangunanInd(L,1,&coba);
+    printf("%d. %s\n",j,coba);
+
+
 }

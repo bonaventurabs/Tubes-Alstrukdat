@@ -30,8 +30,15 @@ void InsertListObjek (ListObjek *L, char S, int X, int Y);
 /* I.S. L terdefinisi, mungkin kosong. */
 /* F.S. S dan (X,Y)  menjadi elemen terakhir L. */
 
-void TulisBangunan (ListObjek L, POINT Lokasi, char **str);
+int SearchIndeks (ListObjek L, POINT Lokasi);
+/* Mengembalikan indeks(1..NObjek(L)) elemen dari L yang berada di-Lokasi, NULL bila tidak ada */
+
+void TulisBangunanLok (ListObjek L, POINT Lokasi, char **str);
 /* I.S. L terdefinisi, tidak kosong. */
 /* F.S. Menyimpan nama bangunan yang terletak di (X,Y). */
+
+void TulisBangunanInd (ListObjek L, int indeks, char **str);
+/* I.S. L terdefinisi, tidak kosong. */
+/* F.S. Menyimpan nama bangunan yang terletak berdasarkan indeks list pada str. */
 
 #endif

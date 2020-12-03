@@ -36,7 +36,7 @@ Queue Pesanan;
 Stack Build;
 int uang;
 int CurrPelanggan;
-int CurrPesanan=0;
+int CurrPesanan;
 
 void LOGO(){
     printf("\n");
@@ -134,87 +134,53 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Gr
     FINISH();
 }
 
-void MOVE(){/*
-    char NamaLokasiPlayer="*";
-    int i=1;
-    while (NamaLokasiPlayer=="*" && i<=NObjek(Bangunan)){
-        if (EQPOINT(LokasiPlayer,Bangunan.TabObjek[i].Loc)){
-            if (i=1){
-                NamaLokasiPlayer="Base";
-            }
-            else if(i=2){
-                NamaLokasiPlayer="Shop";
-            }
-            else{
-                NamaLokasiPlayer=("Pelanggan %d",(i-2));
-            }
-        }
-        else{
-            i++;
-        }       
-    }
+void MOVE(){
+    char *NamaLokPlayer;
+    int id;
     adrNode NodeLokasiPlayer;
-    NodeLokasiPlayer=FirstG(GrafBangunan);
-    while (NodeLokasiPlayer->Id!=i && NodeLokasiPlayer!=Nil){
-        NodeLokasiPlayer=NextG(NodeLokasiPlayer);
-    }
-    printf("Kamu berada pada %s\n", NamaLokasiPlayer);
+    adrSuccNode DaftarLokasi,NodeLokTujuan;
+    int j = 1;
+    char *NamaLokasi;
+    char *NamaLokasiTujuan;
+    int tujuan;
+
+    TulisBangunanLok(Bangunan,LokasiPlayer,&NamaLokPlayer);
+    id = SearchIndeks(Bangunan,LokasiPlayer);
+    NodeLokasiPlayer=SearchNode(GrafBangunan,id);
+
+    printf("Kamu berada pada %s \n",NamaLokPlayer);
     printf("Daftar lokasi yang dapat dicapai:\n");
-    int j=1;
-    adrSuccNode DaftarLokasi=Trail(NodeLokasiPlayer);
+    DaftarLokasi = Trail(NodeLokasiPlayer);
     while (DaftarLokasi!=Nil){
-        if (DaftarLokasi->Succ->Id=1){
-            printf("%d. Base\n",j);
-        }
-        else if (DaftarLokasi->Succ->Id=2){
-            printf("%d. Shop\n",j);
-        }
-        else{
-            printf("%d. Pelanggan %d\n", j, (j-2));
-        }
-        j++;    
+        printf("%c\n",Simbol(Bangunan,4));
+        TulisBangunanInd(Bangunan,1,&NamaLokasi);
+        printf("%d. %s\n",j,NamaLokasi);
+
+        DaftarLokasi = NextG(DaftarLokasi);
+        j++;
     }
 
-    int tujuan;
     printf("Nomor tujuan: ");
     scanf("%d", &tujuan);
 
-    if (tujuan < j){
+    if (1 <= tujuan && tujuan < j){
         int k=1;
-        DaftarLokasi=Trail(NodeLokasiPlayer);
+        NodeLokTujuan=Trail(NodeLokasiPlayer);
         while (k!=tujuan){
-            DaftarLokasi=NextG(DaftarLokasi);
-            j++;    
+            NodeLokTujuan=NextG(NodeLokTujuan);
+            k++;    
         }
-        infograph IdTujuan= Id(Succ(DaftarLokasi));
+        infograph IdTujuan= Id(Succ(NodeLokTujuan));
         POINT LokasiTujuan=Point(Bangunan,IdTujuan);
-        LokasiPlayer=LokasiTujuan;
+        
+        LokasiPlayer = MakePOINT(Absis(LokasiTujuan),Ordinat(LokasiTujuan));
 
-        char NamaLokasiTujuan="*";
-        int m=1;
-        while (NamaLokasiTujuan=="*" && i<=NObjek(Bangunan)){
-            if (EQPOINT(LokasiTujuan,Bangunan.TabObjek[m].Loc)){
-                if (m=1){
-                    NamaLokasiTujuan="Base";
-                }
-                else if(m=2){
-                    NamaLokasiTujuan="Shop";
-                }
-                else{
-                    NamaLokasiTujuan=("Pelanggan %d",(m-2));
-                }
-            }
-            else{
-                m++;
-            }
-
-        }
+        TulisBangunanLok(Bangunan,LokasiTujuan,&NamaLokasiTujuan);
         printf("Kamu telah mencapai lokasi %s", NamaLokasiTujuan);
     }
     else{
         printf("Tempat tersebut tidak bisa dituju. Harap pindah ke tempat terdekat telebih dahulu!");
     }
-*/
 }
 
 void STATUS(){
@@ -552,19 +518,6 @@ void COMMAND()
         } else {
             printf("COMMAND tidak terdefinisi. Silahkan input COMMAND lain!\n");
         }
-        /*IsKataMOVE(CKata);
-        IsKataSTATUS(CKata);
-        IsKataCHECKORDER(CKata);
-        IsKataSTARTBUILD(CKata);
-        IsKataFINISHBUILD(CKata);
-        IsKataADDCOMPONENT(CKata);
-        IsKataREMOVECOMPONENT(CKata);
-        IsKataSHOP(CKata);
-        IsKataDELIVER(CKata);
-        IsKataEND_DAY(CKata);
-        IsKataMAP(CKata);
-        IsKataEXIT(CKata);
-        IsKataSAVE(CKata);*/
     }
 }
 
@@ -587,7 +540,7 @@ int main(){
         KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
         KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
         KonfigurasiMap("./File eksternal/Map.txt", &Map, &Bangunan, &LokasiPlayer, &GrafBangunan);
-
+        printf("%d\n",isConnected(GrafBangunan,1,2));
         //Inventory Awal
         Inventory = MakeArrayInventory();
 

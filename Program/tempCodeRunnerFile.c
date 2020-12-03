@@ -1,1 +1,0 @@
-Inventory.A[x-1].Nama
