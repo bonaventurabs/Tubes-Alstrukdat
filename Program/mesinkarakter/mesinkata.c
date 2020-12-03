@@ -129,9 +129,9 @@ void BacaAngka(int *angka)
     {
         sum = (sum*10) + Char2Int(CKata.TabKata[i]);
     }
-    ADVKATA();
-    IgnoreDelimiter();
     *angka = sum;
+    ADVKATA();
+    
 }
 
 void UnionKata(char string[])
@@ -162,6 +162,11 @@ void InputUSER()
 {
     int i = 1;
     InputKarakter(&CC);
+    while (CC==MARKNL || CC==BLANK)
+    {
+        InputKarakter(&CC);
+    }
+    
     while ((CC != MARKNL) && (i <= NMax))
     {
         CKata.TabKata[i] = CC;

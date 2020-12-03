@@ -80,12 +80,13 @@ adrNode SearchNode (Graph G, infograph X){
 adrSuccNode SearchEdge (Graph G, infograph prec, infograph succ){
 /* 	Mengembalikan address trailer yang menyimpan info busur (prec,succ)
 	jika sudah ada pada graph G, Nil jika belum */
-	adrNode Pprec;
+	adrNode Pprec, Ps;
 	adrSuccNode Psucc;
 	boolean found = false;
 
 	Pprec = SearchNode(G,prec);
-	if (Pprec == Nil){
+	Ps = SearchNode(G,succ);
+	if (Pprec == Nil || Psucc == Nil){
 		return Nil;
 	}
 
@@ -93,8 +94,9 @@ adrSuccNode SearchEdge (Graph G, infograph prec, infograph succ){
     while (!found && Psucc != Nil){
 		if (Id(Succ(Psucc)) == succ){
 			found = true;
+		} else {
+			Psucc = NextG(Psucc);
 		}
-		Psucc = NextG(Psucc);
 	}
 
 	return Psucc;

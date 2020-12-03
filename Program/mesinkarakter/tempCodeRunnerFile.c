@@ -1,1 +1,3 @@
-[100]
+
+    scanf("%d",&angka);
+    printf("...\n");

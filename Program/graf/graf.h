@@ -32,7 +32,6 @@ typedef struct{
 #define Id(Pn) (Pn)->Id
 #define Trail(Pn) (Pn)->Trail
 #define Succ(Pn) (Pn)->Succ
-#define NPred(Pn) (Pn)->NPred
 #define NextG(Pn) (Pn)->NextG
 
 /* *** Konstruktor *** */

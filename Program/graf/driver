@@ -1,5 +1,4 @@
-#include "graf.h"
-#include "graf.c"
+#include "../graf.h"
 #include <stdio.h>
 
 int main(){
@@ -9,6 +8,8 @@ int main(){
 	int a, b;
 
 	CreateGraph(1, &G);
+	InsertNode(&G, 2, &Pn);
+	InsertNode(&G, 3, &Pn);
 
 	Connect(&G, 1, 2);
 	Connect(&G, 1, 3);

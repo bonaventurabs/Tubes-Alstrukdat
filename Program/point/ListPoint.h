@@ -30,4 +30,8 @@ void InsertListObjek (ListObjek *L, char S, int X, int Y);
 /* I.S. L terdefinisi, mungkin kosong. */
 /* F.S. S dan (X,Y)  menjadi elemen terakhir L. */
 
+void TulisBangunan (ListObjek L, POINT Lokasi, char **str);
+/* I.S. L terdefinisi, tidak kosong. */
+/* F.S. Menyimpan nama bangunan yang terletak di (X,Y). */
+
 #endif

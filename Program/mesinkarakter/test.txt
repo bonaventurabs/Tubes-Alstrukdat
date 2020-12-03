@@ -1,4 +1,4 @@
 aku mau minum  , 2002 , 
 test , 
 101 , B , COBA ,
-200 
+200 10 0 

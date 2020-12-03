@@ -10,14 +10,14 @@ dan ukuran sama
 TOP adalah alamat elemen puncak*/
 
 #define NilS 0
-#define MaxEl 7
+#define MaxElS 7
 
 typedef char *infotype;
 typedef int address;
 
 typedef struct
 {
-    infotype T[MaxEl];
+    infotype T[MaxElS];
     address TOP;
 } Stack;
 
@@ -32,7 +32,7 @@ typedef struct
 /* *** Konstruktor/Kreator *** */
 void CreateEmptyStack(Stack *S);
 /* I.S. Sembarang */
-/* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
+/* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxElS */
 /* Ciri stack kosong : TOP bernilai NilS */
 
 /* ********* Predikat Untuk test keadaan KOLEKSI ********* */
@@ -41,7 +41,7 @@ boolean IsStackEmpty(Stack S);
 /* Ciri stack kosong : TOP bernilai NilS */
 boolean IsStackFull(Stack S);
 /* Mengirim true jika stack S penuh */
-/* Ciri stack penuh : TOP bernilai MaxEl */
+/* Ciri stack penuh : TOP bernilai MaxElS */
 
 /* ********** Operator Dasar Stack ********* */
 void Push(Stack *S, infotype X);

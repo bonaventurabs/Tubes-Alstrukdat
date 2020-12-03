@@ -4,7 +4,8 @@
 #include "arrayKomponen.c"
 
 int main(){
-    char Nama[100] = "Intel";
+    char *Nama;
+    Nama = "Intel";
     char *Kategori2 = "CPU";
     char *Kategori1 = "Memory";
     int Harga = 20;

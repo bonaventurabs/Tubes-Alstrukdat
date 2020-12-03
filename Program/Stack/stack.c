@@ -3,7 +3,7 @@
 
 void CreateEmptyStack(Stack *S)
 /* I.S. Sembarang */
-/* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
+/* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxElS */
 /* Ciri stack kosong : TOP bernilai NilS */
 {
     S->TOP = NilS;
@@ -19,9 +19,9 @@ boolean IsStackEmpty(Stack S)
 
 boolean IsStackFull(Stack S)
 /* Mengirim true jika stack S penuh */
-/* Ciri stack penuh : TOP bernilai MaxEl */
+/* Ciri stack penuh : TOP bernilai MaxElS */
 {
-    return S.TOP == MaxEl;
+    return S.TOP == MaxElS;
 }
 /* ********** Operator Dasar Stack ********* */
 void Push(Stack *S, infotype X)

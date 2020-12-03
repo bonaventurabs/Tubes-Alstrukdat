@@ -31,6 +31,10 @@ int main(){
     printf("%s\n",kalimat);
     BacaAngka(&angka2);
     printf("%d\n",angka2);
+    BacaAngka(&angka2);
+    printf("%d\n",angka2);
+    BacaAngka(&angka2);
+    printf("%d\n",angka2);
 
 
     printf("%d\n",EndKata);
@@ -39,5 +43,12 @@ int main(){
     char* str;
     str = kalimat;
     printf("%s\n",str);
+
+    char A;
+    scanf("%c",&A);
+    printf("input ");
+    InputUSER();
+    printf("input ");
+
     return 0;
 }

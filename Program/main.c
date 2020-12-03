@@ -45,7 +45,7 @@ void MENU(int *inputmenu){
     printf("                                         >");
     InputAngka(inputmenu);
     printf("\n");
-    while (*inputmenu!=1 || *inputmenu!=2){
+    while (*inputmenu!=1 && *inputmenu!=2){
         printf("                    Input tidak terdefinisi, silahkan masukan angka menu");
         printf("                                     >");
         InputAngka(inputmenu);
@@ -110,7 +110,7 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Gr
     }
 }
 
-void MOVE(){
+void MOVE(){/*
     char NamaLokasiPlayer="*";
     int i=1;
     while (NamaLokasiPlayer=="*" && i<=NObjek(Bangunan)){
@@ -190,6 +190,7 @@ void MOVE(){
     else{
         printf("Tempat tersebut tidak bisa dituju. Harap pindah ke tempat terdekat telebih dahulu!");
     }
+*/
 }
 
 void STATUS(){
@@ -547,7 +548,6 @@ int main(){
     /* Variabel */
     int inputmenu;
     All = MakeArrayKomponen();
-    uang = 10000; // inisialisasi uang
 
     /* Program */
     LOGO();
@@ -568,10 +568,12 @@ int main(){
         Inventory = MakeArrayInventory();
 
         //Order Pesawan Awal
+        uang = 10000; // inisialisasi uang
         Pesanan = CreateQueue(99);
         END_DAY();
+        COMMAND();
     } else {
 
     }
-    COMMAND();
+    
 }
