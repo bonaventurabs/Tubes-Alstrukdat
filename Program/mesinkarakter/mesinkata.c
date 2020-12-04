@@ -157,6 +157,18 @@ void UnionKata(char string[])
     ADVKATA();
 }
 
+void CopyStr(char string[],char copy[])
+/* Menyalin str pada copy */
+{
+    int i;
+    for (i = 0; string[i] != '\0'; ++i) { 
+        copy[i] = string[i]; 
+    } 
+  
+    copy[i] = '\0'; 
+  
+}
+
 void InputUSER()
 /* Membaca input dari user secara keseluruhan */
 {
@@ -174,6 +186,26 @@ void InputUSER()
         i++;
     }
     CKata.Length = i-1;
+}
+
+boolean IsStrEqual(char x[],char y[])
+/* Menghasilkan true jika x = y */
+{
+    boolean equal = true;
+    int i = 0; 
+
+    while (x[i] != '\0' && y[i] != '\0') { 
+        if (x[i] != y[i]) { 
+            equal = false; 
+            break;  
+        }  
+        i++; 
+    } 
+    if (equal && x[i]=='\0' && y[i]=='\0'){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 boolean IsKataSama (Kata K1, Kata K2)

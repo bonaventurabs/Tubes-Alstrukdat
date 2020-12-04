@@ -10,9 +10,11 @@ dan ukuran sama
 TOP adalah alamat elemen puncak*/
 
 #define NilS 0
-#define MaxElS 7
+#define MaxElS 8
 
-typedef char *infotype;
+typedef struct {
+    char NamaKomp[200];
+} infotype;
 typedef int address;
 
 typedef struct
@@ -61,5 +63,8 @@ void ForcePush(Stack *S, infotype X);
         Apabila S penuh, buang element paling bawah dari S dan masukkan X sebagai TOP
         Contoh: S berisi a b c d e f g h i j, setelah melakukan ForcePush(S, "k")
         S berisi b c d e f g h i j k */
+
+infotype Arrangeinfotype(char Komponen[]);
+/* Membentuk infotype sesuai parameter Komponen */
 
 #endif

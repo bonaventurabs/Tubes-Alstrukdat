@@ -245,7 +245,7 @@ void ADDCOMPONENT(){
         }
     }
 
-    printf("Komponen yang ingin dipasang: \n");
+    printf("Komponen yang ingin dipasang: ");
     scanf("%d", &x);
     if (x>=1 && x <= Inventory.Neff){
         KompBuild = Arrangeinfotype(Inventory.A[x-1].Nama); 
@@ -321,7 +321,7 @@ void FINISHBUILD(){
         startbuild = false;
     }
     else{
-        printf("Komponen yang dipasangkan belum sesuai dengan pesanan, build belum dapat diselesaikan");
+        printf("Komponen yang dipasangkan belum sesuai dengan pesanan, build belum dapat diselesaikan!\n");
     }
 }
 

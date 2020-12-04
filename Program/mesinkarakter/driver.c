@@ -40,9 +40,15 @@ int main(){
     printf("%d\n",EndKata);
     printf("%c\n",CC);
 
-    char* str;
-    str = kalimat;
+    char str[50];
+    CopyStr(kalimat,str);
     printf("%s\n",str);
+
+    printf("oke\n");
+
+    char X[10]="akua";
+    char Y[10]="akua";
+    printf("%d\n",IsStrEqual(X,Y));
 
     char A;
     scanf("%c",&A);

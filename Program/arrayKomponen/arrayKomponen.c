@@ -98,14 +98,38 @@ void ArrayKomponenInsertFirst(ArrayKomponen *list, Item el) {
 }
 
 /**
+ * Fungsi untuk mengcopy seluruh elemen list.
+ * Prekondisi: list terdefinisi
+ */
+ArrayKomponen CopyArrayKomponen(ArrayKomponen list) {
+    Item itemc;
+    ArrayKomponen copy = MakeArrayKomponen();
+    if (!IsArrayKomponenEmpty(list)){
+        for (int i = 0; i < list.Neff; i++){
+            itemc = ArrangeItem(list.A[i].Nama,list.A[i].Harga,list.A[i].Kategori);
+            ArrayKomponenInsertLast(&copy,itemc);
+        }
+    }
+    return copy;
+}
+
+/**
  * Fungsi untuk membentuk Item.
  * Prekondisi: Nama, Harga, dan Kategori terdefinisi
  */
 Item ArrangeItem(char Nama[],int Harga, char Kategori[]){
     Item Item;
+    int i;
     
-    Item.Nama = Nama;
+    for (i = 0; Nama[i] != '\0'; ++i) {
+        Item.Nama[i] = Nama[i];
+    }
+    Item.Nama[i] = '\0';
+
+    for (i = 0; Kategori[i] != '\0'; ++i) {
+        Item.Kategori[i] = Kategori[i];
+    }
+    Item.Kategori[i] = '\0';
     Item.Harga = Harga;
-    Item.Kategori = Kategori;
     return Item;
 }

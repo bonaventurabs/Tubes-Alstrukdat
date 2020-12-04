@@ -17,7 +17,7 @@ typedef struct {
         int Pemesan;
         int Nilai;
         char Detail[8][200];
-} Order;
+        } Order;
 
 typedef struct { Order *Tab;  /* tabel penyimpan elemen */
                  IdxType HEAD;  /* indeks elemen paling awal (terdepan) */

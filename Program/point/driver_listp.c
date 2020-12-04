@@ -22,11 +22,12 @@ int main(){
     printf("%d\n",Absis(P));
     printf("%d\n",Ordinat(P));
     printf("\n");
-    char *coba;
-    TulisBangunanLok(L,P,&coba);
+    char coba[100];
+    TulisBangunanLok(L,P,coba);
     printf("Anda ada di %s\n",coba);
     printf("%d\n",SearchIndeks(L,P));
-    TulisBangunanInd(L,1,&coba);
+    InsertListObjek(&L,'S',3,2);
+    TulisBangunanInd(L,2,coba);
     printf("%d. %s\n",j,coba);
 
 

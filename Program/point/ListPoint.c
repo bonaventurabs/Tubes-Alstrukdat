@@ -45,13 +45,16 @@ int SearchIndeks (ListObjek L, POINT Lokasi)
     }
 }
 
-void TulisBangunanLok (ListObjek L, POINT Lokasi, char **str)
+void TulisBangunanLok (ListObjek L, POINT Lokasi, char str[])
 /* I.S. L terdefinisi, tidak kosong. */
 /* F.S. Menyimpan nama bangunan yang terletak di (X,Y) pada str. */
 {
     boolean found = false;
     int countpelanggan = 0;
     int i = 1;
+    int j;
+    char Lok1[10] = "Base";
+    char Lok2[10] = "Shop";
 
     while (!found && i<=NObjek(L)){
         if (Simbol(L,i)=='C'){
@@ -60,11 +63,17 @@ void TulisBangunanLok (ListObjek L, POINT Lokasi, char **str)
 
         if (EQPOINT(Lokasi,Point(L,i))){
             if (Simbol(L,i)=='B'){
-                *str = "Base";
+                for (j = 0; Lok1[j] != '\0'; ++j) {
+                    str[j] = Lok1[j];
+                }
+                str[j] = '\0';
             } else if (Simbol(L,i)=='S'){
-                *str = "Shop";
+                for (j = 0; Lok2[j] != '\0'; ++j) {
+                    str[j] = Lok2[j];
+                }
+                str[j] = '\0';
             } else if (Simbol(L,i)=='C'){
-                sprintf(*str,"Pelanggan %d",countpelanggan);
+                sprintf(str,"Pelanggan %d",countpelanggan);
             }
             found = true;
         }
@@ -72,14 +81,18 @@ void TulisBangunanLok (ListObjek L, POINT Lokasi, char **str)
             i++;
         }
     }
+
 }
 
-void TulisBangunanInd (ListObjek L, int indeks, char **str)
+void TulisBangunanInd (ListObjek L, int indeks, char str[])
 /* I.S. L terdefinisi, tidak kosong. */
 /* F.S. Menyimpan nama bangunan yang terletak berdasarkan indeks list pada str. */
 {
     int countpelanggan = 0;
     int i = 1;
+    int j;
+    char Lok1[10] = "Base";
+    char Lok2[10] = "Shop";
 
     while (i<=indeks){
         if (Simbol(L,i)=='C'){
@@ -89,10 +102,72 @@ void TulisBangunanInd (ListObjek L, int indeks, char **str)
     }
 
     if (Simbol(L,indeks)=='B'){
-        *str = "Base";
+        for (j = 0; Lok1[j] != '\0'; ++j) {
+            str[j] = Lok1[j];
+        }
+        str[j] = '\0';
     } else if (Simbol(L,indeks)=='S'){
-        *str = "Shop";
+        for (j = 0; Lok2[j] != '\0'; ++j) {
+            str[j] = Lok2[j];
+        }
+        str[j] = '\0';
     } else if (Simbol(L,indeks)=='C'){
-        sprintf(*str,"Pelanggan %d",countpelanggan);
+        sprintf(str,"Pelanggan %d",countpelanggan);
     }
+}
+
+int TulisNoPelangganLok(ListObjek L, POINT Lokasi)
+/* Menghasilkan no pelanggan sesuai Lokasi, */
+/* I.S. Lokasi adalah lokasi pelanggan, jika tidak ada mengembalikan 0. */
+{
+    boolean found = false;
+    int countpelanggan = 0;
+    int i = 1;
+
+    while (!found && i<=NObjek(L)){
+        if (Simbol(L,i)=='C'){
+            countpelanggan++;
+        }
+        if (EQPOINT(Lokasi,Point(L,i))){
+            found = true;
+        } else {
+            i++;
+        }
+    }
+    if (found){
+        return countpelanggan;
+    } else {
+        return 0;
+    }
+}
+
+int TulisNoPelangganInd(ListObjek L, int indeks)
+/* Menghasilkan no pelanggan sesuai indeks dari list L */
+{
+    boolean found = false;
+    int countpelanggan = 0;
+    int i = 1;
+
+    while (i<=indeks){
+        if (Simbol(L,i)=='C'){
+            countpelanggan++;
+        }
+        i++;
+    }
+    return countpelanggan;
+}
+
+int MaxPelanggan(ListObjek L)
+/* Menghasilkan jumlah pelaggan 'C' dalam L */
+{
+    int countpelanggan = 0;
+    int i = 1;
+
+    while (i<=NObjek(L)){
+        if (Simbol(L,i)=='C'){
+            countpelanggan++;
+        }
+        i++;
+    }
+    return countpelanggan;
 }

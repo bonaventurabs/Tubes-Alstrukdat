@@ -1,13 +1,15 @@
 #ifndef __INVENTORY_ARRAY__
 #define __INVENTORY_ARRAY__
 #include "../boolean/boolean.h"
+#include "../mesinkarakter/mesinkata.h"
 
 #define InitialSizeInventory 50
 
 typedef int IdxType;
 typedef struct {
-    char *Nama;
+    char Nama[200];
     int Jumlah;
+    char Jenis[20];
 } Element;
 
 typedef struct {
@@ -71,5 +73,23 @@ void ArrayInventoryInsertLast(ArrayInventory *list, Element el);
  * Prekondisi: list terdefinisi
  */
 void ArrayInventoryInsertFirst(ArrayInventory *list, Element el);
+
+/**
+/* I.S. list terdefinisi, tidak kosong,  
+/* F.S. Elemen list sesuai indeks logic dihapus dari list. 
+*/
+void ArrayInventoryDeleteAt (ArrayInventory *list, Element *el, IdxType i);
+
+/**
+ * Fungsi untuk mendapatkan indeks dari Elemen sesuai NoPesanan
+ * Prekondisi: terdapat build yang tersimpan di inventory.
+ */
+IdxType IndeksInventPesanan(ArrayInventory list, int NoPesanan);
+
+/**
+ * Fungsi untuk membentuk Element.
+ * Prekondisi: Nama dan Jumlah terdefinisi
+ */
+Element ArrangeElement(char Nama[],int Jumlah, char Jenis[]);
 
 #endif	

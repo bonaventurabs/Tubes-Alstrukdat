@@ -96,3 +96,75 @@ void ArrayInventoryInsertLast(ArrayInventory *list, Element el) {
 void ArrayInventoryInsertFirst(ArrayInventory *list, Element el) {
     ArrayInventoryInsertAt(list, el, 0);
 }
+
+/**
+/* I.S. list terdefinisi, tidak kosong,  
+/* F.S. Elemen list sesuai indeks logic dihapus dari list. 
+*/
+void ArrayInventoryDeleteAt (ArrayInventory *list, Element *el, IdxType i){
+    
+    IdxType j;
+    if (!IsArrayInventoryEmpty(*list)){
+        *el = list->A[i];
+        if (i!=list->Neff-1){
+            for (j=i; i<list->Neff-1;j++){
+                list->A[j] = list->A[j+1];
+            }
+        }
+        list->Neff--;
+        if (list->Neff<list->Capacity/4){
+            list->Capacity = list->Capacity/2;
+            list->A = (Element*) realloc (list->A,list->Capacity*sizeof(Element));
+        }
+    }
+}
+
+/**
+ * Fungsi untuk mendapatkan indeks dari Elemen sesuai NoPesanan
+ * Prekondisi: terdapat build yang tersimpan di inventory.
+ */
+IdxType IndeksInventPesanan(ArrayInventory list, int NoPesanan){
+    boolean found = false;
+    int i = 0;
+    int Nomor;
+
+    while (!found && i < list.Neff){
+        if(IsStrEqual(list.A[i].Jenis,"Build")){
+            sscanf(list.A[i].Nama,"Build untuk Pesanan #%d",&Nomor);
+            if (Nomor==NoPesanan){
+                found = true;
+            } else {
+                i++;
+            } 
+        } else {
+            i++;
+        }
+    }
+    if (found){
+        return i;
+    } else {
+        return -99;
+    }
+}
+
+/**
+ * Fungsi untuk membentuk Element.
+ * Prekondisi: Nama dan Jumlah terdefinisi
+ */
+Element ArrangeElement(char Nama[],int Jumlah, char Jenis[]){
+    Element Elemen;
+    int i;
+    
+    for (i = 0; Nama[i] != '\0'; ++i) {
+        Elemen.Nama[i] = Nama[i];
+    }
+    Elemen.Nama[i] = '\0';
+
+    Elemen.Jumlah = Jumlah;
+
+    for (i = 0; Jenis[i] != '\0'; ++i) {
+        Elemen.Jenis[i] = Jenis[i];
+    }
+    Elemen.Jenis[i] = '\0';
+    return Elemen;
+}

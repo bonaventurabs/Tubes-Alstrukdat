@@ -66,8 +66,14 @@ void BacaAngka(int *angka);
 void UnionKata(char string[]);
 /* Membaca kata dan menggabungkan kata hingga DELIMITER, antar kata dipisahkan dengan ' ' (spasi) */
 
+void CopyStr(char string[],char copy[]);
+/* Menyalin str pada copy */
+
 void InputUSER();
 /* Membaca input dari user secara keseluruhan */
+
+boolean IsStrEqual(char x[],char y[]);
+/* Menghasilkan true jika x = y */
 
 boolean IsKataSama (Kata K1, Kata K2);
 /* Menghasilkan true jika K1 = K2 */

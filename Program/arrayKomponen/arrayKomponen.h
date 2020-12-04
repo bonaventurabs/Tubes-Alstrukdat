@@ -9,9 +9,9 @@
 
 typedef int IdxType;
 typedef struct {
-    char *Nama;
+    char Nama[200];
     int Harga;
-    char *Kategori;
+    char Kategori[20];
 } Item;
 typedef struct {
     Item *A;
@@ -74,6 +74,12 @@ void ArrayKomponenInsertLast(ArrayKomponen *list, Item el);
  * Prekondisi: list terdefinisi
  */
 void ArrayKomponenInsertFirst(ArrayKomponen *list, Item el);
+
+/**
+ * Fungsi untuk mengcopy seluruh elemen list.
+ * Prekondisi: list terdefinisi
+ */
+ArrayKomponen CopyArrayKomponen(ArrayKomponen list);
 
 /* ********** OPERASI GAME SANTO TYCOON ********** */
 /**
