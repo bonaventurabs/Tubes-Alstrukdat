@@ -545,6 +545,9 @@ int main(){
     LOGO();
     MENU(&inputmenu);
     if (inputmenu==1){
+        //Array Penyimpanan Data Komponen
+        All = MakeArrayKomponen();
+
         //Konfigurasi File Eksternal (Komponen/Item, Map, Objek)
         KonfigurasiItem("./File eksternal/Motherboard.txt", &Motherboard, &All);
         KonfigurasiItem("./File eksternal/CPU.txt", &CPU, &All);
@@ -555,10 +558,7 @@ int main(){
         KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
         KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
         KonfigurasiMap("./File eksternal/Map.txt", &Map, &Bangunan, &LokasiPlayer, &GrafBangunan);
-
-        //Array Komponen Awal
-        All = MakeArrayKomponen();
-
+  
         //Inventory Awal
         Inventory = MakeArrayInventory();
 
