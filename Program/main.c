@@ -539,7 +539,7 @@ void COMMAND()
 int main(){
     /* Variabel */
     int inputmenu;
-    All = MakeArrayKomponen();
+    
 
     /* Program */
     LOGO();
@@ -555,6 +555,9 @@ int main(){
         KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
         KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
         KonfigurasiMap("./File eksternal/Map.txt", &Map, &Bangunan, &LokasiPlayer, &GrafBangunan);
+
+        //Array Komponen Awal
+        All = MakeArrayKomponen();
 
         //Inventory Awal
         Inventory = MakeArrayInventory();
