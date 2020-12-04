@@ -13,22 +13,17 @@
 /* Definisi tipe elemen dan indeks pada Queue */
 typedef int IdxType;
 
-typedef struct { int Pemesan;
-                 int Nilai;
-                 char *Motherboard;
-                 char *CPU;
-                 char *Memory;
-                 char *CPU_Cooler;
-                 char *Case;
-                 char *GPU;
-                 char *Storage;
-                 char *PSU;
-               } Order;
+typedef struct {
+        int Pemesan;
+        int Nilai;
+        char Detail[8][200];
+} Order;
 
 typedef struct { Order *Tab;  /* tabel penyimpan elemen */
                  IdxType HEAD;  /* indeks elemen paling awal (terdepan) */
                  IdxType TAIL;  /* indeks tempat menambah elemen baru */
                  int MaxEl;     /* kapasitas jumlah elemen */
+                 int OrderNum; /* order number pada queue HEAD */
                } Queue;
 /* Definisi Queue kosong: HEAD=NIL; TAIL=NIL. */
 
@@ -82,5 +77,10 @@ Queue CopyQueue (Queue Q);
 /* I.S. Q pernah dialokasi */
 /* F.S. Queue baru dengan nilai isi antrean sama seperti Q;
         HEAD pada Queue baru dimulai dari 0 */
+
+Order ArrangeOrder(int Pemesan,int Nilai, char Detail[8][200]);
+/* Proses: Mengembalikan Order baru dengan isi paramater */
+/* I.S. Parameter terdefinisi */
+/* F.S. Order terbentuk sesuai parameter */
 
 #endif

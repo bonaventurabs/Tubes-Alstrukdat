@@ -1,0 +1,1 @@
+Order ArrangeOrder(int Pemesan,int Nilai, char *Detail[]){

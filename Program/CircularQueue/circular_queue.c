@@ -1,4 +1,5 @@
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "circular_queue.h"
 
 /* ********* Prototype ********* */
@@ -58,6 +59,7 @@ Order PopQueue (Queue * Q) {
         Q->HEAD = NIL;
         Q->TAIL = NIL;
     }
+    Q->OrderNum++;
     return ret;
 }
 Order Front (Queue Q) {
@@ -75,4 +77,21 @@ Queue CopyQueue (Queue Q) {
         }
     }
     return new;
+}
+
+Order ArrangeOrder(int Pemesan,int Nilai, char Detail[8][200]){
+    Order Pesan;
+    int i,j;
+    Pesan.Pemesan = Pemesan;
+    Pesan.Nilai = Nilai;
+
+    
+    for (i = 0; i < 8; ++i) {
+        for ( j = 0; Detail[i][j]!='\0'; ++j){
+            Pesan.Detail[i][j] = Detail[i][j];
+    
+        }
+        Pesan.Detail[i][j] = '\0';
+    }
+    return Pesan;
 }

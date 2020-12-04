@@ -3,6 +3,7 @@
 #include "./point/ListPoint.h"
 #include "./arrayKomponen/arrayKomponen.h"
 #include "./arrayInventory/arrayInventory.h"
+#include "./arrayDelivery/arrayDelivery.h"
 #include "./mesinkarakter/mesinkar.h"
 #include "./mesinkarakter/mesinkata.h"
 #include "./CircularQueue/circular_queue.h"
@@ -14,6 +15,7 @@
 #include "./point/ListPoint.c"
 #include "./arrayKomponen/arrayKomponen.c"
 #include "./arrayInventory/arrayInventory.c"
+#include "./arrayDelivery/arrayDelivery.c"
 #include "./mesinkarakter/mesinkar.c"
 #include "./mesinkarakter/mesinkata.c"
 #include "./CircularQueue/circular_queue.c"
@@ -23,6 +25,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
+#define NKomponen 8
 
 // Variabel Global
 ArrayKomponen Motherboard,CPU,Memory,CPUCool,Case,GPU,Storage,PSU;
@@ -34,9 +39,9 @@ MATRIKS Map; //peta game
 Graph GrafBangunan; //graf bangunan
 Queue Pesanan;
 Stack Build;
+ArrayDelivery Delivery;
 int uang;
-int CurrPelanggan;
-int CurrPesanan;
+boolean startbuild = false;
 
 void LOGO(){
     printf("\n");
@@ -53,12 +58,12 @@ void MENU(int *inputmenu){
     printf("                                         SANTO TYCOON\n");
     printf("                                         1. NEW GAME\n");
     printf("                                         2. LOAD GAME\n");
-    printf("                                         >");
+    printf("                                         > ");
     InputAngka(inputmenu);
     printf("\n");
     while (*inputmenu!=1 && *inputmenu!=2){
         printf("                    Input tidak terdefinisi, silahkan masukan angka menu");
-        printf("                                     >");
+        printf("                                     > ");
         InputAngka(inputmenu);
     }
 }
@@ -135,16 +140,16 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Gr
 }
 
 void MOVE(){
-    char *NamaLokPlayer = (char*) malloc (100*sizeof(char));
-    char *NamaLokasi = (char*) malloc (100*sizeof(char));
-    char *NamaLokasiTujuan = (char*) malloc (100*sizeof(char));
+    char NamaLokPlayer[100];
+    char NamaLokasi[100];
+    char NamaLokasiTujuan[100];
     int id;
     adrNode NodeLokasiPlayer;
     adrSuccNode DaftarLokasi,NodeLokTujuan;
     int j = 1;
     int tujuan;
 
-    TulisBangunanLok(Bangunan,LokasiPlayer,&NamaLokPlayer);
+    TulisBangunanLok(Bangunan,LokasiPlayer,NamaLokPlayer);
     id = SearchIndeks(Bangunan,LokasiPlayer);
     NodeLokasiPlayer=SearchNode(GrafBangunan,id);
 
@@ -152,7 +157,7 @@ void MOVE(){
     printf("Daftar lokasi yang dapat dicapai:\n");
     DaftarLokasi = Trail(NodeLokasiPlayer);
     while (DaftarLokasi!=Nil){
-        TulisBangunanInd(Bangunan,Id(Succ(DaftarLokasi)),&NamaLokasi);
+        TulisBangunanInd(Bangunan,Id(Succ(DaftarLokasi)),NamaLokasi);
         printf("%d. %s\n",j,NamaLokasi);
 
         DaftarLokasi = NextG(DaftarLokasi);
@@ -174,68 +179,83 @@ void MOVE(){
         
         LokasiPlayer = MakePOINT(Absis(LokasiTujuan),Ordinat(LokasiTujuan));
 
-        TulisBangunanLok(Bangunan,LokasiTujuan,&NamaLokasiTujuan);
+        TulisBangunanLok(Bangunan,LokasiTujuan,NamaLokasiTujuan);
         printf("Kamu telah mencapai lokasi %s\n", NamaLokasiTujuan);
     }
     else{
         printf("Tempat tersebut tidak bisa dituju. Harap pindah ke tempat terdekat telebih dahulu!\n");
     }
-    free(NamaLokasi);
-    free(NamaLokasiTujuan);
-    free(NamaLokPlayer);
 }
 
 void STATUS(){
+    char NamaLokPlayer[100];
+    TulisBangunanLok(Bangunan,LokasiPlayer,NamaLokPlayer);
     printf("Uang tersisa: $%d\n", uang);
-    printf("Build yang sedang dikerjakan: pesanan %d untuk Pelanggan %d.\n", CurrPesanan, CurrPelanggan);
-    printf("Lokasi: pemain sedang berada pada %s.\n", &LokasiPlayer);
+    printf("Build yang sedang dikerjakan: ");
+    if (startbuild){
+        printf("pesanan %d untuk Pelanggan %d.\n", Pesanan.OrderNum, Pesanan.Tab[Pesanan.HEAD].Pemesan);
+    } else {
+        printf("-\n");
+    }
+    printf("Lokasi: pemain sedang berada pada %s.\n", NamaLokPlayer);
     printf("Inventory anda:\n");
-    for(int i=0;i<Inventory.Neff;i++){
-      printf("%d. %s (%d)\n",(i+1), &(Inventory.A[i].Nama), &(Inventory.A[i].Jumlah));
+    if (Inventory.Neff>0){
+        for(int i=0;i<Inventory.Neff;i++){
+            printf("%d. %s (%d)\n",(i+1), Inventory.A[i].Nama, Inventory.A[i].Jumlah);
+        }
     }
 }
 
 void CHECKORDER(){
-    printf("Nomor Order: %s\n", &CurrPesanan);
-    printf("Pemesan: Pelanggan %d\n", &CurrPelanggan);
-    printf("Invoice: $%d\n", &(Pesanan.Tab[CurrPesanan-1].Nilai));
-    printf("Komponen:\n");
-    printf("1. %s\n", &(Pesanan.Tab[CurrPesanan-1].Motherboard));
-    printf("2. %s\n", &(Pesanan.Tab[CurrPesanan-1].CPU));
-    printf("3. %s\n", &(Pesanan.Tab[CurrPesanan-1].Memory));
-    printf("4. %s\n", &(Pesanan.Tab[CurrPesanan-1].CPU_Cooler));
-    printf("5. %s\n", &(Pesanan.Tab[CurrPesanan-1].Case));
-    printf("6. %s\n", &(Pesanan.Tab[CurrPesanan-1].GPU));
-    printf("7. %s\n", &(Pesanan.Tab[CurrPesanan-1].Storage));
-    printf("8. %s\n", &(Pesanan.Tab[CurrPesanan-1].PSU));   
+    if (IsQueueEmpty(Pesanan)){
+        printf("Tidak ada pesanan!\n");
+    } else {
+        printf("Nomor Order: %d\n", Pesanan.OrderNum);
+        printf("Pemesan: Pelanggan %d\n", Pesanan.Tab[Pesanan.HEAD].Pemesan);
+        printf("Invoice: $%d\n", Pesanan.Tab[Pesanan.HEAD].Nilai);
+        printf("Komponen:\n");
+        for (int i = 0; i < 8; i++)
+        {
+            printf("%d. %s\n",i+1 , Pesanan.Tab[Pesanan.HEAD].Detail[i]);
+        } 
+    }     
 }
 
 void STARTBUILD(){
-    CurrPelanggan=Pesanan.Tab[CurrPesanan].Pemesan;
-    CurrPesanan++;
+    startbuild = true;
     CreateEmptyStack(&Build);
-    printf("Kamu telah memulai pesanan %d untuk Pelanggan %d.\n", CurrPesanan, CurrPelanggan); 
+    printf("Kamu telah memulai pesanan %d untuk Pelanggan %d.\n", Pesanan.OrderNum, Pesanan.Tab[Pesanan.HEAD].Pemesan); 
 }
 
 void ADDCOMPONENT(){ 
     int x;
+    infotype KompBuild;
     printf("Komponen yang telah terpasang:\n");
-    for(int i=0;i<TOP(Build);i++){
-        printf("%d. %s\n", (i+1), Build.T[i]);
+    if (IsStackEmpty(Build)){
+        printf("\n");
+    } else {
+        for(int i=0;i<TOP(Build);i++){
+           printf("%d. %s\n", (i+1), Build.T[i].NamaKomp);
+        }
     }
     printf("Komponen yang tersedia\n");
     for(int i=0;i<Inventory.Neff;i++){
-        printf("&d. %s\n", (i+1), (Inventory.A[i].Nama));
+        if (IsStrEqual("Komponen",Inventory.A[i].Jenis)){
+            printf("&d. %s\n", (i+1), Inventory.A[i].Nama);
+        }
     }
 
     printf("Komponen yang ingin dipasang: \n");
     scanf("%d", &x);
-    if (x <= Inventory.Neff){ /*masih gatau gimana caranya ngilangin komponen yang tersedia kalo dipilih buat dipasang */
-        Push(&Build, Inventory.A[x-1].Nama);
+    if (x>=1 && x <= Inventory.Neff){
+        KompBuild = Arrangeinfotype(Inventory.A[x-1].Nama); 
+        Push(&Build, KompBuild);
         Inventory.A[x-1].Jumlah--;
         if (Inventory.A[x-1].Jumlah==0){
-            for(int i=x-1;i<(Inventory.Neff-1);i++){
-                Inventory.A[x-1]=Inventory.A[x];
+            if ((x-1)!=Inventory.Neff-1){
+                for(int i=x-1;i<(Inventory.Neff-1) ;i++){
+                    Inventory.A[i]=Inventory.A[i+1];
+                }
             }
             Inventory.Neff--;
         }
@@ -247,48 +267,58 @@ void ADDCOMPONENT(){
 }
 
 void REMOVECOMPONENT(){
-    char *copot;
-    Pop(&Build,&copot);
+    infotype infocopot;
+    char copot[200];
     Element simpan;
-    simpan.Nama=copot;
-    simpan.Jumlah=1;
-    ArrayInventoryInsertLast(&Inventory,simpan);
+    boolean found = false;
+    int i = 0;
+
+    Pop(&Build,&infocopot);
+    CopyStr(infocopot.NamaKomp,copot);
+    while (!found && i<Inventory.Neff){
+        if (IsStrEqual(copot,Inventory.A[i].Nama)){
+            Inventory.A[i].Jumlah++;
+            found = true;
+        } else {
+            i++;
+        }
+    }
+    if (!found){
+        simpan = ArrangeElement(copot,1,"Komponen");
+        ArrayInventoryInsertLast(&Inventory,simpan);
+    }
     printf("Komponen %d\n", &copot, " berhasil dicopot!");
 }
 
 void FINISHBUILD(){
     boolean benar=true;
-    if(Build.T[1]!=Pesanan.Tab[CurrPesanan-1].Motherboard){
-        benar=false;
-    }
-    if(Build.T[2]!=Pesanan.Tab[CurrPesanan-1].CPU){
-        benar=false;
-    }
-    if(Build.T[3]!=Pesanan.Tab[CurrPesanan-1].Memory){
-        benar=false;
-    }
-    if(Build.T[4]!=Pesanan.Tab[CurrPesanan-1].CPU_Cooler){
-        benar=false;
-    }
-    if(Build.T[5]!=Pesanan.Tab[CurrPesanan-1].Case){
-        benar=false;
-    }
-    if(Build.T[6]!=Pesanan.Tab[CurrPesanan-1].GPU){
-        benar=false;
-    }
-    if(Build.T[7]!=Pesanan.Tab[CurrPesanan-1].Storage){
-        benar=false;
-    }
-    if(Build.T[8]!=Pesanan.Tab[CurrPesanan-1].PSU){
-        benar=false;
+    int i = 0;
+    while (benar && i < 8){
+        if (!IsStrEqual(Build.T[i].NamaKomp,Pesanan.Tab[Pesanan.HEAD].Detail[i])){
+            benar = false;
+        } else {
+            i++;
+        }
     }
       
-    if(benar){ 
-        printf("%d", &CurrPesanan, "telah selesai. Silahkan antar ke Pelanggan %d\n", &CurrPelanggan);
+    if(benar){
         Element Komputer;
-        Komputer.Nama="Build untuk pesanan #%d",&CurrPesanan;
-        Komputer.Jumlah=1;
+        char KomputerF [100];
+        DelBuild DelKomputer;
+        Order OrderFinish;
+
+        OrderFinish = PopQueue(&Pesanan);
+         
+        printf("Pesanan %d telah selesai. Silahkan antar ke Pelanggan %d\n", Pesanan.OrderNum-1, OrderFinish.Pemesan);
+        
+        sprintf(KomputerF,"Build untuk Pesanan #%d",Pesanan.OrderNum-1);
+        Komputer = ArrangeElement(KomputerF,1,"Build");
         ArrayInventoryInsertLast(&Inventory,Komputer);
+
+        DelKomputer = ArrangeDelBuild(Pesanan.OrderNum-1,OrderFinish.Pemesan,OrderFinish.Nilai);
+        ArrayDeliveryInsertLast(&Delivery,DelKomputer);
+        
+        startbuild = false;
     }
     else{
         printf("Komponen yang dipasangkan belum sesuai dengan pesanan, build belum dapat diselesaikan");
@@ -296,135 +326,125 @@ void FINISHBUILD(){
 }
 
 void DELIVER(){
-    if (EQPOINT(LokasiPlayer,Bangunan.TabObjek[CurrPelanggan+2].Loc)){
-        printf("Pesanan #%d berhasil diantarkan kepada Pelanggan %d!\n", &CurrPesanan, &CurrPelanggan);    
-    }
-    else{
-        printf("Posisi anda belum berada di rumah Pelanggan %d. Harap pindah ke rumah Pelanggan %d terlebih dahulu!\n", &CurrPelanggan, &CurrPelanggan);
+    int NoPelanggan;
+    int indeksDel;
+    int indeksInvent;
+    int NoPesanan;
+    DelBuild Delivered;
+    Element Invent;
+
+    NoPelanggan = TulisNoPelangganLok(Bangunan,LokasiPlayer);
+    if (NoPelanggan!= 0 && IsPemesanAda(Delivery,NoPelanggan)){
+        indeksDel = IndeksPemesan(Delivery,NoPelanggan);
+        ArrayDeliveyDeleteAt(&Delivery,&Delivered,indeksDel);
+
+        indeksInvent = IndeksInventPesanan(Inventory,Delivered.NoPesanan);
+        ArrayInventoryDeleteAt(&Inventory,&Invent,indeksInvent);
+
+        uang += Delivered.Invoice;
+    } else {
+        printf("Anda belum berada di lokasi pemesan atau tidak ada pesanan yang harus diantar!\n");
     }
 }
 
 void SHOP(){
     int pil, pilkom, jumlah, pilawal;
 	ArrayKomponen X;
+    char NamaLok[100];
+    Element Beli;
 
-    printf("1. Tampilkan semua komponen");
-	printf("2. Tampilkan komponen berdasarkan tipe");
-	printf("Masukkan pilihan: ");
-	scanf("%d", &pilawal);
-	if (pilawal == 1)
-	{
-		for (int i=0;i<All.Neff;i++)
-		{
-			printf("%d. %s $%d\n" , i+1,All.A[i].Nama,All.A[i].Harga);
-		}
-		printf("Komponen yang ingin dibeli: ");
-		scanf("%d", &pilkom);
-		printf("\n");
-		printf("Masukkan jumlah yang ingin dibeli: ");
-		scanf("%d", &jumlah);
-		printf("\n");
+    TulisBangunanLok(Bangunan,LokasiPlayer,NamaLok);
+    if (!IsStrEqual("Shop",NamaLok)){
+        printf("Anda belum berada di Shop!");
+    } else {
+        printf("1. Tampilkan semua komponen\n");
+	    printf("2. Tampilkan komponen berdasarkan tipe\n");
+	    printf("Masukkan pilihan: ");
+	    scanf("%d", &pilawal);
+	    if (pilawal == 1){
+		    for (int i=0;i<All.Neff;i++)
+		    {
+			    printf("%d. %s $%d\n" , i+1,All.A[i].Nama,All.A[i].Harga);
+		    }
+		    printf("Komponen yang ingin dibeli: ");
+		    scanf("%d", &pilkom);
+		    printf("Masukkan jumlah yang ingin dibeli: ");
+		    scanf("%d", &jumlah);
+            printf("\n");
 
-		if ((All.A[pilkom-1].Harga * jumlah) >= uang)
-		{
-			printf("Kompenen berhasil dibeli!");
-			uang = uang - All.A[pilkom-1].Harga * jumlah;
-			Element Bought;
-            Bought.Nama = All.A[pilkom-1].Nama;
-            Bought.Jumlah = jumlah;
-            ArrayInventoryInsertLast(&Inventory, Bought);
-		}
-		else
-		{
-			printf("Uang tidak cukup!");
-		}
-	}
-	else
-	{
-		printf("Tipe komponen:\n");
-	    printf("1. Motherboard\n");
-		printf("2. CPU\n");
-		printf("3. Memory\n");
-		printf("4. CPU Cooler\n");
-		printf("5. Case\n");
-		printf("6. GPU\n");
-		printf("7. Storage\n");
-		printf("8. PSU\n");
-		printf("Masukkan pilihan: ");
-		scanf("%d", &pil);
-		if (pil == 1)
-		{
-			X.A = Motherboard.A;
-			X.Capacity = Motherboard.Capacity;
-			X.Neff = Motherboard.Neff;
-		}
-		else if (pil == 2)
-		{
-			X.A = CPU.A;
-			X.Capacity = CPU.Capacity;
-			X.Neff = CPU.Neff;
-		}
-	    else if (pil == 3)
-		{
-			X.A = Memory.A;
-			X.Capacity = Memory.Capacity;
-			X.Neff = Memory.Neff;
-		}
-		else if (pil == 4)
-		{
-			X.A = CPUCool.A;
-			X.Capacity = CPUCool.Capacity;
-			X.Neff = CPUCool.Neff;
-		}
-		else if (pil == 5)
-		{
-			X.A = Case.A;
-			X.Capacity = Case.Capacity;
-			X.Neff = Case.Neff;
-		}
-		else if (pil == 6)
-		{
-			X.A = GPU.A;
-			X.Capacity = GPU.Capacity;
-			X.Neff = GPU.Neff;
-		}
-		else if (pil == 7)
-		{
-			X.A = Storage.A;
-	    	X.Capacity = Storage.Capacity;
-			X.Neff = Storage.Neff;
-		}
-		else if (pil == 8)
-		{
-			X.A = PSU.A;
-			X.Capacity = PSU.Capacity;
-			X.Neff = PSU.Neff;
-		}
-		for (int i=0;i<X.Neff;i++)
-		{
-			printf("%d. %s $%d\n" , i+1,X.A[i].Nama,X.A[i].Harga);
-		}
-		printf("Komponen yang ingin dibeli: ");
-		scanf("%d", &pilkom);
-		printf("\n");
-		printf("Masukkan jumlah yang ingin dibeli: ");
-		scanf("%d", &jumlah);
-		printf("\n");
+            if (1>pilkom && pilkom>All.Neff || jumlah<1){
+                goto endshop;
+            }
 
-		if ((X.A[pilkom-1].Harga * jumlah) >= uang)
-		{
-			printf("Kompenen berhasil dibeli!");
-			uang = uang - X.A[pilkom-1].Harga * jumlah;
-			Element Bought;
-            Bought.Nama = X.A[pilkom-1].Nama;
-            Bought.Jumlah = jumlah;
-            ArrayInventoryInsertLast(&Inventory, Bought);
-		}
-		else
-		{
-			printf("Uang tidak cukup!");
-		}
-	}
+		    if ((All.A[pilkom-1].Harga * jumlah) <= uang){
+			    printf("Kompenen berhasil dibeli!");
+			    uang = uang - (All.A[pilkom-1].Harga * jumlah);
+                Beli = ArrangeElement(All.A[pilkom-1].Nama,jumlah,"Komponen");
+                ArrayInventoryInsertLast(&Inventory, Beli);
+		    } else {
+			    printf("Uang tidak cukup!");
+		    }
+	    } else if (pilawal==2) {
+            printf("Tipe komponen:\n");
+            printf("1. Motherboard\n");
+            printf("2. CPU\n");
+            printf("3. Memory\n");
+            printf("4. CPU Cooler\n");
+            printf("5. Case\n");
+            printf("6. GPU\n");
+            printf("7. Storage\n");
+            printf("8. PSU\n");
+            printf("Masukkan pilihan: ");
+            scanf("%d", &pil);
+            if (pil == 1){
+                X = CopyArrayKomponen(Motherboard);
+            } else if (pil == 2) {
+                X = CopyArrayKomponen(CPU);
+            } else if (pil == 3) {
+                X = CopyArrayKomponen(Memory);
+            } else if (pil == 4) {
+                X = CopyArrayKomponen(CPUCool);
+            } else if (pil == 5) {
+                X = CopyArrayKomponen(Case);
+            } else if (pil == 6) {
+                X = CopyArrayKomponen(GPU);
+            } else if (pil == 7) {
+                X = CopyArrayKomponen(CPUCool);
+            } else if (pil == 8) {
+                X = CopyArrayKomponen(CPUCool);
+            } else {
+                goto endshop;
+            }
+            for (int i=0;i<X.Neff;i++){
+                printf("%d. %s $%d\n" , i+1,X.A[i].Nama,X.A[i].Harga);
+            }
+            printf("Komponen yang ingin dibeli: ");
+            scanf("%d", &pilkom);
+            printf("Masukkan jumlah yang ingin dibeli: ");
+            scanf("%d", &jumlah);
+            printf("\n");
+
+            if (1>pilkom && pilkom>All.Neff || jumlah<1){
+                goto endshop;
+            }
+
+            if ((X.A[pilkom-1].Harga * jumlah) <= uang){
+                printf("Kompenen berhasil dibeli!");
+			    uang = uang - (X.A[pilkom-1].Harga * jumlah);
+                Beli = ArrangeElement(X.A[pilkom-1].Nama,jumlah,"Komponen");
+                ArrayInventoryInsertLast(&Inventory, Beli);
+            } else {
+                printf("Uang tidak cukup!");
+            }
+        } else {
+            goto endshop;
+        }
+    }
+    goto jump;
+    endshop:
+    printf("Pilihan tidak tersedia!");
+    jump:
+    printf("\n");
 }
 
 int Random(int lower, int upper){
@@ -437,45 +457,46 @@ void END_DAY(){
     int pemesan;
     int K1, K2, K3, K4, K5, K6, K7, K8, sumK, tagihan;
     int K1H, K2H, K3H, K4H, K5H, K6H, K7H, K8H;
+    char DetailOrder[8][200];
     Order PSN; 
-    pemesan = Random(1,7);
-    PSN.Pemesan = pemesan;
+    pemesan = Random(1,MaxPelanggan(Bangunan));
         
-    K1 = (Random(0,35)%5);
+    K1 = (Random(0,35)%Motherboard.Neff);
     K1H = Motherboard.A[K1].Harga;
-    PSN.Motherboard = Motherboard.A[K1].Nama;
+    CopyStr(Motherboard.A[K1].Nama,DetailOrder[0]);
 
-    K2 = (Random(21,65)%5);
+    K2 = (Random(21,65)%CPU.Neff);
     K2H = CPU.A[K2].Harga;
-    PSN.CPU = CPU.A[K2].Nama;
+    CopyStr(CPU.A[K2].Nama,DetailOrder[1]);
 
-    K3 = (Random(85,150)%5);
+    K3 = (Random(85,150)%Memory.Neff);
     K3H = Memory.A[K3].Harga;
-    PSN.Memory = Memory.A[K3].Nama;
+    CopyStr(Memory.A[K3].Nama,DetailOrder[2]);
 
-    K4 = (Random(78, 98)%5);
+    K4 = (Random(78, 98)%CPUCool.Neff);
     K4H = CPUCool.A[K4].Harga;
-    PSN.CPU_Cooler = CPUCool.A[K4].Nama;
+    CopyStr(CPUCool.A[K4].Nama,DetailOrder[3]);
 
-    K5 = (Random(101, 111)%5);
+    K5 = (Random(101, 111)%Case.Neff);
     K5H = Case.A[K5].Harga;
-    PSN.Case = Case.A[K5].Nama;
+    CopyStr(Case.A[K5].Nama,DetailOrder[4]);
 
-    K6 = (Random(212, 232)%5);
+    K6 = (Random(212, 232)%GPU.Neff);
     K6H = GPU.A[K6].Harga;
-    PSN.GPU = GPU.A[K6].Nama;
+    CopyStr(GPU.A[K6].Nama,DetailOrder[5]);
 
-    K7 = (Random(9, 79)%5);
+    K7 = (Random(9, 79)%Storage.Neff);
     K7H = Storage.A[K7].Harga;
-    PSN.Storage = Storage.A[K7].Nama;
+    CopyStr(Storage.A[K7].Nama,DetailOrder[6]);
 
-    K8 = (Random(20, 86)%5);
+    K8 = (Random(20, 86)%PSU.Neff);
     K8H = PSU.A[K8].Harga;
-    PSN.PSU = PSU.A[K8].Nama;
+    CopyStr(PSU.A[K7].Nama,DetailOrder[7]);
 
     sumK = K1H+K2H+K3H+K4H+K5H+K6H+K7H+K8H;
     tagihan = sumK * 1.5;
-    PSN.Nilai = tagihan;
+
+    PSN = ArrangeOrder(pemesan,tagihan,DetailOrder);
 
     PushQueue(&Pesanan, PSN);
 }
@@ -520,6 +541,7 @@ void COMMAND()
         } else {
             printf("COMMAND tidak terdefinisi. Silahkan input COMMAND lain!\n");
         }
+        printf("\n");
     }
 }
 
@@ -542,14 +564,20 @@ int main(){
         KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
         KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
         KonfigurasiMap("./File eksternal/Map.txt", &Map, &Bangunan, &LokasiPlayer, &GrafBangunan);
-        printf("%d\n",isConnected(GrafBangunan,1,2));
+
         //Inventory Awal
         Inventory = MakeArrayInventory();
 
-        //Order Pesawan Awal
+        //Order Pesanan Awal
         uang = 10000; // inisialisasi uang
         Pesanan = CreateQueue(99);
         END_DAY();
+        Pesanan.OrderNum = 1;
+
+        //Delivery Awal
+        Delivery = MakeArrayDelivery();
+
+        //COMMAND
         COMMAND();
     } else {
 
