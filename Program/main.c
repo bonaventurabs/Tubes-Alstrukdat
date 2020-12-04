@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // Variabel Global
 ArrayKomponen Motherboard,CPU,Memory,CPUCool,Case,GPU,Storage,PSU;
@@ -175,12 +176,22 @@ void MOVE(){
 }
 
 void STATUS(){
-    printf("Uang tersisa: $%d\n", &uang);
-    printf("Build yang sedang dikerjakan: pesanan %d untuk Pelanggan %d.\n", &CurrPesanan, &CurrPelanggan);
-    printf("Lokasi: pemain sedang berada pada %s.\n", &LokasiPlayer);
-    printf("Inventory anda:\n");
-    for(int i=0;i<Inventory.Neff;i++){
-      printf("%d. %s (%d)\n",(i+1), &(Inventory.A[i].Nama), &(Inventory.A[i].Jumlah));
+    printf("Uang tersisa: $%d\n", uang);
+    if (CurrPesanan==0){
+         printf("Anda belum memulai build!\n");
+    }
+    else{
+       printf("Build yang sedang dikerjakan: pesanan %d untuk Pelanggan %d.\n", CurrPesanan, CurrPelanggan);
+    }
+        printf("Lokasi: pemain sedang berada pada %s.\n", LokasiPlayer);
+    if(IsArrayInventoryEmpty(Inventory)){
+        printf("Inventory anda kosong!\n");
+    }
+    else{
+        printf("Inventory anda:\n");
+        for(int i=0;i<Inventory.Neff;i++){
+        printf("%d. %s (%d)\n",(i+1), &(Inventory.A[i].Nama), &(Inventory.A[i].Jumlah));
+        }
     }
 }
 
@@ -528,12 +539,15 @@ void COMMAND()
 int main(){
     /* Variabel */
     int inputmenu;
-    All = MakeArrayKomponen();
+    
 
     /* Program */
     LOGO();
     MENU(&inputmenu);
     if (inputmenu==1){
+        //Array Penyimpanan Data Komponen
+        All = MakeArrayKomponen();
+
         //Konfigurasi File Eksternal (Komponen/Item, Map, Objek)
         KonfigurasiItem("./File eksternal/Motherboard.txt", &Motherboard, &All);
         KonfigurasiItem("./File eksternal/CPU.txt", &CPU, &All);
@@ -544,7 +558,7 @@ int main(){
         KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
         KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
         KonfigurasiMap("./File eksternal/Map.txt", &Map, &Bangunan, &LokasiPlayer, &GrafBangunan);
-
+  
         //Inventory Awal
         Inventory = MakeArrayInventory();
 
