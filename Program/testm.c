@@ -74,14 +74,16 @@ void MENU(int *inputmenu){
     printf("\x1b[1m"); //bold
     printf("\x1b[4m"); //underlined
     InputAngka(inputmenu);
-    printf("\x1b[0m");
+    printf("\x1b[21m");
+    printf("\x1b[24m");
     while (*inputmenu!=1 && *inputmenu!=2){
         printf("                    Input tidak terdefinisi, silahkan masukan angka menu\n");
         printf("                                         > ");
         printf("\x1b[1m"); //bold
         printf("\x1b[4m"); //underlined
         InputAngka(inputmenu);
-        printf("\x1b[0m");
+        printf("\x1b[21m");
+        printf("\x1b[24m");
     }
 }
 
@@ -281,7 +283,8 @@ void MOVE(){
     printf("\x1b[1m"); //bold
     printf("\x1b[4m"); //underlined
     scanf("%d", &tujuan);
-    printf("\x1b[0m");
+    printf("\x1b[21m");
+    printf("\x1b[24m");
 
     if (1 <= tujuan && tujuan < j){
         int k=1;
@@ -385,7 +388,8 @@ void ADDCOMPONENT(){
             printf("\x1b[1m"); //bold
             printf("\x1b[4m"); //underlined
             scanf("%d", &x);
-            printf("\x1b[0m");
+            printf("\x1b[21m");
+            printf("\x1b[24m");
             if (x>=1 && x <= Inventory.Neff){
                 if (!IsStackFull(Build)){
                     KompBuild = Arrangeinfotype(Inventory.A[x-1].Nama); 
@@ -506,7 +510,8 @@ void SHOP(){
         printf("\x1b[1m"); //bold
         printf("\x1b[4m"); //underlined
 	    scanf("%d", &pilawal);
-         printf("\x1b[0m");
+        printf("\x1b[21m");
+        printf("\x1b[24m");
 	    if (pilawal == 1){
 		    for (int i=0;i<All.Neff;i++)
 		    {
@@ -516,12 +521,14 @@ void SHOP(){
             printf("\x1b[1m"); //bold
             printf("\x1b[4m"); //underlined
 		    scanf("%d", &pilkom);
-            printf("\x1b[0m");
+            printf("\x1b[21m");
+            printf("\x1b[24m");
 		    printf("Masukkan jumlah yang ingin dibeli: ");
             printf("\x1b[1m"); //bold
             printf("\x1b[4m"); //underlined
 		    scanf("%d", &jumlah);
-            printf("\x1b[0m");
+            printf("\x1b[21m");
+            printf("\x1b[24m");
             printf("\n");
 
             if (1>pilkom && pilkom>All.Neff || jumlah<1){
@@ -550,7 +557,8 @@ void SHOP(){
             printf("\x1b[1m"); //bold
             printf("\x1b[4m"); //underlined
             scanf("%d", &pil);
-            printf("\x1b[0m");
+            printf("\x1b[21m");
+            printf("\x1b[24m");
             if (pil == 1){
                 X = CopyArrayKomponen(Motherboard);
             } else if (pil == 2) {
@@ -577,12 +585,14 @@ void SHOP(){
             printf("\x1b[1m"); //bold
             printf("\x1b[4m"); //underlined
             scanf("%d", &pilkom);
-            printf("\x1b[0m");
+            printf("\x1b[21m");
+            printf("\x1b[24m");
             printf("Masukkan jumlah yang ingin dibeli: ");
             printf("\x1b[1m"); //bold
             printf("\x1b[4m"); //underlined
             scanf("%d", &jumlah);
-            printf("\x1b[0m");
+            printf("\x1b[21m");
+            printf("\x1b[24m");
 
             if (1>pilkom && pilkom>All.Neff || jumlah<1){
                 goto endshop;
@@ -671,7 +681,8 @@ void SAVE(){
     printf("\x1b[1m"); //bold
     printf("\x1b[4m"); //underlined
     scanf("%s",str);
-    printf("\x1b[0m");
+    printf("\x1b[21m");
+    printf("\x1b[24m");
 
     STARTWRITE(str);
     //uang
@@ -749,7 +760,8 @@ void COMMAND()
         printf("\x1b[1m"); //bold
         printf("\x1b[4m"); //underlined
         InputUSER();
-        printf("\x1b[0m");
+        printf("\x1b[21m");
+        printf("\x1b[24m");
         if (IsKataMOVE(CKata)){
             MOVE();
         } else if (IsKataSTATUS(CKata)){
@@ -838,7 +850,8 @@ int main(){
         printf("\x1b[1m"); //bold
         printf("\x1b[4m"); //underlined
         scanf("%s",directory);
-        printf("\x1b[0m");
+        printf("\x1b[21m");
+        rintf("\x1b[24m");
 
         if (cfileexists(directory)){
             KonfigurasiLoadGame(directory);
