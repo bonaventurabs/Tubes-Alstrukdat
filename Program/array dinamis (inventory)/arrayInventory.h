@@ -1,7 +1,7 @@
 #ifndef __INVENTORY_ARRAY__
 #define __INVENTORY_ARRAY__
 #include "../boolean/boolean.h"
-#include "../mesinkarakter/mesinkata.h"
+#include "../mesinkarakter-kata/mesinkata.h"
 
 #define InitialSizeInventory 50
 

@@ -1,7 +1,7 @@
 #ifndef LISTPOINT_H
 #define LISTPOINT_H
 
-#include "point.h"
+#include "../point/point.h"
 #include "../boolean/boolean.h"
 
 /* ********** LIST OBJEK SANTO TYCOON ********** */
