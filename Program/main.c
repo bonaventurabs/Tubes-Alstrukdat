@@ -1,13 +1,13 @@
 #include "./boolean/boolean.h"
 #include "./point/point.h"
-#include "./array statis (list of point)/ListPoint.h"
-#include "./array dinamis (komponen)/arrayKomponen.h"
-#include "./array dinamis (inventory)/arrayInventory.h"
-#include "./array dinamis (delivery)/arrayDelivery.h"
+#include "./array_statis(listofpoint)/ListPoint.h"
+#include "./array_dinamis(komponen)/arrayKomponen.h"
+#include "./array_dinamis(inventory)/arrayInventory.h"
+#include "./array_dinamis(delivery)/arrayDelivery.h"
 #include "./mesinkarakter-kata/mesinkar.h"
 #include "./mesinkarakter-kata/mesinkata.h"
 #include "./queue/circular_queue.h"
-#include "./Stack/stack.h"
+#include "./stack/stack.h"
 #include "./matriks/matriks.h"
 #include "./graf/graf.h"
 
@@ -60,14 +60,12 @@ void MENU(int *inputmenu){
     printf("                                         2. LOAD GAME\n");
     printf("                                         > ");
     printf("\x1b[1m"); //bold
-    printf("\x1b[4m"); //underlined
     InputAngka(inputmenu);
     printf("\x1b[0m");
     while (*inputmenu!=1 && *inputmenu!=2){
         printf("                    Input tidak terdefinisi, silahkan masukan angka menu\n");
         printf("                                         > ");
         printf("\x1b[1m"); //bold
-        printf("\x1b[4m"); //underlined
         InputAngka(inputmenu);
         printf("\x1b[0m");
     }
@@ -267,7 +265,6 @@ void MOVE(){
 
     printf("Nomor tujuan: ");
     printf("\x1b[1m"); //bold
-    printf("\x1b[4m"); //underlined
     scanf("%d", &tujuan);
     printf("\x1b[0m");
 
@@ -371,7 +368,6 @@ void ADDCOMPONENT(){
 
             printf("Komponen yang ingin dipasang: ");
             printf("\x1b[1m"); //bold
-            printf("\x1b[4m"); //underlined
             scanf("%d", &x);
             printf("\x1b[0m");
             if (x>=1 && x <= Inventory.Neff){
@@ -492,7 +488,6 @@ void SHOP(){
 	    printf("2. Tampilkan komponen berdasarkan tipe\n");
 	    printf("Masukkan pilihan: ");
         printf("\x1b[1m"); //bold
-        printf("\x1b[4m"); //underlined
 	    scanf("%d", &pilawal);
          printf("\x1b[0m");
 	    if (pilawal == 1){
@@ -502,12 +497,10 @@ void SHOP(){
 		    }
 		    printf("Komponen yang ingin dibeli: ");
             printf("\x1b[1m"); //bold
-            printf("\x1b[4m"); //underlined
 		    scanf("%d", &pilkom);
             printf("\x1b[0m");
 		    printf("Masukkan jumlah yang ingin dibeli: ");
             printf("\x1b[1m"); //bold
-            printf("\x1b[4m"); //underlined
 		    scanf("%d", &jumlah);
             printf("\x1b[0m");
             printf("\n");
@@ -536,7 +529,6 @@ void SHOP(){
             printf("8. PSU\n");
             printf("Masukkan pilihan: ");
             printf("\x1b[1m"); //bold
-            printf("\x1b[4m"); //underlined
             scanf("%d", &pil);
             printf("\x1b[0m");
             if (pil == 1){
@@ -563,12 +555,10 @@ void SHOP(){
             }
             printf("Komponen yang ingin dibeli: ");
             printf("\x1b[1m"); //bold
-            printf("\x1b[4m"); //underlined
             scanf("%d", &pilkom);
             printf("\x1b[0m");
             printf("Masukkan jumlah yang ingin dibeli: ");
             printf("\x1b[1m"); //bold
-            printf("\x1b[4m"); //underlined
             scanf("%d", &jumlah);
             printf("\x1b[0m");
 
@@ -657,7 +647,6 @@ void SAVE(){
     char str[200];
     printf("Lokasi save file: ");
     printf("\x1b[1m"); //bold
-    printf("\x1b[4m"); //underlined
     scanf("%s",str);
     printf("\x1b[0m");
 
@@ -735,7 +724,6 @@ void COMMAND()
     while (!exit){
         printf("ENTER COMMAND: ");
         printf("\x1b[1m"); //bold
-        printf("\x1b[4m"); //underlined
         InputUSER();
         printf("\x1b[0m");
         if (IsKataMOVE(CKata)){
@@ -824,7 +812,6 @@ int main(){
         //Load file
         printf("Directory file: ");
         printf("\x1b[1m"); //bold
-        printf("\x1b[4m"); //underlined
         scanf("%s",directory);
         printf("\x1b[0m");
 
