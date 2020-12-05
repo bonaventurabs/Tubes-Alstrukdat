@@ -386,6 +386,7 @@ void DELIVER(){
         ArrayInventoryDeleteAt(&Inventory,&Invent,indeksInvent);
 
         uang += Delivered.Invoice;
+        printf("Pesanan #%d berhasil diantarkan kepada pelanggan %d!",Delivered.NoPesanan,Delivered.Pemesan);
     } else {
         printf("Anda belum berada di lokasi pemesan atau tidak ada pesanan yang harus diantar!\n");
     }
