@@ -117,3 +117,12 @@ void InputKarakter(char *ch)
 {
     retval = scanf("%c", ch);
 }
+
+boolean cfileexists(const char * path){
+    FILE *file = fopen(path,"r");
+    if (file == NULL){
+        return false;
+    }
+    fclose(file);
+    return true;
+}

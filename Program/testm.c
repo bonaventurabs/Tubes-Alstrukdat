@@ -156,7 +156,101 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Gr
     FINISH();
 }
 
-/*void KonfigurasiLoadGame()*/
+void KonfigurasiLoadGame(char *path){
+    int bool;
+
+    int NInventory;
+    char InventNama[200];
+    int InventJumlah;
+    char InventJenis[20];
+    Element InventEl;
+
+    int OrNumP; int MaxQ;
+    int NPesanan;
+    int QHead,QTail;
+    int QPemesan;
+    int QNilai;
+    char QDetail[8][200];
+    Order QOrder;
+
+    int NBuild;
+    char BuildNama[200];
+    infotype BuildInfo;
+
+    int NDelivery;
+    int DelNoPesanan;
+    int DelPemesan;
+    int DelInvoice;
+    DelBuild Deliver;
+
+    STARTKATA(path);
+    //uang
+    BacaAngka(&uang);
+    //lokasi player
+    BacaAngka(&Absis(LokasiPlayer)); BacaAngka(&Ordinat(LokasiPlayer));
+    //startbuild
+    BacaAngka(&bool);
+    if (bool==1){
+        startbuild = true;
+    } else {
+        startbuild = false;
+    }
+    //inventory (arrayinventory)
+    BacaAngka(&NInventory);
+    Inventory = MakeArrayInventory();
+    if (NInventory!=0){
+        for (int i = 0; i < NInventory; i++)
+        {
+            UnionKata(InventNama);
+            BacaAngka(&InventJumlah);
+            UnionKata(InventJenis);
+            InventEl = ArrangeElement(InventNama,InventJumlah,InventJenis);
+            ArrayInventoryInsertLast(&Inventory,InventEl);
+        }  
+    }
+    //pesanan (queue)
+    BacaAngka(&OrNumP); BacaAngka(&MaxQ);
+    BacaAngka(&NPesanan);
+    Pesanan = CreateQueue(MaxQ);
+    Pesanan.OrderNum = OrNumP;
+    if (NPesanan!=0){
+        for (int i = 0; i < NPesanan; i++)
+        {
+            BacaAngka(&QPemesan);
+            BacaAngka(&QNilai);
+            for (int j = 0; j < 8; ++j)
+            {
+                UnionKata(QDetail[j]);
+            }
+            QOrder = ArrangeOrder(QPemesan,QNilai,QDetail);
+            PushQueue(&Pesanan,QOrder);
+        }
+    }
+    //build (stack)
+    BacaAngka(&NBuild);
+    CreateEmptyStack(&Build);
+    if(NBuild!=0){
+        for (int i = 0; i < NBuild; i++)
+        {
+            UnionKata(BuildNama);
+            BuildInfo = Arrangeinfotype(BuildNama);
+            Push(&Build,BuildInfo);
+        }
+    }
+    //delivery (arraydelivey)
+    BacaAngka(&NDelivery);
+    Delivery = MakeArrayDelivery();
+    if (NDelivery!=0){
+        for (int i = 0; i < NDelivery; i++)
+        {
+            BacaAngka(&DelNoPesanan);
+            BacaAngka(&DelPemesan);
+            BacaAngka(&DelInvoice);
+            Deliver = ArrangeDelBuild(DelNoPesanan,DelPemesan,DelInvoice);
+            ArrayDeliveryInsertLast(&Delivery,Deliver);
+        }
+    }
+}
 
 void MOVE(){
     char NamaLokPlayer[100];
@@ -244,9 +338,13 @@ void CHECKORDER(){
 }
 
 void STARTBUILD(){
-    startbuild = true;
-    CreateEmptyStack(&Build);
-    printf("Kamu telah memulai pesanan %d untuk Pelanggan %d.\n", Pesanan.OrderNum, Pesanan.Tab[Pesanan.HEAD].Pemesan); 
+    if (startbuild){
+        printf("Selesaikan pesanan %d untuk Pelanggan %d terlebih dulu!\n",Pesanan.OrderNum,Pesanan.Tab[Pesanan.HEAD].Pemesan);
+    } else {
+        startbuild = true;
+        CreateEmptyStack(&Build);
+        printf("Kamu telah memulai pesanan %d untuk Pelanggan %d.\n", Pesanan.OrderNum, Pesanan.Tab[Pesanan.HEAD].Pemesan); 
+    }
 }
 
 void ADDCOMPONENT(){ 
@@ -307,7 +405,7 @@ void ADDCOMPONENT(){
                 } 
             }
             else{
-                printf("Komponen tidak tersedia!");
+                printf("Komponen tidak tersedia!\n");
             }
         } 
     }  
@@ -405,7 +503,10 @@ void SHOP(){
         printf("1. Tampilkan semua komponen\n");
 	    printf("2. Tampilkan komponen berdasarkan tipe\n");
 	    printf("Masukkan pilihan: ");
+        printf("\x1b[1m"); //bold
+        printf("\x1b[4m"); //underlined
 	    scanf("%d", &pilawal);
+         printf("\x1b[0m");
 	    if (pilawal == 1){
 		    for (int i=0;i<All.Neff;i++)
 		    {
@@ -565,21 +666,24 @@ void MAP(){
 }
 
 void SAVE(){
-    char *path;
+    char str[200];
     printf("Lokasi save file: ");
     printf("\x1b[1m"); //bold
     printf("\x1b[4m"); //underlined
-    scanf("%s",path);
+    scanf("%s",str);
     printf("\x1b[0m");
 
-    STARTWRITE(path);
+    STARTWRITE(str);
     //uang
     WRITEINT(uang); WRITENEWLINE();
     //lokasi player
     WRITEINT(Absis(LokasiPlayer)); WRITEBLANK(); WRITEINT(Ordinat(LokasiPlayer)); WRITENEWLINE();
     //starbuild
-    WRITEINT(startbuild); WRITENEWLINE();
-
+    if (startbuild){
+        WRITEINT(1); WRITENEWLINE();
+    } else {
+        WRITEINT(0); WRITENEWLINE();
+    }
     //inventory (arrayinventory)
     WRITEINT(Inventory.Neff); WRITENEWLINE();
     for (int i = 0; i < Inventory.Neff; i++)
@@ -589,10 +693,11 @@ void SAVE(){
         WRITEINT(Inventory.A[i].Jumlah);
         WRITEDELIMITER();
         WRITESTRING(Inventory.A[i].Jenis);
+        WRITEDELIMITER();
+        WRITENEWLINE();
     }
 
     //pesanan (queue)
-    WRITEINT(Pesanan.HEAD); WRITEBLANK(); WRITEINT(Pesanan.TAIL); WRITEBLANK();
     WRITEINT(Pesanan.OrderNum); WRITEBLANK(); WRITEINT(Pesanan.MaxEl); WRITENEWLINE();
     WRITEINT(LengthQueue(Pesanan)); WRITENEWLINE();
     for (int i = 0; i < LengthQueue(Pesanan); i++)
@@ -604,6 +709,7 @@ void SAVE(){
         for (int j = 0; j < 8; ++j)
         {
             WRITESTRING(Pesanan.Tab[i].Detail[j]);
+            WRITEDELIMITER();
             WRITENEWLINE();
         }
     }
@@ -613,6 +719,7 @@ void SAVE(){
     for (int i = 0; i < TOP(Build); i++)
     {
         WRITESTRING(Build.T[i].NamaKomp);
+        WRITEDELIMITER();
         WRITENEWLINE();
     }
     
@@ -630,13 +737,12 @@ void SAVE(){
 
     WRITEMARK();
     FINISHWRITE();
+    printf("Game berhasil di save!\n");
 }
 
 void COMMAND()
 /* Menginput COMMAND, mengecek commandnya, serta menjalankan commandnya */
 {
-    clear();
-    LOGO();
     boolean exit = false;
     while (!exit){
         printf("ENTER COMMAND: ");
@@ -711,9 +817,37 @@ int main(){
         Delivery = MakeArrayDelivery();
 
         //COMMAND
+        clear();
+        LOGO();
         COMMAND();
     } else {
+        char directory[200];
+        //Konfigurasi File Eksternal (Komponen/Item, Map, Objek)
+        KonfigurasiItem("./File eksternal/Motherboard.txt", &Motherboard, &All);
+        KonfigurasiItem("./File eksternal/CPU.txt", &CPU, &All);
+        KonfigurasiItem("./File eksternal/Memory.txt", &Memory, &All);
+        KonfigurasiItem("./File eksternal/CPU Cooler.txt", &CPUCool, &All);
+        KonfigurasiItem("./File eksternal/Case.txt", &Case, &All);
+        KonfigurasiItem("./File eksternal/GPU.txt", &GPU, &All);
+        KonfigurasiItem("./File eksternal/Storage.txt", &Storage, &All);
+        KonfigurasiItem("./File eksternal/PSU.txt", &PSU, &All);
+        KonfigurasiMap("./File eksternal/Map.txt", &Map, &Bangunan, &LokasiPlayer, &GrafBangunan);
 
+        //Load file
+        printf("Directory file: ");
+        printf("\x1b[1m"); //bold
+        printf("\x1b[4m"); //underlined
+        scanf("%s",directory);
+        printf("\x1b[0m");
+
+        if (cfileexists(directory)){
+            KonfigurasiLoadGame(directory);
+            printf("File berhasil diload!\n");
+            printf("\n");
+            //COMMAND
+            COMMAND();
+        } else {
+            printf("File gagal diload!\n");
+        }
     }
-    
 }

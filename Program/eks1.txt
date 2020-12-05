@@ -1,0 +1,18 @@
+100000
+11 23
+1
+0
+1 99
+1
+1 7545
+Asus Rampage II Extreme , 
+AMD Ryzen 5 2600G With Wraith Stealt , 
+Crucial RAM 16GB Kit (2x8GB) DDR4 3200 MHz CL22 , 
+Noctua NH-D15 , 
+Be Quiet! , 
+NVIDIA RTX 2060 , 
+Seagate Barracuda Pro Performance Internal Hard Drive SATA 14TB 6GB/s , 
+Cooler Master MPY-7501-AFAAG-US MWE 750 , 
+0
+0
+.

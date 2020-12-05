@@ -429,7 +429,7 @@ boolean IsKataSAVE (Kata K)
 /* Menghasilkan true jika Kata K adalah SAVE */
 {
     Kata KataSAVE;
-    KataSAVE.Length = 3;
+    KataSAVE.Length = 4;
     KataSAVE.TabKata[1] = 'S';
     KataSAVE.TabKata[2] = 'A';
     KataSAVE.TabKata[3] = 'V';

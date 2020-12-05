@@ -66,4 +66,7 @@ void InputAngka(int *angka);
 void InputKarakter(char *ch);
 /* Membaca input karakter dari user */
 
+boolean cfileexists(const char * path);
+/* Mengecek apakah ada suatu file pada path */
+
 #endif
