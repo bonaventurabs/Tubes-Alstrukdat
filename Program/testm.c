@@ -156,6 +156,8 @@ void KonfigurasiMap(char *path,MATRIKS *Map,ListObjek *Objek,POINT *LokPlayer,Gr
     FINISH();
 }
 
+/*void KonfigurasiLoadGame()*/
+
 void MOVE(){
     char NamaLokPlayer[100];
     char NamaLokasi[100];
@@ -300,7 +302,7 @@ void ADDCOMPONENT(){
                         Inventory.Neff--;
                     }
                     printf("Komponen berhasil dipasang! \n");
-                }else {
+                } else {
                     printf("Komponen Build Anda sudah penuh!\n");
                 } 
             }

@@ -71,6 +71,6 @@ infotype Arrangeinfotype(char Komponen[]){
     for (i = 0; Komponen[i]!='\0'; ++i){
         Komp.NamaKomp[i] = Komponen[i];
     }
-    Komponen[i] = '\0';
+    Komp.NamaKomp[i] = '\0';
     return Komp;
 }
