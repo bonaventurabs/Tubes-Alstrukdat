@@ -95,4 +95,7 @@ Element ArrangeElement(char Nama[],int Jumlah, char Jenis[]);
 /* Menghitung jumlah komponen dalam list */
 int CountKomponen(ArrayInventory list);
 
+/* Menginsert Element ke list */
+void InsertInventory (ArrayInventory *list, Element Elemen);
+
 #endif	

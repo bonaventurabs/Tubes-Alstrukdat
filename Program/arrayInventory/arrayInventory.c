@@ -172,11 +172,29 @@ Element ArrangeElement(char Nama[],int Jumlah, char Jenis[]){
 /* Menghitung jumlah komponen dalam list */
 int CountKomponen(ArrayInventory list){
     int count = 0;
-    for (int i = 0; i < list.Neff; i++)
-    {
-        if (IsStrEqual(list.A[i].Jenis,"Komponen")){
+    for (int i = 0; i < list.Neff; i++){
+        if (IsStrEqual("Komponen",list.A[i].Jenis)){
             count++;
         }
     }
     return count;
+}
+
+/* Menginsert Element ke list */
+void InsertInventory (ArrayInventory *list, Element Elemen)
+{
+    boolean found = false;
+    int i = 0;
+
+    while (!found && i<list->Neff){
+        if (IsStrEqual(Elemen.Nama,list->A[i].Nama)){
+            list->A[i].Jumlah += Elemen.Jumlah;
+            found = true;
+        } else {
+            i++;
+        }
+    }
+    if (!found){
+        ArrayInventoryInsertLast(list,Elemen);
+    }
 }

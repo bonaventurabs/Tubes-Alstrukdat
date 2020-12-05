@@ -243,8 +243,12 @@ void ADDCOMPONENT(){
     char NamaLok[100];
 
     TulisBangunanLok(Bangunan,LokasiPlayer,NamaLok);
-    if (!IsStrEqual("Base",NamaLok)){
-        printf("Anda belum berada di Base!");
+    if (!IsStrEqual("Base",NamaLok) && !startbuild){
+        printf("Anda belum berada di Base dan memulai Build!\n");
+    } else if (!IsStrEqual("Base",NamaLok) && startbuild){
+        printf("Anda belum berada di Base\n");
+    } else if (IsStrEqual("Base",NamaLok) && !startbuild){
+        printf("Anda belum berada memulai Build\n");
     } else {
         printf("Komponen yang telah terpasang:\n");
         if (IsStackEmpty(Build)){
@@ -254,32 +258,38 @@ void ADDCOMPONENT(){
             printf("%d. %s\n", (i+1), Build.T[i].NamaKomp);
             }
         }
-        printf("Komponen yang tersedia\n");
+        printf("Komponen yang tersedia:\n");
         if (CountKomponen(Inventory)==0){
             printf("\n");
             printf("Inventory komponen Anda kosong!\n");
         } else {
+            int k = 1;
             for(int i=0;i<Inventory.Neff;i++){
                 if (IsStrEqual("Komponen",Inventory.A[i].Jenis)){
-                    printf("&d. %s\n", (i+1), Inventory.A[i].Nama);
+                    printf("%d. %s\n", k, Inventory.A[i].Nama);
+                    k++;
                 }
             }
 
             printf("Komponen yang ingin dipasang: ");
             scanf("%d", &x);
             if (x>=1 && x <= Inventory.Neff){
-                KompBuild = Arrangeinfotype(Inventory.A[x-1].Nama); 
-                Push(&Build, KompBuild);
-                Inventory.A[x-1].Jumlah--;
-                if (Inventory.A[x-1].Jumlah==0){
-                    if ((x-1)!=Inventory.Neff-1){
-                        for(int i=x-1;i<(Inventory.Neff-1) ;i++){
-                            Inventory.A[i]=Inventory.A[i+1];
+                if (!IsStackFull(Build)){
+                    KompBuild = Arrangeinfotype(Inventory.A[x-1].Nama); 
+                    Push(&Build, KompBuild);
+                    Inventory.A[x-1].Jumlah--;
+                    if (Inventory.A[x-1].Jumlah==0){
+                        if ((x-1)!=Inventory.Neff-1){
+                            for(int i=x-1;i<(Inventory.Neff-1) ;i++){
+                                Inventory.A[i]=Inventory.A[i+1];
+                            }
                         }
+                        Inventory.Neff--;
                     }
-                    Inventory.Neff--;
-                }
-                printf("Komponen berhasil dipasang! \n");
+                    printf("Komponen berhasil dipasang! \n");
+                }else {
+                    printf("Komponen Build Anda sudah penuh!\n");
+                } 
             }
             else{
                 printf("Komponen tidak tersedia!");
@@ -292,24 +302,12 @@ void REMOVECOMPONENT(){
     infotype infocopot;
     char copot[200];
     Element simpan;
-    boolean found = false;
-    int i = 0;
 
     Pop(&Build,&infocopot);
     CopyStr(infocopot.NamaKomp,copot);
-    while (!found && i<Inventory.Neff){
-        if (IsStrEqual(copot,Inventory.A[i].Nama)){
-            Inventory.A[i].Jumlah++;
-            found = true;
-        } else {
-            i++;
-        }
-    }
-    if (!found){
-        simpan = ArrangeElement(copot,1,"Komponen");
-        ArrayInventoryInsertLast(&Inventory,simpan);
-    }
-    printf("Komponen %d\n", &copot, " berhasil dicopot!");
+    simpan = ArrangeElement(copot,1,"Komponen");
+    InsertInventory(&Inventory,simpan);
+    printf("Komponen %s berhasil dicopot!\n",copot);
 }
 
 void FINISHBUILD(){
@@ -402,7 +400,7 @@ void SHOP(){
 			    printf("Kompenen berhasil dibeli!");
 			    uang = uang - (All.A[pilkom-1].Harga * jumlah);
                 Beli = ArrangeElement(All.A[pilkom-1].Nama,jumlah,"Komponen");
-                ArrayInventoryInsertLast(&Inventory, Beli);
+                InsertInventory(&Inventory,Beli);
 		    } else {
 			    printf("Uang tidak cukup!");
 		    }
@@ -454,7 +452,7 @@ void SHOP(){
                 printf("Kompenen berhasil dibeli!");
 			    uang = uang - (X.A[pilkom-1].Harga * jumlah);
                 Beli = ArrangeElement(X.A[pilkom-1].Nama,jumlah,"Komponen");
-                ArrayInventoryInsertLast(&Inventory, Beli);
+                InsertInventory(&Inventory,Beli);
             } else {
                 printf("Uang tidak cukup!");
             }
