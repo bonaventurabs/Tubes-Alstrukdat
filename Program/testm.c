@@ -55,11 +55,13 @@ void clear(){
 
 void LOGO(){
     printf("\n");
+    printf("\x1b[1m"); //bold
 	printf("                              ____    _    __  _  _______  ____\n");
 	printf("                             |  __|  / \\  |  \\| ||__   __||    |\n");
 	printf("                             |____  / _ \\ | |\\  |   | |   | || |\n");
 	printf("                              |___|/_/ \\_\\|_| \\_|   |_|   |____|\n");
-	printf("                             --T.Y.C.O.O.N--  \n");
+	printf("                                                 \x1b[4m--T.Y.C.O.O.N--\n");
+    printf("\x1b[0m");
 	printf("\n");
 }
 
@@ -69,12 +71,17 @@ void MENU(int *inputmenu){
     printf("                                         1. NEW GAME\n");
     printf("                                         2. LOAD GAME\n");
     printf("                                         > ");
+    printf("\x1b[1m"); //bold
+    printf("\x1b[4m"); //underlined
     InputAngka(inputmenu);
-    printf("\n");
+    printf("\x1b[0m");
     while (*inputmenu!=1 && *inputmenu!=2){
-        printf("                    Input tidak terdefinisi, silahkan masukan angka menu");
-        printf("                                     > ");
+        printf("                    Input tidak terdefinisi, silahkan masukan angka menu\n");
+        printf("                                         > ");
+        printf("\x1b[1m"); //bold
+        printf("\x1b[4m"); //underlined
         InputAngka(inputmenu);
+        printf("\x1b[0m");
     }
 }
 
@@ -175,7 +182,10 @@ void MOVE(){
     }
 
     printf("Nomor tujuan: ");
+    printf("\x1b[1m"); //bold
+    printf("\x1b[4m"); //underlined
     scanf("%d", &tujuan);
+    printf("\x1b[0m");
 
     if (1 <= tujuan && tujuan < j){
         int k=1;
@@ -248,7 +258,7 @@ void ADDCOMPONENT(){
     } else if (!IsStrEqual("Base",NamaLok) && startbuild){
         printf("Anda belum berada di Base\n");
     } else if (IsStrEqual("Base",NamaLok) && !startbuild){
-        printf("Anda belum berada memulai Build\n");
+        printf("Anda belum memulai Build\n");
     } else {
         printf("Komponen yang telah terpasang:\n");
         if (IsStackEmpty(Build)){
@@ -272,7 +282,10 @@ void ADDCOMPONENT(){
             }
 
             printf("Komponen yang ingin dipasang: ");
+            printf("\x1b[1m"); //bold
+            printf("\x1b[4m"); //underlined
             scanf("%d", &x);
+            printf("\x1b[0m");
             if (x>=1 && x <= Inventory.Neff){
                 if (!IsStackFull(Build)){
                     KompBuild = Arrangeinfotype(Inventory.A[x-1].Nama); 
@@ -303,45 +316,54 @@ void REMOVECOMPONENT(){
     char copot[200];
     Element simpan;
 
-    Pop(&Build,&infocopot);
-    CopyStr(infocopot.NamaKomp,copot);
-    simpan = ArrangeElement(copot,1,"Komponen");
-    InsertInventory(&Inventory,simpan);
-    printf("Komponen %s berhasil dicopot!\n",copot);
+    if (IsStackEmpty(Build)){
+        printf("Belum ada komponen yang terpasang!\n");
+    } else {
+        Pop(&Build,&infocopot);
+        CopyStr(infocopot.NamaKomp,copot);
+        simpan = ArrangeElement(copot,1,"Komponen");
+        InsertInventory(&Inventory,simpan);
+        printf("Komponen %s berhasil dicopot!\n",copot);
+    }
 }
 
 void FINISHBUILD(){
     boolean benar=true;
     int i = 0;
-    while (benar && i < 8){
-        if (!IsStrEqual(Build.T[i].NamaKomp,Pesanan.Tab[Pesanan.HEAD].Detail[i])){
-            benar = false;
-        } else {
-            i++;
+
+    if (IsStackEmpty(Build)){
+        printf("Belum ada komponen yang terpasang!\n");
+    } else {
+        while (benar && i < MaxElS){
+            if (!IsStrEqual(Build.T[i].NamaKomp,Pesanan.Tab[Pesanan.HEAD].Detail[i])){
+                benar = false;
+            } else {
+                i++;
+            }
         }
-    }
-      
-    if(benar){
-        Element Komputer;
-        char KomputerF [100];
-        DelBuild DelKomputer;
-        Order OrderFinish;
-
-        OrderFinish = PopQueue(&Pesanan);
-         
-        printf("Pesanan %d telah selesai. Silahkan antar ke Pelanggan %d\n", Pesanan.OrderNum-1, OrderFinish.Pemesan);
         
-        sprintf(KomputerF,"Build untuk Pesanan #%d",Pesanan.OrderNum-1);
-        Komputer = ArrangeElement(KomputerF,1,"Build");
-        ArrayInventoryInsertLast(&Inventory,Komputer);
+        if(benar){
+            Element Komputer;
+            char KomputerF [100];
+            DelBuild DelKomputer;
+            Order OrderFinish;
 
-        DelKomputer = ArrangeDelBuild(Pesanan.OrderNum-1,OrderFinish.Pemesan,OrderFinish.Nilai);
-        ArrayDeliveryInsertLast(&Delivery,DelKomputer);
-        
-        startbuild = false;
-    }
-    else{
-        printf("Komponen yang dipasangkan belum sesuai dengan pesanan, build belum dapat diselesaikan!\n");
+            OrderFinish = PopQueue(&Pesanan);
+            
+            printf("Pesanan %d telah selesai. Silahkan antar ke Pelanggan %d\n", Pesanan.OrderNum-1, OrderFinish.Pemesan);
+            
+            sprintf(KomputerF,"Build untuk Pesanan #%d",Pesanan.OrderNum-1);
+            Komputer = ArrangeElement(KomputerF,1,"Build");
+            ArrayInventoryInsertLast(&Inventory,Komputer);
+
+            DelKomputer = ArrangeDelBuild(Pesanan.OrderNum-1,OrderFinish.Pemesan,OrderFinish.Nilai);
+            ArrayDeliveryInsertLast(&Delivery,DelKomputer);
+            
+            startbuild = false;
+        }
+        else{
+            printf("Komponen yang dipasangkan belum sesuai dengan pesanan, build belum dapat diselesaikan!\n");
+        }
     }
 }
 
@@ -387,9 +409,15 @@ void SHOP(){
 			    printf("%d. %s $%d\n" , i+1,All.A[i].Nama,All.A[i].Harga);
 		    }
 		    printf("Komponen yang ingin dibeli: ");
+            printf("\x1b[1m"); //bold
+            printf("\x1b[4m"); //underlined
 		    scanf("%d", &pilkom);
+            printf("\x1b[0m");
 		    printf("Masukkan jumlah yang ingin dibeli: ");
+            printf("\x1b[1m"); //bold
+            printf("\x1b[4m"); //underlined
 		    scanf("%d", &jumlah);
+            printf("\x1b[0m");
             printf("\n");
 
             if (1>pilkom && pilkom>All.Neff || jumlah<1){
@@ -415,7 +443,10 @@ void SHOP(){
             printf("7. Storage\n");
             printf("8. PSU\n");
             printf("Masukkan pilihan: ");
+            printf("\x1b[1m"); //bold
+            printf("\x1b[4m"); //underlined
             scanf("%d", &pil);
+            printf("\x1b[0m");
             if (pil == 1){
                 X = CopyArrayKomponen(Motherboard);
             } else if (pil == 2) {
@@ -439,10 +470,15 @@ void SHOP(){
                 printf("%d. %s $%d\n" , i+1,X.A[i].Nama,X.A[i].Harga);
             }
             printf("Komponen yang ingin dibeli: ");
+            printf("\x1b[1m"); //bold
+            printf("\x1b[4m"); //underlined
             scanf("%d", &pilkom);
+            printf("\x1b[0m");
             printf("Masukkan jumlah yang ingin dibeli: ");
+            printf("\x1b[1m"); //bold
+            printf("\x1b[4m"); //underlined
             scanf("%d", &jumlah);
-            printf("\n");
+            printf("\x1b[0m");
 
             if (1>pilkom && pilkom>All.Neff || jumlah<1){
                 goto endshop;
@@ -528,7 +564,10 @@ void MAP(){
 void SAVE(){
     char *path;
     printf("Lokasi save file: ");
+    printf("\x1b[1m"); //bold
+    printf("\x1b[4m"); //underlined
     scanf("%s",path);
+    printf("\x1b[0m");
 
     STARTWRITE(path);
     //uang
@@ -593,10 +632,15 @@ void SAVE(){
 void COMMAND()
 /* Menginput COMMAND, mengecek commandnya, serta menjalankan commandnya */
 {
+    clear();
+    LOGO();
     boolean exit = false;
     while (!exit){
         printf("ENTER COMMAND: ");
+        printf("\x1b[1m"); //bold
+        printf("\x1b[4m"); //underlined
         InputUSER();
+        printf("\x1b[0m");
         if (IsKataMOVE(CKata)){
             MOVE();
         } else if (IsKataSTATUS(CKata)){
@@ -636,6 +680,7 @@ int main(){
     All = MakeArrayKomponen();
 
     /* Program */
+    clear();
     LOGO();
     MENU(&inputmenu);
     if (inputmenu==1){
