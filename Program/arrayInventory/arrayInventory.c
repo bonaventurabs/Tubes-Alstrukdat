@@ -168,3 +168,15 @@ Element ArrangeElement(char Nama[],int Jumlah, char Jenis[]){
     Elemen.Jenis[i] = '\0';
     return Elemen;
 }
+
+/* Menghitung jumlah komponen dalam list */
+int CountKomponen(ArrayInventory list){
+    int count = 0;
+    for (int i = 0; i < list.Neff; i++)
+    {
+        if (IsStrEqual(list.A[i].Jenis,"Komponen")){
+            count++;
+        }
+    }
+    return count;
+}

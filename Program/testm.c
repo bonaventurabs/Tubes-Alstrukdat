@@ -43,13 +43,23 @@ ArrayDelivery Delivery;
 int uang;
 boolean startbuild = false;
 
+void clear(){
+    #if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
+        system("clear");
+    #endif
+
+    #if defined(_WIN32) || defined(_WIN64)
+        system("cls");
+    #endif
+}
+
 void LOGO(){
     printf("\n");
-	printf("                               ____    _    __  _  _______  ____\n");
-	printf("                              |  __|  / \\  |  \\| ||__   __||    |\n");
-	printf("                              |____  / _ \\ | |\\  |   | |   | || |\n");
-	printf("                               |___|/_/ \\_\\|_| \\_|   |_|   |____|\n");
-	printf("                              --T.Y.C.O.O.N--  \n");
+	printf("                              ____    _    __  _  _______  ____\n");
+	printf("                             |  __|  / \\  |  \\| ||__   __||    |\n");
+	printf("                             |____  / _ \\ | |\\  |   | |   | || |\n");
+	printf("                              |___|/_/ \\_\\|_| \\_|   |_|   |____|\n");
+	printf("                             --T.Y.C.O.O.N--  \n");
 	printf("\n");
 }
 
@@ -230,40 +240,52 @@ void STARTBUILD(){
 void ADDCOMPONENT(){ 
     int x;
     infotype KompBuild;
-    printf("Komponen yang telah terpasang:\n");
-    if (IsStackEmpty(Build)){
-        printf("\n");
-    } else {
-        for(int i=0;i<TOP(Build);i++){
-           printf("%d. %s\n", (i+1), Build.T[i].NamaKomp);
-        }
-    }
-    printf("Komponen yang tersedia\n");
-    for(int i=0;i<Inventory.Neff;i++){
-        if (IsStrEqual("Komponen",Inventory.A[i].Jenis)){
-            printf("&d. %s\n", (i+1), Inventory.A[i].Nama);
-        }
-    }
+    char NamaLok[100];
 
-    printf("Komponen yang ingin dipasang: ");
-    scanf("%d", &x);
-    if (x>=1 && x <= Inventory.Neff){
-        KompBuild = Arrangeinfotype(Inventory.A[x-1].Nama); 
-        Push(&Build, KompBuild);
-        Inventory.A[x-1].Jumlah--;
-        if (Inventory.A[x-1].Jumlah==0){
-            if ((x-1)!=Inventory.Neff-1){
-                for(int i=x-1;i<(Inventory.Neff-1) ;i++){
-                    Inventory.A[i]=Inventory.A[i+1];
+    TulisBangunanLok(Bangunan,LokasiPlayer,NamaLok);
+    if (!IsStrEqual("Base",NamaLok)){
+        printf("Anda belum berada di Base!");
+    } else {
+        printf("Komponen yang telah terpasang:\n");
+        if (IsStackEmpty(Build)){
+            printf("\n");
+        } else {
+            for(int i=0;i<TOP(Build);i++){
+            printf("%d. %s\n", (i+1), Build.T[i].NamaKomp);
+            }
+        }
+        printf("Komponen yang tersedia\n");
+        if (CountKomponen(Inventory)==0){
+            printf("\n");
+            printf("Inventory komponen Anda kosong!\n");
+        } else {
+            for(int i=0;i<Inventory.Neff;i++){
+                if (IsStrEqual("Komponen",Inventory.A[i].Jenis)){
+                    printf("&d. %s\n", (i+1), Inventory.A[i].Nama);
                 }
             }
-            Inventory.Neff--;
-        }
-        printf("Komponen berhasil dipasang! \n");
-    }
-    else{
-        printf("Komponen tidak tersedia!");
-    }   
+
+            printf("Komponen yang ingin dipasang: ");
+            scanf("%d", &x);
+            if (x>=1 && x <= Inventory.Neff){
+                KompBuild = Arrangeinfotype(Inventory.A[x-1].Nama); 
+                Push(&Build, KompBuild);
+                Inventory.A[x-1].Jumlah--;
+                if (Inventory.A[x-1].Jumlah==0){
+                    if ((x-1)!=Inventory.Neff-1){
+                        for(int i=x-1;i<(Inventory.Neff-1) ;i++){
+                            Inventory.A[i]=Inventory.A[i+1];
+                        }
+                    }
+                    Inventory.Neff--;
+                }
+                printf("Komponen berhasil dipasang! \n");
+            }
+            else{
+                printf("Komponen tidak tersedia!");
+            }
+        } 
+    }  
 }
 
 void REMOVECOMPONENT(){
@@ -505,6 +527,71 @@ void MAP(){
     TulisMAP(Map, Absis(LokasiPlayer), Ordinat(LokasiPlayer));
 }
 
+void SAVE(){
+    char *path;
+    printf("Lokasi save file: ");
+    scanf("%s",path);
+
+    STARTWRITE(path);
+    //uang
+    WRITEINT(uang); WRITENEWLINE();
+    //lokasi player
+    WRITEINT(Absis(LokasiPlayer)); WRITEBLANK(); WRITEINT(Ordinat(LokasiPlayer)); WRITENEWLINE();
+    //starbuild
+    WRITEINT(startbuild); WRITENEWLINE();
+
+    //inventory (arrayinventory)
+    WRITEINT(Inventory.Neff); WRITENEWLINE();
+    for (int i = 0; i < Inventory.Neff; i++)
+    {
+        WRITESTRING(Inventory.A[i].Nama);
+        WRITEDELIMITER();
+        WRITEINT(Inventory.A[i].Jumlah);
+        WRITEDELIMITER();
+        WRITESTRING(Inventory.A[i].Jenis);
+    }
+
+    //pesanan (queue)
+    WRITEINT(Pesanan.HEAD); WRITEBLANK(); WRITEINT(Pesanan.TAIL); WRITEBLANK();
+    WRITEINT(Pesanan.OrderNum); WRITEBLANK(); WRITEINT(Pesanan.MaxEl); WRITENEWLINE();
+    WRITEINT(LengthQueue(Pesanan)); WRITENEWLINE();
+    for (int i = 0; i < LengthQueue(Pesanan); i++)
+    {
+        WRITEINT(Pesanan.Tab[i].Pemesan); 
+        WRITEBLANK();
+        WRITEINT(Pesanan.Tab[i].Nilai);
+        WRITENEWLINE();
+        for (int j = 0; j < 8; ++j)
+        {
+            WRITESTRING(Pesanan.Tab[i].Detail[j]);
+            WRITENEWLINE();
+        }
+    }
+
+    //build (stack)
+    WRITEINT(TOP(Build)); WRITENEWLINE();
+    for (int i = 0; i < TOP(Build); i++)
+    {
+        WRITESTRING(Build.T[i].NamaKomp);
+        WRITENEWLINE();
+    }
+    
+    //delivery (arraydelivey)
+    WRITEINT(Delivery.Neff); WRITENEWLINE();
+    for (int i = 0; i < Delivery.Neff; i++)
+    {
+        WRITEINT(Delivery.A[i].NoPesanan);
+        WRITEBLANK();
+        WRITEINT(Delivery.A[i].Pemesan);
+        WRITEBLANK();
+        WRITEINT(Delivery.A[i].Invoice);
+        WRITENEWLINE();
+    }
+
+    WRITEMARK();
+    FINISHWRITE();
+}
+
 void COMMAND()
 /* Menginput COMMAND, mengecek commandnya, serta menjalankan commandnya */
 {
@@ -537,7 +624,7 @@ void COMMAND()
         } else if (IsKataEXIT(CKata)){
             exit = true;
         } else if (IsKataSAVE(CKata)){
-
+            SAVE();
         } else {
             printf("COMMAND tidak terdefinisi. Silahkan input COMMAND lain!\n");
         }
@@ -569,7 +656,7 @@ int main(){
         Inventory = MakeArrayInventory();
 
         //Order Pesanan Awal
-        uang = 10000; // inisialisasi uang
+        uang = 100000; // inisialisasi uang
         Pesanan = CreateQueue(99);
         END_DAY();
         Pesanan.OrderNum = 1;

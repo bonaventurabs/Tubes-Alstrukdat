@@ -92,4 +92,7 @@ IdxType IndeksInventPesanan(ArrayInventory list, int NoPesanan);
  */
 Element ArrangeElement(char Nama[],int Jumlah, char Jenis[]);
 
+/* Menghitung jumlah komponen dalam list */
+int CountKomponen(ArrayInventory list);
+
 #endif	

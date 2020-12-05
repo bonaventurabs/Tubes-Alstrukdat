@@ -68,6 +68,20 @@ void WRITECHAR(char in)
     fprintf(savepita, "%c", in);
 }
 
+void WRITESTRING(char str[])
+/* Menulis str pada file savepita */
+{
+    fprintf(savepita, "%s",str);
+}
+
+void WRITEDELIMITER()
+/* Menulis delimiter ' , ' pada file savepita */
+{
+    WRITEBLANK();
+    fprintf(savepita,",");
+    WRITEBLANK();
+}
+
 void WRITEBLANK()
 /* Menulis blank ' ' pada file savepita (spasi) */
 {
@@ -78,6 +92,12 @@ void WRITENEWLINE()
 /* Mengganti baris pada penulisan file savepita (enter) */
 {
     fprintf(savepita, "\n");
+}
+
+void WRITEMARK()
+/* Menulis MARK '.' pada file savepita */
+{
+    fprintf(savepita,".");
 }
 
 void FINISHWRITE()

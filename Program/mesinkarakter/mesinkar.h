@@ -42,11 +42,20 @@ void WRITEINT(int in);
 void WRITECHAR(char in);
 /* Menulis tipe char pada file savepita */
 
+void WRITESTRING(char str[]);
+/* Menulis str pada file savepita */
+
+void WRITEDELIMITER();
+/* Menulis delimiter ' , ' pada file savepita */
+
 void WRITEBLANK();
 /* Menulis blank ' ' pada file savepita (spasi) */
 
 void WRITENEWLINE();
 /* Mengganti baris pada penulisan file savepita (enter) */
+
+void WRITEMARK();
+/* Menulis MARK '.' pada file savepita */
 
 void FINISHWRITE();
 /* Menutup file yang sudah ditulis */
