@@ -431,9 +431,9 @@ void SHOP(){
             } else if (pil == 6) {
                 X = CopyArrayKomponen(GPU);
             } else if (pil == 7) {
-                X = CopyArrayKomponen(CPUCool);
+                X = CopyArrayKomponen(Storage);
             } else if (pil == 8) {
-                X = CopyArrayKomponen(CPUCool);
+                X = CopyArrayKomponen(PSU);
             } else {
                 goto endshop;
             }
