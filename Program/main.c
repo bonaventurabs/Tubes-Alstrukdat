@@ -505,7 +505,7 @@ void SHOP(){
             printf("\x1b[0m");
             printf("\n");
 
-            if (1>pilkom && pilkom>All.Neff || jumlah<1){
+            if (1>pilkom || pilkom>All.Neff || jumlah<1){
                 goto endshop;
             }
 
@@ -562,7 +562,7 @@ void SHOP(){
             scanf("%d", &jumlah);
             printf("\x1b[0m");
 
-            if (1>pilkom && pilkom>All.Neff || jumlah<1){
+            if (1>pilkom || pilkom>X.Neff || jumlah<1){
                 goto endshop;
             }
 
